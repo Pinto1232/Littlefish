@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 const connectDB = require('./config/database');
 const adminRoutes = require('./routes/adminRoutes');
-const productRoutes = require('./routes/productRoutes');
+const productRoutes = require('./routes/adminRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 
 connectDB();
