@@ -6,8 +6,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
-
 const connectDB = require('./config/database');
+const adminRoutes = require('./routes/adminRoutes');
 connectDB();
 
 // Security enhancements
@@ -35,6 +35,7 @@ app.use(express.static('public'));
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 
