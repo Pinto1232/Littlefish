@@ -8,6 +8,9 @@ const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 const connectDB = require('./config/database');
 const adminRoutes = require('./routes/adminRoutes');
+const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+
 connectDB();
 
 // Security enhancements
@@ -36,6 +39,12 @@ app.use(express.static('public'));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use('/api/admin', adminRoutes);
+
+// Product Routes 
+app.use('/api/products', productRoutes);
+
+// category Routes 
+app.use('/api/categories', categoryRoutes);
 
 
 
