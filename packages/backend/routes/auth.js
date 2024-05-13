@@ -11,7 +11,7 @@ router.post(
     body("password").isString().trim(),
   ],
   async (req, res) => {
-    console.log("Request Body:", req.body); // Check the incoming request data
+    console.log("Request Body:", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log("Validation Errors:", errors.array());
