@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const MONGO_URI =
-  process.env.MONGO_URI || "mongodb+srv://pintomanuel:ORuhfFxC7EzA2qYL@LittleFishStoreDB.iqcsto9.mongodb.net/LittleFishStoreDB?retryWrites=true&w=majority";
+  process.env.MONGO_URI || "";
 
 const connectDB = async () => {
   try {
