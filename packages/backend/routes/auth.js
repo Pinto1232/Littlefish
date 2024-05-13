@@ -2,8 +2,11 @@ const express = require("express");
 const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
+
+// login route
 router.post(
   "/login",
   [
@@ -36,9 +39,30 @@ router.post(
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    console.log("Token generated for user:", username);
+    console.log("JWT Secret:", process.env.JWT_SECRET);
     res.send({ token });
   }
 );
+
+// Registration route
+router.post("/register", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    // Check if the username already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(409).send("Username already exists");
+    }
+
+    // Hash the password and create a new user
+    const hashedPassword = await bcrypt.hash(password, 8);
+    const user = new User({ username, password: hashedPassword });
+    await user.save();
+    res.status(201).send("User registered successfully");
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).send("Error registering user");
+  }
+});
 
 module.exports = router;
