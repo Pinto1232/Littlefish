@@ -49,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           alt={name}
           style={{
             height: 255,
-            width: "100%",
+            width: 255,
             borderTopLeftRadius: 2,
             borderTopRightRadius: 2,
             cursor: "pointer",
