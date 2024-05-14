@@ -26,6 +26,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 300, // Reduced maxWidth
   borderRadius: 8,
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  margin: theme.spacing(1), // Add margin to control spacing
   [theme.breakpoints.down("sm")]: {
     maxWidth: "100%",
   },
@@ -63,6 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            cursor: 'pointer'
           }}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
@@ -97,7 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           variant="outlined"
           size="small"
           sx={{
-            width: "150px",
+            width: "120px", 
             borderRadius: "50px",
             backgroundColor: "white",
             color: "black",
@@ -113,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           variant="contained"
           size="small"
           sx={{
-            width: "100px",
+            width: "100px", 
             borderRadius: "50px",
             backgroundColor: "black",
             color: "white",

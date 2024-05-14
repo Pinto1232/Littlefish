@@ -8,7 +8,7 @@ const JumbotronContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '100vw', // Full viewport width
+  width: '100%', 
   height: '46vh',
   marginBottom: theme.spacing(10),
   backgroundSize: 'cover',
