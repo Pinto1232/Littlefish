@@ -84,11 +84,11 @@ const ProductList: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false); 
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // Pagination state
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(4); 
+  const [rowsPerPage, setRowsPerPage] = useState(4);
 
   const handleRemove = (id: string) => {
     confirmAlert({
@@ -101,7 +101,7 @@ const ProductList: React.FC = () => {
             try {
               await deleteProduct(id).unwrap();
               toast.success("Product removed successfully");
-              refetch(); 
+              refetch();
             } catch (error) {
               toast.error("Failed to remove product");
             }
@@ -166,10 +166,7 @@ const ProductList: React.FC = () => {
   return (
     <>
       <ToastContainer />
-      <Typography variant="h6" component="h6" gutterBottom>
-        Product List
-      </Typography>
-      <Paper>
+      <Paper style={{ width: "100%" }}>
         <Table className={classes.table}>
           <TableHead className={classes.tableHeader}>
             <TableRow>
@@ -211,7 +208,10 @@ const ProductList: React.FC = () => {
                           />
                         )}
                         <Box>
-                          <Typography variant="body1">
+                          <Typography
+                            variant="body1"
+                            sx={{ fontWeight: "bold" }}
+                          >
                             {product.name}
                           </Typography>
                           <Typography variant="body2" color="textSecondary">
@@ -279,8 +279,8 @@ const ProductList: React.FC = () => {
           <CreateProduct
             product={productToEdit}
             onClose={handleDialogClose}
-            setIsUpdating={setIsUpdating} 
-            refetch={refetch} 
+            setIsUpdating={setIsUpdating}
+            refetch={refetch}
           />
         </DialogContent>
       </Dialog>

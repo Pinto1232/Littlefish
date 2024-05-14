@@ -1,17 +1,24 @@
-import React from 'react';
-import { Container, Grid } from '@mui/material';
-import ProductList from './features/products/ProductList';
+import React from "react";
+import { Container, Grid, ThemeProvider, createTheme } from "@mui/material";
+import ProductList from "./features/products/ProductList";
+import SearchBar from "./components/SearchComponent/SearchBar";
 
+const theme = createTheme();
 
 const App: React.FC = () => {
   return (
-    <Container>
-      <Grid container spacing={1}>
-      <Grid item xs={12} md={12}>
-          <ProductList />
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <SearchBar />
+          </Grid>
+          <Grid item xs={12}>
+            <ProductList />
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </ThemeProvider>
   );
 };
 
