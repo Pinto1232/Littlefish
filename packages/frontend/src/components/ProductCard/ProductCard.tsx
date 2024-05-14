@@ -23,13 +23,22 @@ interface ProductCardProps {
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  maxWidth: 345,
+  maxWidth: 300, // Reduced maxWidth
   borderRadius: 8,
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   [theme.breakpoints.down("sm")]: {
     maxWidth: "100%",
   },
 }));
+
+const ImageWrapper = styled(Box)({
+  position: 'relative',
+  width: '100%',
+  paddingTop: '75%', // 4:3 aspect ratio
+  overflow: 'hidden',
+  borderTopLeftRadius: 8,
+  borderTopRightRadius: 8,
+});
 
 const MotionImg = motion.img;
 
@@ -43,16 +52,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <StyledCard>
-      <Box position="relative">
+      <ImageWrapper>
         <MotionImg
           src={image}
           alt={name}
           style={{
-            height: 255,
-            width: 255,
-            borderTopLeftRadius: 2,
-            borderTopRightRadius: 2,
-            cursor: "pointer",
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
           }}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
@@ -67,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             backgroundColor: "rgba(255, 255, 255, 0.8)",
           }}
         />
-      </Box>
+      </ImageWrapper>
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
           {name}
@@ -83,17 +93,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between" }}>
-        <Button variant="outlined" size="small">
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{
+            width: "150px",
+            borderRadius: "50px",
+            backgroundColor: "white",
+            color: "black",
+            borderColor: "black",
+            "&:hover": {
+              backgroundColor: "lightgray",
+            },
+          }}
+        >
           Add to Cart
         </Button>
         <Button
           variant="contained"
           size="small"
           sx={{
+            width: "100px",
             borderRadius: "50px",
             backgroundColor: "black",
+            color: "white",
             "&:hover": {
-              backgroundColor: "darkgray", 
+              backgroundColor: "darkgray",
             },
           }}
         >
