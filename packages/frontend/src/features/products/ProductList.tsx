@@ -133,6 +133,12 @@ const ProductList: React.FC = () => {
     handleMenuClose();
   };
 
+  const handleCreateClick = () => {
+    setProductToEdit(null);
+    setIsDialogOpen(true);
+    handleMenuClose();
+  };
+
   const handleDialogClose = () => {
     setIsDialogOpen(false);
     setProductToEdit(null);
@@ -244,6 +250,9 @@ const ProductList: React.FC = () => {
                           <VisibilityIcon /> View
                         </MenuItem>
                         <MenuItem onClick={() => handleEditClick(product)}>
+                          <EditIcon /> Edit
+                        </MenuItem>
+                        <MenuItem onClick={handleCreateClick}>
                           <EditIcon /> Create
                         </MenuItem>
                         <MenuItem onClick={() => handleRemove(product._id)}>
@@ -274,7 +283,7 @@ const ProductList: React.FC = () => {
         maxWidth="md"
         fullWidth
       >
-        <DialogTitle>Create Product</DialogTitle>
+        <DialogTitle>Edit Product</DialogTitle>
         <DialogContent>
           <CreateProduct
             product={productToEdit}
