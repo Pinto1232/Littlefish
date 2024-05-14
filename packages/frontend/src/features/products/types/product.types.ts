@@ -1,4 +1,6 @@
 export interface Product {
+  reviews: number;
+  rating: number;
   _id: string;
   name: string;
   description: string;

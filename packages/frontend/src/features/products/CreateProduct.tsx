@@ -110,7 +110,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
   return (
     <>
       <Typography variant="h4" component="h1" gutterBottom>
-        {product ? "Edit Product" : "Create Product"}
+        {product ? "" : ""}
       </Typography>
       <Paper elevation={3} style={{ padding: "16px" }}>
         <form onSubmit={handleSubmit}>
