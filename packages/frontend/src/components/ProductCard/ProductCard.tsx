@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,6 +11,7 @@ import {
 import { styled } from "@mui/system";
 import { motion } from "framer-motion";
 import StarIcon from "@mui/icons-material/Star";
+import ProductModal from "../ProductModal/ProductModal";
 
 interface ProductCardProps {
   image: string;
@@ -51,7 +52,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rating,
   reviews,
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+
+
   return (
+    <>
     <StyledCard>
       <ImageWrapper>
         <MotionImg
@@ -123,11 +137,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
               backgroundColor: "darkgray",
             },
           }}
+          onClick={handleOpenModal}
         >
           Buy Now
         </Button>
       </CardActions>
     </StyledCard>
+    <ProductModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        product={{ image, name, price, category, rating, reviews }}
+      />
+    </>
   );
 };
 
