@@ -4,6 +4,7 @@ import { Container, Grid, ThemeProvider, createTheme } from "@mui/material";
 import Home from "./pages/Home";
 import ProductList from "./features/products/ProductList";
 import SearchBar from "./components/SearchComponent/SearchBar";
+import { CartProvider } from "./Context/CartContext";
 
 const theme = createTheme();
 
@@ -33,7 +34,9 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
+      <CartProvider>
         <AppContent />
+        </CartProvider>
       </Router>
     </ThemeProvider>
   );

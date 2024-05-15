@@ -1,3 +1,4 @@
+// Navbar.tsx
 import React, { useState } from "react";
 import {
   AppBar,
@@ -26,15 +27,16 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { Theme, useTheme } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useCart } from "../../Context/useCart";
 
-type Item = {
-  id: number;
+interface CartItem {
+  id: string;
+  image: string;
   name: string;
   brand: string;
-  image: string;
   quantity: number;
   price: number;
-};
+}
 
 const NavbarContainer = styled(AppBar)(({ theme }: { theme: Theme }) => ({
   backgroundColor: "#000",
@@ -95,6 +97,12 @@ const ItemContainer = styled(Paper)(({ theme }: { theme: Theme }) => ({
 const Navbar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+  // Use the cart context
+  const { cart } = useCart();
+  const cartItems: CartItem[] = cart.map((product) => ({
+    ...product,
+    id: String(product.id),
+  }));
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -103,43 +111,7 @@ const Navbar: React.FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [items] = useState<Item[]>([
-    {
-      id: 1,
-      name: "Product 1",
-      brand: "Brand A",
-      image: "https://example.com/product1.jpg",
-      quantity: 2,
-      price: 19.99,
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      brand: "Brand B",
-      image: "https://example.com/product2.jpg",
-      quantity: 1,
-      price: 24.99,
-    },
 
-    {
-      id: 3,
-      name: "Product 3",
-      brand: "Brand B",
-      image: "https://example.com/product2.jpg",
-      quantity: 1,
-      price: 54.99,
-    },
-
-    {
-      id: 4,
-      name: "Product 4",
-      brand: "Brand B",
-      image: "https://example.com/product2.jpg",
-      quantity: 1,
-      price: 154.99,
-    },
-    // Add more sample items as needed
-  ]);
   const theme = useTheme();
 
   const toggleDrawer =
@@ -180,7 +152,7 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap={2}>
             <IconButton onClick={toggleDrawer(true)}>
               <Badge
-                badgeContent={4}
+                badgeContent={cart.length} // Display the number of items in the cart
                 color="secondary"
                 sx={{
                   "& .MuiBadge-badge": {
@@ -257,8 +229,8 @@ const Navbar: React.FC = () => {
           <Divider sx={{ mb: 2 }} />
           <Box
             sx={{
-              maxHeight: items.length > 3 ? "calc(100% - 200px)" : "auto",
-              overflowY: items.length > 3 ? "scroll" : "visible",
+              maxHeight: cart.length > 3 ? "calc(100% - 200px)" : "auto",
+              overflowY: cart.length > 3 ? "scroll" : "visible",
               overflowX: "hidden",
               "&::-webkit-scrollbar": {
                 width: "0.4em",
@@ -271,8 +243,11 @@ const Navbar: React.FC = () => {
             }}
           >
             <List>
-              {items.map((item) => (
-                <ItemContainer key={item.id} theme={theme}>
+              {cartItems.map((item: CartItem) => (
+                <ItemContainer
+                  key={String((item as CartItem).id)}
+                  theme={theme}
+                >
                   <ListItem
                     style={{ paddingRight: 16 }}
                     ContainerProps={{
@@ -280,14 +255,13 @@ const Navbar: React.FC = () => {
                     }}
                   >
                     <ListItemAvatar>
-                      <Avatar src={item.image} />
+                      <Avatar src={(item as CartItem).image} />
                     </ListItemAvatar>
                     <ListItemText
-                      primary={item.name}
-                      secondary={item.brand}
+                      primary={(item as CartItem).name}
+                      secondary={(item as CartItem).brand}
                       primaryTypographyProps={{ fontWeight: "bold" }}
                     />
-
                     <ListItemSecondaryAction
                       style={{ position: "static", transform: "none" }}
                     >
@@ -295,7 +269,7 @@ const Navbar: React.FC = () => {
                         <RemoveIcon />
                       </IconButton>
                       <Typography variant="body2" sx={{ mx: 1 }}>
-                        {item.quantity}
+                        {(item as CartItem).quantity}
                       </Typography>
                       <IconButton edge="end">
                         <AddIcon />
@@ -311,7 +285,7 @@ const Navbar: React.FC = () => {
                           fontSize: 10,
                         }}
                       >
-                        R{item.price.toFixed(2)}
+                        R{(item as CartItem).price.toFixed(2)}
                       </Typography>
                     </ListItemSecondaryAction>
                   </ListItem>
@@ -326,7 +300,16 @@ const Navbar: React.FC = () => {
                 <Typography variant="body2">Subtotal:</Typography>
               </Grid>
               <Grid item xs={6} textAlign="right">
-                <Typography variant="body2">R100.01</Typography>
+                <Typography variant="body2">
+                  R
+                  {cartItems
+                    .reduce(
+                      (acc: number, item: CartItem) =>
+                        acc + item.price * item.quantity,
+                      0
+                    )
+                    .toFixed(2)}
+                </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body2">Shipping Fee:</Typography>
@@ -338,7 +321,16 @@ const Navbar: React.FC = () => {
                 <Typography variant="h6">Total:</Typography>
               </Grid>
               <Grid item xs={6} textAlign="right">
-                <Typography variant="h6">R110.07</Typography>
+                <Typography variant="h6">
+                  R
+                  {(
+                     cartItems.reduce(
+                      (acc: number, item: CartItem) =>
+                        acc + item.price * item.quantity,
+                      0
+                    ) + 9.99
+                  ).toFixed(2)}
+                </Typography>
               </Grid>
             </Grid>
             <Button
@@ -358,7 +350,6 @@ const Navbar: React.FC = () => {
           </Box>
         </DrawerContent>
       </Drawer>
-      {drawerOpen && <OverlayBackground theme={theme} />}
       {drawerOpen && <OverlayBackground theme={theme} />}
     </>
   );
