@@ -1,4 +1,6 @@
 export interface Product {
+  brand: string;
+  id: number;
   reviews: number;
   rating: number;
   _id: string;
@@ -6,6 +8,7 @@ export interface Product {
   description: string;
   imageUrl?: string;
   price: number;
+  quantity?: number; 
   category: {
     name: string;
     description: string;

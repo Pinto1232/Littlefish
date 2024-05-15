@@ -79,7 +79,6 @@ console.log("Product Controller Loaded");
 exports.updateProduct = async (req, res) => {
   console.log("Updating Product:", req.params.id);
   try {
-    // Convert price to a number if it's a string
     if (typeof req.body.price === 'string') {
       req.body.price = parseFloat(req.body.price.replace(/[^0-9.-]+/g, ""));
     }
