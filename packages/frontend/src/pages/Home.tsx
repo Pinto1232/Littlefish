@@ -59,16 +59,16 @@ const Home: React.FC = () => {
           page={page}
           onChange={handlePageChange}
           sx={{
-            '& .MuiPaginationItem-root': {
-              '&.Mui-selected': {
-                backgroundColor: 'black',
-                color: 'white',
-                '&:hover': {
+              '& .MuiPaginationItem-root': {
+                '&.Mui-selected': {
                   backgroundColor: 'black',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                  },
                 },
               },
-            },
-          }}
+            }}
         />
       </Box>
     </>
