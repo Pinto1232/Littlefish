@@ -1,5 +1,5 @@
 // Navbar.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -97,8 +97,12 @@ const ItemContainer = styled(Paper)(({ theme }: { theme: Theme }) => ({
 const Navbar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
-  // Use the cart context
   const { cart } = useCart();
+
+  useEffect(() => {
+    console.log('Cart updated:', cart);
+  }, [cart]);
+
   const cartItems: CartItem[] = cart.map((product) => ({
     ...product,
     id: String(product.id),
@@ -152,7 +156,7 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap={2}>
             <IconButton onClick={toggleDrawer(true)}>
               <Badge
-                badgeContent={cart.length} // Display the number of items in the cart
+                badgeContent={cart.length} 
                 color="secondary"
                 sx={{
                   "& .MuiBadge-badge": {
@@ -324,7 +328,7 @@ const Navbar: React.FC = () => {
                 <Typography variant="h6">
                   R
                   {(
-                     cartItems.reduce(
+                    cartItems.reduce(
                       (acc: number, item: CartItem) =>
                         acc + item.price * item.quantity,
                       0

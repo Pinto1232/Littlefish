@@ -49,8 +49,8 @@ const Home: React.FC = () => {
         {paginatedProducts?.map((product) => (
           <Grid item key={product._id}>
             <ProductCard
-              id={product.id}
-              brand={product.brand}
+              id={product._id} // Use _id from JSON data
+              brand={product.brand || "Default Brand"} // Provide a default value if brand is missing
               image={product.imageUrl || "defaultImageUrl"}
               name={product.name}
               description={product.description}

@@ -1,3 +1,4 @@
+// ProductCard.tsx
 import React, { useState } from "react";
 import {
   Card,
@@ -15,15 +16,15 @@ import ProductModal from "../ProductModal/ProductModal";
 import { useCart } from "../../Context/useCart";
 
 interface ProductCardProps {
-  id: number; 
+  id: string; // Changed to string to match _id type
   image: string;
   name: string;
   price: string;
   category: { name: string; description: string };
   description: string;
-  rating: number;
-  reviews: number;
-  brand: string; 
+  rating?: number; // Made optional
+  reviews?: number; // Made optional
+  brand?: string; // Made optional
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -55,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   category,
   rating,
   reviews,
-  brand
+  brand,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { addToCart } = useCart();
@@ -128,14 +129,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
             }}
             onClick={() =>
               addToCart({
-                id, 
+                id,
                 image,
                 name,
-                brand, 
+                brand: brand ?? "", // Provide a default empty string if brand is undefined
                 price: Number(price),
-                category, 
-                rating,
-                reviews,
+                category,
+                rating: rating ?? 0, // Default to 0 if rating is undefined
+                reviews: reviews ?? 0, // Default to 0 if reviews is undefined
                 quantity: 1,
               })
             }
@@ -163,7 +164,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <ProductModal
         open={modalOpen}
         onClose={handleCloseModal}
-        product={{ image, name, price, category, rating, reviews }}
+        product={{
+          image,
+          name,
+          price,
+          category,
+          rating: rating ?? 0, // Default to 0 if rating is undefined
+          reviews: reviews ?? 0, // Default to 0 if reviews is undefined
+        }}
       />
     </>
   );
