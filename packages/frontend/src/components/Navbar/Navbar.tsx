@@ -24,6 +24,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Theme, useTheme } from "@mui/material/styles";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 type Item = {
   id: number;
@@ -92,6 +94,15 @@ const ItemContainer = styled(Paper)(({ theme }: { theme: Theme }) => ({
 
 const Navbar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const [items] = useState<Item[]>([
     {
       id: 1,
@@ -117,6 +128,15 @@ const Navbar: React.FC = () => {
       image: "https://example.com/product2.jpg",
       quantity: 1,
       price: 54.99,
+    },
+
+    {
+      id: 4,
+      name: "Product 4",
+      brand: "Brand B",
+      image: "https://example.com/product2.jpg",
+      quantity: 1,
+      price: 154.99,
     },
     // Add more sample items as needed
   ]);
@@ -172,7 +192,49 @@ const Navbar: React.FC = () => {
                 <ShoppingCartIcon sx={{ color: "white" }} />
               </Badge>
             </IconButton>
-            <Avatar alt="User" src="https://via.placeholder.com/40" />
+            <Avatar
+              alt="User"
+              src="https://via.placeholder.com/40"
+              onClick={handleClick}
+              sx={{ cursor: "pointer" }}
+            />
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "&.MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem onClick={handleClose}>Login</MenuItem>
+              <MenuItem onClick={handleClose}>Register</MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </NavbarContainer>
