@@ -1,4 +1,3 @@
-// ProductCard.tsx
 import React, { useState } from "react";
 import {
   Card,
@@ -22,16 +21,16 @@ interface ProductCardProps {
   price: string;
   category: { name: string; description: string };
   description: string;
-  rating?: number; // Made optional
-  reviews?: number; // Made optional
-  brand?: string; // Made optional
+  rating?: number; 
+  reviews?: number; 
+  brand?: string;
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  maxWidth: 300, // Reduced maxWidth
+  maxWidth: 300, 
   borderRadius: 8,
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  margin: theme.spacing(1), // Add margin to control spacing
+  margin: theme.spacing(1),
   [theme.breakpoints.down("sm")]: {
     maxWidth: "100%",
   },
@@ -40,7 +39,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 const ImageWrapper = styled(Box)({
   position: "relative",
   width: "100%",
-  paddingTop: "75%", // 4:3 aspect ratio
+  paddingTop: "75%", 
   overflow: "hidden",
   borderTopLeftRadius: 8,
   borderTopRightRadius: 8,
@@ -132,11 +131,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 id,
                 image,
                 name,
-                brand: brand ?? "", // Provide a default empty string if brand is undefined
+                brand: brand ?? "", 
                 price: Number(price),
                 category,
-                rating: rating ?? 0, // Default to 0 if rating is undefined
-                reviews: reviews ?? 0, // Default to 0 if reviews is undefined
+                rating: rating ?? 0, 
+                reviews: reviews ?? 0, 
+                
                 quantity: 1,
               })
             }
@@ -169,8 +169,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           name,
           price,
           category,
-          rating: rating ?? 0, // Default to 0 if rating is undefined
-          reviews: reviews ?? 0, // Default to 0 if reviews is undefined
+          rating: rating ?? 0, 
+          reviews: reviews ?? 0, 
         }}
       />
     </>
