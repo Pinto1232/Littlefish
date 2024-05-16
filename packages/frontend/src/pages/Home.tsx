@@ -11,10 +11,13 @@ import ProductCard from "../components/ProductCard/ProductCard";
 import Jumbotron from "../components/Jumbotron/Jumbotron";
 import Navbar from "../components/Navbar/Navbar";
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
+import AuthForm from "../components/AuthForm/AuthForm";
 
 const Home: React.FC = () => {
   const { data: products, error, isLoading } = useGetProductsQuery();
   const [page, setPage] = useState(1);
+  const [tab, setTab] = useState(0);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const itemsPerPage = 4;
 
   if (isLoading) {
@@ -43,14 +46,14 @@ const Home: React.FC = () => {
   return (
     <>
       <GlobalStyle />
-      <Navbar />
+      <Navbar setTab={setTab} setAuthModalOpen={setAuthModalOpen} />
       <Jumbotron backgroundImage="https://wallpapers.com/images/hd/shop-background-2y3skz5z6mp0qca3.jpg" />
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         {paginatedProducts?.map((product) => (
           <Grid item key={product._id}>
             <ProductCard
-              id={product._id} // Use _id from JSON data
-              brand={product.brand || "Default Brand"} // Provide a default value if brand is missing
+              id={product._id}
+              brand={product.brand || "Default Brand"}
               image={product.imageUrl || "defaultImageUrl"}
               name={product.name}
               description={product.description}
@@ -80,6 +83,12 @@ const Home: React.FC = () => {
           }}
         />
       </Box>
+      <AuthForm
+        tab={tab}
+        setTab={setTab}
+        open={authModalOpen}
+        setOpen={setAuthModalOpen}
+      />
     </>
   );
 };
