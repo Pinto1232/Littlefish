@@ -105,14 +105,14 @@ const ProductModal: React.FC<ProductModalProps> = ({
               {product.name}
             </Typography>
             <Typography variant="h5" color="text.primary" sx={{ mt: 1 }}>
-              {product.price} CAD
+              R{product.price}
             </Typography>
             <Typography
               variant="body2"
               color="text.secondary"
               sx={{ textDecoration: "line-through" }}
             >
-              130 CAD
+              R130 
             </Typography>
             <Grid container spacing={1} sx={{ mt: 2 }}>
               <Grid item xs={4}>

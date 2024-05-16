@@ -1,4 +1,3 @@
-// Navbar.tsx
 import React, { useEffect, useState } from "react";
 import {
   AppBar,
@@ -36,6 +35,11 @@ interface CartItem {
   brand: string;
   quantity: number;
   price: number;
+}
+
+interface NavbarProps {
+  setTab: (tab: number) => void;
+  setAuthModalOpen: (open: boolean) => void;
 }
 
 const NavbarContainer = styled(AppBar)(({ theme }: { theme: Theme }) => ({
@@ -94,13 +98,13 @@ const ItemContainer = styled(Paper)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<NavbarProps> = ({ setTab, setAuthModalOpen }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const { cart } = useCart();
 
   useEffect(() => {
-    console.log('Cart updated:', cart);
+    console.log("Cart updated:", cart);
   }, [cart]);
 
   const cartItems: CartItem[] = cart.map((product) => ({
@@ -114,6 +118,18 @@ const Navbar: React.FC = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLoginClick = () => {
+    setTab(0);
+    setAuthModalOpen(true);
+    handleClose();
+  };
+
+  const handleRegisterClick = () => {
+    setTab(1);
+    setAuthModalOpen(true);
+    handleClose();
   };
 
   const theme = useTheme();
@@ -156,7 +172,7 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap={2}>
             <IconButton onClick={toggleDrawer(true)}>
               <Badge
-                badgeContent={cart.length} 
+                badgeContent={cart.length}
                 color="secondary"
                 sx={{
                   "& .MuiBadge-badge": {
@@ -208,8 +224,8 @@ const Navbar: React.FC = () => {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={handleClose}>Login</MenuItem>
-              <MenuItem onClick={handleClose}>Register</MenuItem>
+              <MenuItem onClick={handleLoginClick}>Login</MenuItem>
+              <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -319,7 +335,7 @@ const Navbar: React.FC = () => {
                 <Typography variant="body2">Shipping Fee:</Typography>
               </Grid>
               <Grid item xs={6} textAlign="right">
-                <Typography variant="body2">R9.99</Typography>
+                <Typography variant="body2">R0.0</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="h6">Total:</Typography>
@@ -332,7 +348,7 @@ const Navbar: React.FC = () => {
                       (acc: number, item: CartItem) =>
                         acc + item.price * item.quantity,
                       0
-                    ) + 9.99
+                    ) + 0.0
                   ).toFixed(2)}
                 </Typography>
               </Grid>
