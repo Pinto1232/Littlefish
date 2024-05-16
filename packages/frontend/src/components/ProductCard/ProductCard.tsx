@@ -1,3 +1,4 @@
+// Enhanced styling for ProductCard.tsx
 import React, { useState } from "react";
 import {
   CardContent,
@@ -26,21 +27,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rating,
   reviews,
   brand,
+  description,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { addToCart } = useCart();
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
 
   return (
     <>
-      <StyledCard sx={{ margin: 0, padding: 1 }}>
+      <StyledCard sx={{ margin: 2, padding: 2, boxShadow: 3, borderRadius: 1 }}>
         <ImageWrapper>
           <MotionImg
             src={image}
@@ -50,11 +47,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               top: 0,
               left: 0,
               width: "100%",
-              height: "100%",
+              height: "200px",
               objectFit: "cover",
               cursor: "pointer",
             }}
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           />
           <Chip
@@ -69,7 +66,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           />
         </ImageWrapper>
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
             {name}
           </Typography>
           <Box display="flex" alignItems="center" mb={1}>
@@ -78,8 +75,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {rating} ({reviews} Reviews)
             </Typography>
           </Box>
-          <Typography variant="h6" color="text.primary">
+          <Typography variant="h6" color="text.primary" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
             R{price}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mt={1}>
+            {description}
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: "space-between" }}>
@@ -101,11 +101,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 id,
                 image,
                 name,
-                brand: brand ?? "",
+                brand: brand?? "",
                 price: Number(price),
                 category,
-                rating: rating ?? 0,
-                reviews: reviews ?? 0,
+                rating: rating?? 0,
+                reviews: reviews?? 0,
                 quantity: 1,
               })
             }
@@ -138,8 +138,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           name,
           price,
           category,
-          rating: rating ?? 0,
-          reviews: reviews ?? 0,
+          rating: rating?? 0,
+          reviews: reviews?? 0,
         }}
       />
     </>

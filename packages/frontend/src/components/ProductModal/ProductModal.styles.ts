@@ -1,18 +1,20 @@
-export const modalStyle = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+export const style = {
+  position: "absolute" as const,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: '80%', 
-  maxWidth: '600px', 
-  height: '80%', 
-  maxHeight: '800px',
-  bgcolor: 'background.paper',
+  maxWidth: '700px', 
+  height: '85%',
+  bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
-  overflow: 'auto',
+  p: 5,
+  borderRadius: 2,
 };
+
 export const imageStyle = {
   width: "100%",
+  height: "100%",
   borderRadius: 8,
 };
+

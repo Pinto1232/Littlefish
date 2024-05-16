@@ -15,31 +15,11 @@ import ReactImageMagnify from "react-image-magnify";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {ProductModalProps} from "./ProductModal.types"
+import {style} from './ProductModal.styles';
 
-interface ProductModalProps {
-  open: boolean;
-  onClose: () => void;
-  product: {
-    image: string;
-    name: string;
-    price: string;
-    category: { name: string; description: string };
-    rating: number;
-    reviews: number;
-  };
-}
 
-const style = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 800,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 2,
-};
+
 
 const ProductModal: React.FC<ProductModalProps> = ({
   open,
@@ -90,7 +70,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 largeImage: {
                   src: product.image,
                   width: 1200,
-                  height: 1800,
+                  height: 1400,
                 },
                 enlargedImageContainerStyle: { zIndex: 1500 },
               }}
@@ -208,14 +188,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
             >
               Add to Bag
             </Button>
-            <Button
-              variant="outlined"
-              sx={{ mt: 1 }}
-              fullWidth
-              onClick={onClose}
-            >
-              Favorites
-            </Button>
+  
           </Grid>
         </Grid>
       </Box>
