@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <>
-      <StyledCard>
+      <StyledCard sx={{ margin: 0, padding: 1 }}>
         <ImageWrapper>
           <MotionImg
             src={image}

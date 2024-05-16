@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   Box,
@@ -11,6 +11,10 @@ import {
   ToggleButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import ReactImageMagnify from "react-image-magnify";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface ProductModalProps {
   open: boolean;
@@ -42,13 +46,21 @@ const ProductModal: React.FC<ProductModalProps> = ({
   onClose,
   product,
 }) => {
-  const [size, setSize] = React.useState<string | null>("6");
+  const [size, setSize] = useState<string | null>("6");
 
   const handleSizeChange = (
     _event: React.MouseEvent<HTMLElement>,
     newSize: string | null
   ) => {
     setSize(newSize);
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
   };
 
   return (
@@ -68,34 +80,49 @@ const ProductModal: React.FC<ProductModalProps> = ({
         </IconButton>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <img
-              src={product.image}
-              alt={product.name}
-              style={{ width: "100%", borderRadius: 8 }}
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: product.name,
+                  isFluidWidth: true,
+                  src: product.image,
+                },
+                largeImage: {
+                  src: product.image,
+                  width: 1200,
+                  height: 1800,
+                },
+                enlargedImageContainerStyle: { zIndex: 1500 },
+              }}
             />
-            <Grid container spacing={1} sx={{ mt: 1 }}>
-              <Grid item xs={4}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: "100%", borderRadius: 8 }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: "100%", borderRadius: 8 }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: "100%", borderRadius: 8 }}
-                />
-              </Grid>
-            </Grid>
+            <Box sx={{ marginTop: 2, cursor: "pointer" }}>
+              <Slider {...settings}>
+                <Box sx={{ marginRight: 2 }}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "100%" }}
+                    loading="lazy"
+                  />
+                </Box>
+                <Box sx={{ marginRight: 2 }}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "100%" }}
+                    loading="lazy"
+                  />
+                </Box>
+                <Box>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "100%" }}
+                    loading="lazy"
+                  />
+                </Box>
+              </Slider>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6" color="text.secondary">
@@ -112,31 +139,36 @@ const ProductModal: React.FC<ProductModalProps> = ({
               color="text.secondary"
               sx={{ textDecoration: "line-through" }}
             >
-              R130 
+              R130
             </Typography>
-            <Grid container spacing={1} sx={{ mt: 2 }}>
-              <Grid item xs={4}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: "100%", borderRadius: 8 }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: "100%", borderRadius: 8 }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{ width: "100%", borderRadius: 8 }}
-                />
-              </Grid>
-            </Grid>
+            <div style={{ marginTop: 16 }}>
+              <Slider {...settings}>
+                <Box>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "100%"}}
+                    loading="lazy"
+                  />
+                </Box>
+                <Box>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "100%"}}
+                    loading="lazy"
+                  />
+                </Box>
+                <Box>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "100%"}}
+                    loading="lazy"
+                  />
+                </Box>
+              </Slider>
+            </div>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
               Select Size
             </Typography>
@@ -170,7 +202,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
             </Typography>
             <Button
               variant="contained"
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, bgcolor: "black" }}
               fullWidth
               onClick={onClose}
             >
