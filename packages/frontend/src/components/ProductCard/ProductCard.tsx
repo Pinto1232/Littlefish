@@ -1,49 +1,19 @@
 import React, { useState } from "react";
 import {
-  Card,
   CardContent,
   Typography,
   CardActions,
   Button,
   Chip,
   Box,
-} from "@mui/material";
-import { styled } from "@mui/system";
-import { motion } from "framer-motion";
-import StarIcon from "@mui/icons-material/Star";
-import ProductModal from "../ProductModal/ProductModal";
-import { useCart } from "../../Context/useCart";
-
-interface ProductCardProps {
-  id: string; // Changed to string to match _id type
-  image: string;
-  name: string;
-  price: string;
-  category: { name: string; description: string };
-  description: string;
-  rating?: number; 
-  reviews?: number; 
-  brand?: string;
-}
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  maxWidth: 300, 
-  borderRadius: 8,
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  margin: theme.spacing(1),
-  [theme.breakpoints.down("sm")]: {
-    maxWidth: "100%",
-  },
-}));
-
-const ImageWrapper = styled(Box)({
-  position: "relative",
-  width: "100%",
-  paddingTop: "75%", 
-  overflow: "hidden",
-  borderTopLeftRadius: 8,
-  borderTopRightRadius: 8,
-});
+  motion,
+  StarIcon,
+  ProductModal,
+  useCart,
+  StyledCard,
+  ImageWrapper,
+} from "./ProductCardImports";
+import { ProductCardProps } from "./ProductCardInterfaces";
 
 const MotionImg = motion.img;
 
@@ -131,12 +101,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 id,
                 image,
                 name,
-                brand: brand ?? "", 
+                brand: brand ?? "",
                 price: Number(price),
                 category,
-                rating: rating ?? 0, 
-                reviews: reviews ?? 0, 
-                
+                rating: rating ?? 0,
+                reviews: reviews ?? 0,
                 quantity: 1,
               })
             }
@@ -169,8 +138,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           name,
           price,
           category,
-          rating: rating ?? 0, 
-          reviews: reviews ?? 0, 
+          rating: rating ?? 0,
+          reviews: reviews ?? 0,
         }}
       />
     </>
