@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Box, IconButton, Badge } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import React, { useState } from 'react';
+import { Box, IconButton, Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
   CartDrawer,
-  NavLinks,
   NavbarContainerComponent,
   UserMenu,
   useCart,
-} from "./index";
+} from './index';
+import MegaMenu from '../MegaMenu/MegaMenu';
+import NavLinks from './NavLinks'; // Import NavLinks
+import GlobalStyle from '../../GlobalStyle/GlobalStyle';
 
 const Navbar: React.FC<{
   setTab: (tab: number) => void;
@@ -16,6 +18,7 @@ const Navbar: React.FC<{
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const { cart } = useCart();
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -40,9 +43,9 @@ const Navbar: React.FC<{
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
       ) {
         return;
       }
@@ -51,17 +54,17 @@ const Navbar: React.FC<{
 
   return (
     <NavbarContainerComponent>
-      <NavLinks />
       <Box display="flex" alignItems="center" gap={2}>
+        <NavLinks setMegaMenuOpen={setMegaMenuOpen} /> {/* Pass setMegaMenuOpen */}
         <IconButton onClick={toggleDrawer(true)}>
           <Badge
             badgeContent={cart.length}
             color="secondary"
             sx={{
-              "& .MuiBadge-badge": { color: "white", backgroundColor: "red" },
+              '& .MuiBadge-badge': { color: 'white', backgroundColor: 'red' },
             }}
           >
-            <ShoppingCartIcon sx={{ color: "white" }} />
+            <ShoppingCartIcon sx={{ color: 'white' }} />
           </Badge>
         </IconButton>
         <UserMenu
@@ -72,9 +75,11 @@ const Navbar: React.FC<{
           handleRegisterClick={handleRegisterClick}
         />
       </Box>
+      <GlobalStyle />
+      {megaMenuOpen && <MegaMenu open={megaMenuOpen} />} {/* Render MegaMenu conditionally */}
       <CartDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
     </NavbarContainerComponent>
   );
-};
-
-export default Navbar;
+  };
+  
+  export default Navbar;
