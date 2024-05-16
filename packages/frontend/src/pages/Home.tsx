@@ -26,15 +26,15 @@ const Home: React.FC = () => {
     setFilteredProducts(products);
   }, [products]);
 
-  const categories = ["All", "Electronics", "Books", "Clothing"];
+  // Extract unique categories
+  const categories = Array.from(new Set(products?.map(product => product.category.name)));
+
   const handleFilter = (selectedCategory: string) => {
     if (selectedCategory === "All") {
       setFilteredProducts(products);
     } else {
       setFilteredProducts(
-        products?.filter(
-          (product) => product.category.name === selectedCategory
-        )
+        products?.filter((product) => product.category.name === selectedCategory)
       );
     }
   };
@@ -42,18 +42,20 @@ const Home: React.FC = () => {
   const handlePriceChange = (priceRange: number[]) => {
     const [minPrice, maxPrice] = priceRange;
     setFilteredProducts(
-      products?.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
-      )
+      products?.filter((product) => product.price >= minPrice && product.price <= maxPrice)
     );
   };
 
   const handleColorChange = (color: string) => {
-    setFilteredProducts(products?.filter((product) => product.color === color));
+    setFilteredProducts(
+      products?.filter((product) => product.color === color)
+    );
   };
 
   const handleSizeChange = (size: string) => {
-    setFilteredProducts(products?.filter((product) => product.size === size));
+    setFilteredProducts(
+      products?.filter((product) => product.size === size)
+    );
   };
 
   if (isLoading) {
@@ -84,19 +86,14 @@ const Home: React.FC = () => {
       <GlobalStyle />
       <Navbar setTab={setTab} setAuthModalOpen={setAuthModalOpen} />
       <Jumbotron backgroundImage="https://wallpapers.com/images/hd/shop-background-2y3skz5z6mp0qca3.jpg" />
-      <Grid
-        container
-        spacing={1}
-        justifyContent="center"
-        alignItems="flex-start"
-      >
+      <Grid container spacing={1} justifyContent="center" alignItems="flex-start">
         <Grid item xs={12} sm={3}>
-          <CategoryFilter
-            categories={categories}
-            onFilter={handleFilter}
-            onPriceChange={handlePriceChange}
-            onColorChange={handleColorChange}
-            onSizeChange={handleSizeChange}
+          <CategoryFilter 
+            categories={categories} 
+            onFilter={handleFilter} 
+            onPriceChange={handlePriceChange} 
+            onColorChange={handleColorChange} 
+            onSizeChange={handleSizeChange} 
           />
         </Grid>
         <Grid item xs={12} sm={9}>

@@ -17,6 +17,10 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+import ElectronicsIcon from '@mui/icons-material/ElectricalServices';
+import BookIcon from '@mui/icons-material/Book';
+import ClothingIcon from '@mui/icons-material/Checkroom';
 
 interface CategoryFilterProps {
   categories: string[];
@@ -33,7 +37,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   onColorChange,
   onSizeChange,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('Categories');
   const [priceRange, setPriceRange] = useState<number[]>([0, 100]);
   const [color, setColor] = useState<string>('all');
   const [size, setSize] = useState<string>('all');
@@ -64,8 +68,23 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     setOpen(!open);
   };
 
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'All':
+        return <AllInclusiveIcon sx={{ mr: 1 }} />;
+      case 'Electronics':
+        return <ElectronicsIcon sx={{ mr: 1 }} />;
+      case 'Books':
+        return <BookIcon sx={{ mr: 1 }} />;
+      case 'Clothing':
+        return <ClothingIcon sx={{ mr: 1 }} />;
+      default:
+        return <CategoryIcon sx={{ mr: 1 }} />;
+    }
+  };
+
   return (
-    <Box sx={{ p: 2, boxShadow: 2, mt: 1, borderRadius: 2, backgroundColor: 'white' }}>
+    <Box sx={{ p: 2,  mt: 1, borderRadius: 1, backgroundColor: '#fafafa' }}>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: 'primary.main' }}>
           <FilterListIcon /> Filter
@@ -85,9 +104,17 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
+            <MenuItem value="Categories" disabled>
+              <CategoryIcon sx={{ mr: 1 }} />
+              Categories
+            </MenuItem>
+            <MenuItem value="All">
+              <AllInclusiveIcon sx={{ mr: 1 }} />
+              All
+            </MenuItem>
             {categories.map((category, index) => (
               <MenuItem key={index} value={category}>
-                <CategoryIcon sx={{ mr: 1 }} />
+                {getCategoryIcon(category)}
                 {category}
               </MenuItem>
             ))}

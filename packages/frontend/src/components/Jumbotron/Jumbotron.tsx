@@ -36,9 +36,9 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(5),
   backgroundColor: '#fff',
   borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(1),
+  padding: theme.spacing(2),
   width: '100%',
-  maxWidth: '600px',
+  maxWidth: '900px',
   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
@@ -54,7 +54,7 @@ const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage }) => {
   return (
     <JumbotronContainer style={{ backgroundImage: `url(${backgroundImage})` }}>
       <OverlayText variant="h1">Shop</OverlayText>
-      <Typography variant="h4" component="h2" gutterBottom>
+      <Typography variant="h2" component="h3" gutterBottom>
         Give All You Need
       </Typography>
       <SearchContainer>
