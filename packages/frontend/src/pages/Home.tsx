@@ -97,7 +97,7 @@ const Home: React.FC = () => {
           />
         </Grid>
         <Grid item xs={12} sm={9}>
-          <Grid container spacing={1}>
+          <Grid container>
             {paginatedProducts?.map((product) => (
               <Grid item key={product._id} xs={12} sm={6} md={4}>
                 <ProductCard

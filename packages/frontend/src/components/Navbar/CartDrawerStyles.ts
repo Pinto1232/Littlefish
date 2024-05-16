@@ -6,7 +6,7 @@ import { Theme } from "@mui/material/styles";
 export const DrawerContent = styled(Box)(({ theme }: { theme: Theme }) => ({
   width: 350,
   padding: theme.spacing(2),
-  background: "linear-gradient(135deg, #f5f5f5 30%, #e0e0e0 100%)",
+  background: "linear-gradient(135deg, #f5f5f5 30%, #fff 100%)",
   height: "100%",
   display: "flex",
   flexDirection: "column",

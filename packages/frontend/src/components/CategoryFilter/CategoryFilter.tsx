@@ -3,8 +3,7 @@ import {
   Box,
   Typography,
   Slider,
-  Radio,
-  RadioGroup,
+  Checkbox,
   FormControlLabel,
   FormControl,
   Collapse,
@@ -12,6 +11,8 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  RadioGroup,
+  Divider,
 } from '@mui/material';
 import CategoryIcon from '@mui/icons-material/Category';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -83,18 +84,37 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     }
   };
 
+  const getColorCheckbox = (color: string) => {
+    const colorMap: { [key: string]: string } = {
+      red: '#f44336',
+      blue: '#2196f3',
+      green: '#4caf50',
+    };
+
+    return (
+      <Checkbox
+        sx={{
+          color: colorMap[color] || 'default',
+          '&.Mui-checked': {
+            color: colorMap[color] || 'default',
+          },
+        }}
+      />
+    );
+  };
+
   return (
-    <Box sx={{ p: 2,  mt: 1, borderRadius: 1, backgroundColor: '#fafafa' }}>
+    <Box sx={{ p: 3, mt: 2, borderRadius: 2, boxShadow: 2, width: 320 }}>
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: 'primary.main' }}>
-          <FilterListIcon /> Filter
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: 'primary.main', display: 'flex', alignItems: 'center' }}>
+          <FilterListIcon sx={{ mr: 1 }} /> Filter
         </Typography>
         <IconButton onClick={handleClick}>
           {open ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
       </Box>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <Typography variant="subtitle1" sx={{ mb: 1 }}>
+        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'medium' }}>
           Category
         </Typography>
         <FormControl fullWidth>
@@ -103,6 +123,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
             onChange={handleCategoryChange}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
+            sx={{ mb: 2, borderRadius: 1, borderColor: 'primary.main', '& .MuiSelect-select': { padding: '10px' } }}
           >
             <MenuItem value="Categories" disabled>
               <CategoryIcon sx={{ mr: 1 }} />
@@ -120,7 +141,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
             ))}
           </Select>
         </FormControl>
-        <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="subtitle1" sx={{ mt: 2, mb: 1, fontWeight: 'medium' }}>
           Price
         </Typography>
         <Slider
@@ -131,26 +153,28 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
           max={1000}
           sx={{ mb: 2 }}
         />
-        <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="subtitle1" sx={{ mt: 2, mb: 1, fontWeight: 'medium' }}>
           Color
         </Typography>
         <FormControl component="fieldset">
           <RadioGroup value={color} onChange={handleColorChange}>
-            <FormControlLabel value="all" control={<Radio />} label="All" />
-            <FormControlLabel value="red" control={<Radio />} label="Red" />
-            <FormControlLabel value="blue" control={<Radio />} label="Blue" />
-            <FormControlLabel value="green" control={<Radio />} label="Green" />
+            <FormControlLabel value="all" control={<Checkbox />} label="All" />
+            <FormControlLabel value="red" control={getColorCheckbox('red')} label="Red" />
+            <FormControlLabel value="blue" control={getColorCheckbox('blue')} label="Blue" />
+            <FormControlLabel value="green" control={getColorCheckbox('green')} label="Green" />
           </RadioGroup>
         </FormControl>
-        <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="subtitle1" sx={{ mt: 2, mb: 1, fontWeight: 'medium' }}>
           Size
         </Typography>
         <FormControl component="fieldset">
           <RadioGroup value={size} onChange={handleSizeChange}>
-            <FormControlLabel value="all" control={<Radio />} label="All" />
-            <FormControlLabel value="small" control={<Radio />} label="Small" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="large" control={<Radio />} label="Large" />
+            <FormControlLabel value="all" control={<Checkbox />} label="All" />
+            <FormControlLabel value="small" control={<Checkbox />} label="Small" />
+            <FormControlLabel value="medium" control={<Checkbox />} label="Medium" />
+            <FormControlLabel value="large" control={<Checkbox />} label="Large" />
           </RadioGroup>
         </FormControl>
       </Collapse>
