@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   Grid,
-  CircularProgress,
   Typography,
   Pagination,
   Box,
+  useMediaQuery,
 } from "@mui/material";
 import { useGetProductsQuery } from "../features/api/apiSlice";
 import ProductCard from "../components/ProductCard/ProductCard";
@@ -13,13 +13,19 @@ import Navbar from "../components/Navbar/Navbar";
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
 import AuthForm from "../components/AuthForm/AuthForm";
 import CategoryFilter from "../components/CategoryFilter/CategoryFilter";
+import theme from "../custom/theme";
 
 const Home: React.FC = () => {
-  const { data: products, error, isLoading } = useGetProductsQuery();
+  const { data: products, error } = useGetProductsQuery();
+  console.log("Product Card data Home: ", products);
+
   const [page, setPage] = useState(1);
   const [tab, setTab] = useState(0);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(products);
+  
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const itemsPerPage = 6;
 
   useEffect(() => {
@@ -58,9 +64,7 @@ const Home: React.FC = () => {
     );
   };
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+
 
   if (error) {
     return (
@@ -106,15 +110,15 @@ const Home: React.FC = () => {
                   image={product.imageUrl || "defaultImageUrl"}
                   name={product.name}
                   description={product.description}
-                  price={product.price.toString()}
+                  price={product.price}
                   category={product.category}
-                  rating={product.rating}
-                  reviews={product.reviews}
+                  rating={product.rating ?? 0}
+                  reviews={Array.isArray(product.reviews) ? product.reviews : []}
                 />
               </Grid>
             ))}
           </Grid>
-          <Box display="flex" justifyContent="flex-start" mt={4}>
+          <Box display="flex" justifyContent={isSmallScreen ? 'center' : 'flex-start'} mt={4}>
             <Pagination
               count={Math.ceil((filteredProducts?.length || 0) / itemsPerPage)}
               page={page}

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useGetProductsQuery, useDeleteProductMutation } from "../api/apiSlice";
 import {
   CircularProgress,
   Table,
@@ -26,54 +25,12 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { makeStyles } from "@mui/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateProduct from "./CreateProduct";
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  tableHeader: {
-    backgroundColor: "#f5f5f5",
-  },
-  tableCell: {
-    display: "flex",
-    alignItems: "center",
-  },
-  productImage: {
-    width: "60px",
-    height: "60px",
-    marginRight: "10px",
-    objectFit: "cover",
-    borderRadius: "50%",
-    boxShadow: "4px"
-  },
-  actions: {
-    display: "flex",
-    alignItems: "center",
-  },
-  switch: {
-    marginRight: "10px",
-  },
-  menuButton: {
-    marginLeft: "auto",
-  },
-  statusPublished: {
-    color: "green",
-  },
-  statusInactive: {
-    color: "gray",
-  },
-  progressContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  },
-});
+import { useGetProductsQuery, useDeleteProductMutation } from "../api/apiSlice";
+import { useStyles } from './ProductList.style'
 
 const ProductList: React.FC = () => {
   const classes = useStyles();
@@ -86,6 +43,7 @@ const ProductList: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+
 
   // Pagination state
   const [page, setPage] = useState(0);

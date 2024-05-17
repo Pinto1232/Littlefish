@@ -1,54 +1,9 @@
 import React from 'react';
-import { Box, Typography, TextField, Button, InputAdornment } from '@mui/material';
-import { styled } from '@mui/system';
+import { Typography, TextField, Button, InputAdornment } from '@mui/material';
+import { JumbotronContainer, OverlayText, SearchContainer} from './Jumbotron.style';
 import SearchIcon from '@mui/icons-material/Search';
+import {JumbotronProps} from './Jumbotron.types'
 
-const JumbotronContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%', 
-  height: '46vh',
-  marginBottom: theme.spacing(10),
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-  color: '#fff',
-  textAlign: 'center',
-}));
-
-const OverlayText = styled(Typography)(({ theme }) => ({
-  fontSize: '10rem',
-  fontWeight: 'bold',
-  opacity: 0.1,
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '5rem',
-  },
-  [theme.breakpoints.down('xs')]: {
-    fontSize: '3rem',
-  },
-}));
-
-const SearchContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginTop: theme.spacing(5),
-  backgroundColor: '#fff',
-  borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(2),
-  width: '100%',
-  maxWidth: '900px',
-  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    padding: theme.spacing(0.5),
-  },
-}));
-
-interface JumbotronProps {
-  backgroundImage: string;
-}
 
 const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage }) => {
   return (
@@ -60,7 +15,7 @@ const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage }) => {
       <SearchContainer>
         <TextField
           variant="outlined"
-          placeholder="Search on Stuffsus"
+          placeholder="Search..."
           fullWidth
           sx={{
             marginBottom: { xs: 1, sm: 0 },

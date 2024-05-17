@@ -3,10 +3,10 @@ import { useCreateProductMutation } from "../api/apiSlice";
 import {
   Button,
   TextField,
-  CircularProgress,
   Typography,
   Paper,
   Grid,
+  Box,
 } from "@mui/material";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Product } from "../products/types/product.types";
@@ -235,7 +235,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <CircularProgress size={24} />
+                  <Box></Box>
                 ) : product ? (
                   "Edit Product"
                 ) : (
