@@ -31,7 +31,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+    <Dialog open={open}  onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogContent>
         <Box
           sx={{
@@ -97,8 +97,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
             <Button
               fullWidth
               variant="contained"
-              color="primary"
-              sx={{ mt: 2 }}
+              sx={{ mt: 2 , backgroundColor: '#000', borderRadius: 5}}
             >
               {tab === 0 ? "Log in" : "Register"}
             </Button>
