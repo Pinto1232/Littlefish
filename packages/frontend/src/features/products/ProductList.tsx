@@ -44,11 +44,12 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   productImage: {
-    width: "90px",
-    height: "90px",
+    width: "60px",
+    height: "60px",
     marginRight: "10px",
     objectFit: "cover",
-    borderRadius: "4px",
+    borderRadius: "50%",
+    boxShadow: "4px"
   },
   actions: {
     display: "flex",

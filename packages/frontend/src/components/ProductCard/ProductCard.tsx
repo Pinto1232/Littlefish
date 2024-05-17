@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               left: 0,
               width: "100%",
               height: "200px",
-              objectFit: "cover",
+              objectFit: "contain",
               cursor: "pointer",
             }}
             whileHover={{ scale: 1.05 }}
@@ -61,7 +61,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
               position: "absolute",
               top: 8,
               right: 8,
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              backgroundColor: "blue",
+              color: '#fff',
             }}
           />
         </ImageWrapper>
