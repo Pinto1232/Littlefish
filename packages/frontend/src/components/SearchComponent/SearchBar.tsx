@@ -8,22 +8,28 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 const SearchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  backgroundColor: theme.palette.background.paper,
   borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(1),
   width: "98.6%",
   boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+  backgroundColor: "#000",
 }));
 
 const SearchInput = styled(InputBase)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   flex: 1,
+  color: "#000",
+  backgroundColor: "#fff",
+  padding: 3,
+  borderRadius: 8,
+  margin: 3
+
 }));
 
 const Shortcut = styled(Typography)(({ theme }) => ({
   marginLeft: theme.spacing(2),
   fontSize: 14,
-  color: theme.palette.text.secondary,
+  color: "#fff",
 }));
 
 const UserProfile = styled(Box)(({ theme }) => ({
