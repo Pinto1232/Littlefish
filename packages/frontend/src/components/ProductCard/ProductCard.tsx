@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               top: 0,
               left: 0,
               width: "100%",
-              height: "200px",
+              height: "214px",
               objectFit: "contain",
               cursor: "pointer",
             }}
@@ -62,12 +62,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
               top: 8,
               right: 8,
               backgroundColor: "blue",
-              color: '#fff',
+              color: "#fff",
             }}
           />
         </ImageWrapper>
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+          >
             {name}
           </Typography>
           <Box display="flex" alignItems="center" mb={1}>
@@ -76,7 +81,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {rating} ({reviews} Reviews)
             </Typography>
           </Box>
-          <Typography variant="h6" color="text.primary" sx={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+          <Typography
+            variant="h6"
+            color="text.primary"
+            sx={{ fontSize: "1.5rem", fontWeight: "bold" }}
+          >
             R{price}
           </Typography>
           <Typography variant="body2" color="text.secondary" mt={1}>
@@ -102,11 +111,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 id,
                 image,
                 name,
-                brand: brand?? "",
+                brand: brand ?? "",
                 price: Number(price),
                 category,
-                rating: rating?? 0,
-                reviews: reviews?? 0,
+                rating: rating ?? 0,
+                reviews: reviews ?? 0,
                 quantity: 1,
               })
             }
@@ -139,8 +148,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           name,
           price,
           category,
-          rating: rating?? 0,
-          reviews: reviews?? 0,
+          rating: rating ?? 0,
+          reviews: reviews ?? 0,
         }}
       />
     </>

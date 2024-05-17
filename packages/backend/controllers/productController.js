@@ -1,10 +1,9 @@
-const Product = require('../models/Product');
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
+const Product = require("../models/Product");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
-
-const uploadDir = path.join(__dirname, '../uploads');
+const uploadDir = path.join(__dirname, "../uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
   console.log(`Created directory: ${uploadDir}`);
@@ -12,52 +11,52 @@ if (!fs.existsSync(uploadDir)) {
   console.log(`Directory already exists: ${uploadDir}`);
 }
 
-
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     console.log(`Saving file to: ${uploadDir}`);
-    cb(null, uploadDir);  
+    cb(null, uploadDir);
   },
-  filename: function(req, file, cb) {
-    const filename = new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname;
+  filename: function (req, file, cb) {
+    const filename =
+      new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname;
     console.log(`Generated filename: ${filename}`);
     cb(null, filename);
-  }
+  },
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
+  if (file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {
-    cb(new Error('Not an image! Please upload only images.'), false);
+    cb(new Error("Not an image! Please upload only images."), false);
   }
 };
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-exports.uploadImage = upload.single('image');
+exports.uploadImage = upload.single("image");
 
 exports.createProduct = async (req, res) => {
   try {
-    console.log('Request Body:', req.body);
-    console.log('File:', req.file);
+    console.log("Request Body:", req.body);
+    console.log("File:", req.file);
 
-    if (typeof req.body.price === 'string') {
+    if (typeof req.body.price === "string") {
       req.body.price = parseFloat(req.body.price.replace(/[^0-9.-]+/g, ""));
     }
 
-    const url = req.protocol + '://' + req.get('host');
+    const url = req.protocol + "://" + req.get("host");
     const product = new Product({
       ...req.body,
-      imageUrl: req.file ? url + '/uploads/' + req.file.filename : undefined  
+      imageUrl: req.file ? url + "/uploads/" + req.file.filename : undefined,
     });
 
     await product.save();
-    console.log('Product Created:', product);
+    console.log("Product Created:", product);
 
     res.status(201).send(product);
   } catch (error) {
-    console.error('Error Creating Product:', error);
+    console.error("Error Creating Product:", error);
     res.status(400).send(error);
   }
 };
@@ -79,16 +78,20 @@ console.log("Product Controller Loaded");
 exports.updateProduct = async (req, res) => {
   console.log("Updating Product:", req.params.id);
   try {
-    if (typeof req.body.price === 'string') {
+    if (typeof req.body.price === "string") {
       req.body.price = parseFloat(req.body.price.replace(/[^0-9.-]+/g, ""));
     }
 
-    const url = req.protocol + '://' + req.get('host');
+    const url = req.protocol + "://" + req.get("host");
     const updatedData = {
       ...req.body,
-      imageUrl: req.file ? url + '/uploads/' + req.file.filename : undefined 
+      imageUrl: req.file ? url + "/uploads/" + req.file.filename : undefined,
     };
-    const product = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      updatedData,
+      { new: true }
+    );
     if (!product) {
       return res.status(404).send();
     }
@@ -104,7 +107,7 @@ exports.deleteProduct = async (req, res) => {
     if (!product) {
       return res.status(404).send();
     }
-    res.send({ message: 'Product deleted' });
+    res.send({ message: "Product deleted" });
   } catch (error) {
     res.status(500).send(error);
   }
