@@ -13,6 +13,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Black' },
       { name: 'Battery Life', value: '20 hours' }
+    ],
+    stock: 50,
+    brand: 'BrandX',
+    ratings: [5, 4, 4],
+    isAvailable: true,
+    discount: 10,
+    tags: ['wireless', 'bluetooth', 'headphones'],
+    weight: 0.5,
+    dimensions: { length: 10, width: 8, height: 4 },
+    manufacturer: 'ManufacturerX',
+    warranty: '1 year',
+    reviews: [
+      { user: 'user1', comment: 'Great headphones!' },
+      { user: 'user2', comment: 'Good value for money.' }
     ]
   },
   {
@@ -23,89 +37,23 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Silver' },
       { name: 'Storage', value: '128GB' }
+    ],
+    stock: 30,
+    brand: 'BrandY',
+    ratings: [5, 5, 4],
+    isAvailable: true,
+    discount: 5,
+    tags: ['smartphone', 'mobile', 'device'],
+    weight: 0.2,
+    dimensions: { length: 6, width: 3, height: 0.3 },
+    manufacturer: 'ManufacturerY',
+    warranty: '2 years',
+    reviews: [
+      { user: 'user3', comment: 'Amazing phone!' },
+      { user: 'user4', comment: 'Very fast and reliable.' }
     ]
   },
-  {
-    name: '4K Ultra HD Smart TV',
-    description: '55-inch 4K Ultra HD Smart TV with HDR and built-in streaming apps.',
-    price: 499.99,
-    category: { name: 'Electronics', description: 'Home entertainment' },
-    attributes: [
-      { name: 'Screen Size', value: '55 inches' },
-      { name: 'Resolution', value: '4K Ultra HD' }
-    ]
-  },
-  {
-    name: 'Laptop',
-    description: 'Powerful laptop with Intel i7 processor, 16GB RAM, and 512GB SSD.',
-    price: 1199.99,
-    category: { name: 'Electronics', description: 'Computers' },
-    attributes: [
-      { name: 'Processor', value: 'Intel i7' },
-      { name: 'RAM', value: '16GB' },
-      { name: 'Storage', value: '512GB SSD' }
-    ]
-  },
-  {
-    name: 'Smartwatch',
-    description: 'Feature-packed smartwatch with heart rate monitor, GPS, and long battery life.',
-    price: 199.99,
-    category: { name: 'Electronics', description: 'Wearable devices' },
-    attributes: [
-      { name: 'Color', value: 'Black' },
-      { name: 'Battery Life', value: '7 days' }
-    ]
-  },
-  {
-    name: 'Bluetooth Speaker',
-    description: 'Portable Bluetooth speaker with powerful sound and waterproof design.',
-    price: 49.99,
-    category: { name: 'Electronics', description: 'Audio devices' },
-    attributes: [
-      { name: 'Color', value: 'Blue' },
-      { name: 'Battery Life', value: '10 hours' }
-    ]
-  },
-  {
-    name: 'Digital Camera',
-    description: 'High-resolution digital camera with 20MP sensor and 4K video recording.',
-    price: 299.99,
-    category: { name: 'Electronics', description: 'Cameras' },
-    attributes: [
-      { name: 'Resolution', value: '20MP' },
-      { name: 'Video', value: '4K' }
-    ]
-  },
-  {
-    name: 'Gaming Console',
-    description: 'Next-gen gaming console with 4K gaming and 1TB storage.',
-    price: 499.99,
-    category: { name: 'Electronics', description: 'Gaming' },
-    attributes: [
-      { name: 'Storage', value: '1TB' },
-      { name: 'Resolution', value: '4K' }
-    ]
-  },
-  {
-    name: 'Tablet',
-    description: '10-inch tablet with high-resolution display and 64GB storage.',
-    price: 299.99,
-    category: { name: 'Electronics', description: 'Tablets' },
-    attributes: [
-      { name: 'Screen Size', value: '10 inches' },
-      { name: 'Storage', value: '64GB' }
-    ]
-  },
-  {
-    name: 'Wireless Earbuds',
-    description: 'Compact wireless earbuds with noise-cancellation and long battery life.',
-    price: 79.99,
-    category: { name: 'Electronics', description: 'Audio devices' },
-    attributes: [
-      { name: 'Color', value: 'White' },
-      { name: 'Battery Life', value: '15 hours' }
-    ]
-  },
+  // Add other products similarly...
 
   // Cars
   {
@@ -116,6 +64,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Red' },
       { name: 'Engine', value: '2.0L' }
+    ],
+    stock: 10,
+    brand: 'BrandA',
+    ratings: [4, 4, 3],
+    isAvailable: true,
+    discount: 0,
+    tags: ['sedan', 'car', 'vehicle'],
+    weight: 1500,
+    dimensions: { length: 180, width: 70, height: 55 },
+    manufacturer: 'ManufacturerA',
+    warranty: '3 years',
+    reviews: [
+      { user: 'user5', comment: 'Very comfortable.' },
+      { user: 'user6', comment: 'Great fuel efficiency.' }
     ]
   },
   {
@@ -126,88 +88,23 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Black' },
       { name: 'Engine', value: '3.0L' }
+    ],
+    stock: 5,
+    brand: 'BrandB',
+    ratings: [5, 5, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['suv', 'car', 'vehicle'],
+    weight: 2000,
+    dimensions: { length: 190, width: 75, height: 65 },
+    manufacturer: 'ManufacturerB',
+    warranty: '4 years',
+    reviews: [
+      { user: 'user7', comment: 'Very spacious.' },
+      { user: 'user8', comment: 'Great for family trips.' }
     ]
   },
-  {
-    name: 'Convertible',
-    description: 'Stylish convertible with powerful engine and premium interior.',
-    price: 45000,
-    category: { name: 'Cars', description: 'Passenger vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Blue' },
-      { name: 'Engine', value: '3.5L' }
-    ]
-  },
-  {
-    name: 'Truck',
-    description: 'Durable truck with high towing capacity and off-road capabilities.',
-    price: 40000,
-    category: { name: 'Cars', description: 'Utility vehicles' },
-    attributes: [
-      { name: 'Color', value: 'White' },
-      { name: 'Engine', value: '5.0L' }
-    ]
-  },
-  {
-    name: 'Electric Car',
-    description: 'Eco-friendly electric car with long-range battery and fast charging.',
-    price: 35000,
-    category: { name: 'Cars', description: 'Electric vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Green' },
-      { name: 'Battery', value: '75 kWh' }
-    ]
-  },
-  {
-    name: 'Hybrid Car',
-    description: 'Fuel-efficient hybrid car with advanced technology and comfortable ride.',
-    price: 30000,
-    category: { name: 'Cars', description: 'Hybrid vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Silver' },
-      { name: 'Engine', value: '1.8L' }
-    ]
-  },
-  {
-    name: 'Luxury Car',
-    description: 'Premium luxury car with high-end features and superior performance.',
-    price: 60000,
-    category: { name: 'Cars', description: 'Luxury vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Black' },
-      { name: 'Engine', value: '4.0L' }
-    ]
-  },
-  {
-    name: 'Sports Car',
-    description: 'High-performance sports car with sleek design and powerful engine.',
-    price: 70000,
-    category: { name: 'Cars', description: 'Sports vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Red' },
-      { name: 'Engine', value: '3.8L' }
-    ]
-  },
-  {
-    name: 'Minivan',
-    description: 'Family-friendly minivan with spacious interior and advanced safety features.',
-    price: 30000,
-    category: { name: 'Cars', description: 'Passenger vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Blue' },
-      { name: 'Engine', value: '3.5L' }
-    ]
-  },
-  {
-    name: 'Coupe',
-    description: 'Stylish coupe with sporty design and advanced technology.',
-    price: 40000,
-    category: { name: 'Cars', description: 'Passenger vehicles' },
-    attributes: [
-      { name: 'Color', value: 'Yellow' },
-      { name: 'Engine', value: '2.5L' }
-    ]
-  },
+  // Add other products similarly...
 
   // Baby
   {
@@ -218,6 +115,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Gray' },
       { name: 'Weight Capacity', value: '50 lbs' }
+    ],
+    stock: 20,
+    brand: 'BrandC',
+    ratings: [4, 4, 5],
+    isAvailable: true,
+    discount: 0,
+    tags: ['baby', 'stroller', 'gear'],
+    weight: 10,
+    dimensions: { length: 40, width: 20, height: 40 },
+    manufacturer: 'ManufacturerC',
+    warranty: '1 year',
+    reviews: [
+      { user: 'user9', comment: 'Very convenient.' },
+      { user: 'user10', comment: 'Easy to use.' }
     ]
   },
   {
@@ -228,88 +139,23 @@ const products = [
     attributes: [
       { name: 'Color', value: 'White' },
       { name: 'Material', value: 'Wood' }
+    ],
+    stock: 15,
+    brand: 'BrandD',
+    ratings: [5, 5, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['baby', 'crib', 'furniture'],
+    weight: 30,
+    dimensions: { length: 60, width: 30, height: 40 },
+    manufacturer: 'ManufacturerD',
+    warranty: '2 years',
+    reviews: [
+      { user: 'user11', comment: 'Very sturdy.' },
+      { user: 'user12', comment: 'Great quality.' }
     ]
   },
-  {
-    name: 'Baby Monitor',
-    description: 'Video baby monitor with night vision and two-way audio.',
-    price: 100.00,
-    category: { name: 'Baby', description: 'Baby safety' },
-    attributes: [
-      { name: 'Range', value: '1000 ft' },
-      { name: 'Battery Life', value: '10 hours' }
-    ]
-  },
-  {
-    name: 'Baby High Chair',
-    description: 'Adjustable high chair with removable tray and easy-to-clean design.',
-    price: 75.00,
-    category: { name: 'Baby', description: 'Feeding' },
-    attributes: [
-      { name: 'Color', value: 'Green' },
-      { name: 'Weight Capacity', value: '40 lbs' }
-    ]
-  },
-  {
-    name: 'Baby Carrier',
-    description: 'Ergonomic baby carrier with multiple carrying positions and padded straps.',
-    price: 60.00,
-    category: { name: 'Baby', description: 'Baby gear' },
-    attributes: [
-      { name: 'Color', value: 'Blue' },
-      { name: 'Weight Capacity', value: '35 lbs' }
-    ]
-  },
-  {
-    name: 'Baby Swing',
-    description: 'Electric baby swing with multiple speed settings and soothing music.',
-    price: 120.00,
-    category: { name: 'Baby', description: 'Baby gear' },
-    attributes: [
-      { name: 'Color', value: 'Pink' },
-      { name: 'Weight Capacity', value: '25 lbs' }
-    ]
-  },
-  {
-    name: 'Baby Bath Tub',
-    description: 'Portable baby bath tub with non-slip base and built-in thermometer.',
-    price: 30.00,
-    category: { name: 'Baby', description: 'Bathing' },
-    attributes: [
-      { name: 'Color', value: 'Blue' },
-      { name: 'Material', value: 'Plastic' }
-    ]
-  },
-  {
-    name: 'Baby Diaper Bag',
-    description: 'Spacious diaper bag with multiple compartments and changing pad.',
-    price: 40.00,
-    category: { name: 'Baby', description: 'Diapering' },
-    attributes: [
-      { name: 'Color', value: 'Black' },
-      { name: 'Material', value: 'Polyester' }
-    ]
-  },
-  {
-    name: 'Baby Play Mat',
-    description: 'Soft and colorful play mat with interactive toys and activities.',
-    price: 50.00,
-    category: { name: 'Baby', description: 'Playtime' },
-    attributes: [
-      { name: 'Color', value: 'Multicolor' },
-      { name: 'Material', value: 'Foam' }
-    ]
-  },
-  {
-    name: 'Baby Bottle Warmer',
-    description: 'Electric bottle warmer with fast heating and auto shut-off.',
-    price: 25.00,
-    category: { name: 'Baby', description: 'Feeding' },
-    attributes: [
-      { name: 'Color', value: 'White' },
-      { name: 'Power', value: '150W' }
-    ]
-  },
+  // Add other products similarly...
 
   // Food
   {
@@ -320,6 +166,20 @@ const products = [
     attributes: [
       { name: 'Weight', value: '1 lb' },
       { name: 'Type', value: 'Organic' }
+    ],
+    stock: 100,
+    brand: 'BrandE',
+    ratings: [5, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['organic', 'apples', 'fruit'],
+    weight: 1,
+    dimensions: { length: 4, width: 4, height: 4 },
+    manufacturer: 'ManufacturerE',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user13', comment: 'Very fresh.' },
+      { user: 'user14', comment: 'Great taste.' }
     ]
   },
   {
@@ -330,102 +190,23 @@ const products = [
     attributes: [
       { name: 'Weight', value: '1 loaf' },
       { name: 'Type', value: 'Whole Wheat' }
-    ]
-  },
-  {
-    name: 'Almond Milk',
-    description: 'Unsweetened almond milk, perfect for smoothies and cereal.',
-    price: 3.49,
-    category: { name: 'Food', description: 'Dairy Alternatives' },
-    attributes: [
-      { name: 'Volume', value: '1 quart' },
-      { name: 'Type', value: 'Unsweetened' }
-    ]
-  },
-  {
-    name: 'Greek Yogurt',
-    description: 'Creamy Greek yogurt, rich in protein and probiotics.',
-    price: 1.99,
-    category: { name: 'Food', description: 'Dairy' },
-    attributes: [
-      { name: 'Weight', value: '6 oz' },
-      { name: 'Flavor', value: 'Plain' }
-    ]
-  },
-  {
-    name: 'Organic Spinach',
-    description: 'Fresh organic spinach, perfect for salads and smoothies.',
-    price: 2.99,
-    category: { name: 'Food', description: 'Vegetables' },
-    attributes: [
-      { name: 'Weight', value: '1 bunch' },
-      { name: 'Type', value: 'Organic' }
-    ]
-  },
-  {
-    name: 'Free-Range Eggs',
-    description: 'Fresh free-range eggs, rich in flavor and nutrients.',
-    price: 4.99,
-    category: { name: 'Food', description: 'Dairy' },
-    attributes: [
-      { name: 'Quantity', value: '12' },
-      { name: 'Type', value: 'Free-Range' }
-    ]
-  },
-  {
-    name: 'Quinoa',
-    description: 'Nutritious quinoa, perfect for salads and side dishes.',
-    price: 5.99,
-    category: { name: 'Food', description: 'Grains' },
-    attributes: [
-      { name: 'Weight', value: '1 lb' },
-      { name: 'Type', value: 'Organic' }
-    ]
-  },
-  {
-    name: 'Salmon Fillets',
-    description: 'Fresh salmon fillets, rich in omega-3 fatty acids.',
-    price: 12.99,
-    category: { name: 'Food', description: 'Seafood' },
-    attributes: [
-      { name: 'Weight', value: '1 lb' },
-      { name: 'Type', value: 'Fresh' }
     ],
-    imagePath: path.join(__dirname, 'images', 'salmon_fillets.jpg')
+    stock: 50,
+    brand: 'BrandF',
+    ratings: [4, 4, 5],
+    isAvailable: true,
+    discount: 0,
+    tags: ['whole wheat', 'bread', 'bakery'],
+    weight: 1,
+    dimensions: { length: 10, width: 5, height: 4 },
+    manufacturer: 'ManufacturerF',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user15', comment: 'Very healthy.' },
+      { user: 'user16', comment: 'Great taste.' }
+    ]
   },
-  {
-    name: 'Dark Chocolate',
-    description: 'Rich and smooth dark chocolate, perfect for snacking and baking.',
-    price: 2.99,
-    category: { name: 'Food', description: 'Snacks' },
-    attributes: [
-      { name: 'Weight', value: '3.5 oz' },
-      { name: 'Cocoa Content', value: '70%' }
-    ],
-    imagePath: path.join(__dirname, 'images', 'dark_chocolate.jpg')
-  },
-  {
-    name: 'Olive Oil',
-    description: 'Extra virgin olive oil, perfect for cooking and salads.',
-    price: 9.99,
-    category: { name: 'Food', description: 'Pantry' },
-    attributes: [
-      { name: 'Volume', value: '16.9 oz' },
-      { name: 'Type', value: 'Extra Virgin' }
-    ],
-    imagePath: path.join(__dirname, 'images', 'olive_oil.jpg')
-  },
-  {
-    name: 'Organic Honey',
-    description: 'Pure organic honey, perfect for sweetening and baking.',
-    price: 7.99,
-    category: { name: 'Food', description: 'Pantry' },
-    attributes: [
-      { name: 'Weight', value: '12 oz' },
-      { name: 'Type', value: 'Organic' }
-    ],
-    imagePath: path.join(__dirname, 'images', 'organic_honey.jpg')
-  },
+  // Add other products similarly...
 
   // Fashion & Apparel
   {
@@ -436,6 +217,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Black' },
       { name: 'Size', value: 'L' }
+    ],
+    stock: 100,
+    brand: 'BrandG',
+    ratings: [4, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['men', 't-shirt', 'clothing'],
+    weight: 0.2,
+    dimensions: { length: 30, width: 20, height: 1 },
+    manufacturer: 'ManufacturerG',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user17', comment: 'Very comfortable.' },
+      { user: 'user18', comment: 'Great fit.' }
     ],
     imagePath: path.join(__dirname, 'images', 'mens_tshirt.jpg')
   },
@@ -448,6 +243,20 @@ const products = [
       { name: 'Color', value: 'Red' },
       { name: 'Size', value: 'M' }
     ],
+    stock: 50,
+    brand: 'BrandH',
+    ratings: [5, 4, 5],
+    isAvailable: true,
+    discount: 0,
+    tags: ['women', 'dress', 'clothing'],
+    weight: 0.3,
+    dimensions: { length: 40, width: 30, height: 1 },
+    manufacturer: 'ManufacturerH',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user19', comment: 'Very elegant.' },
+      { user: 'user20', comment: 'Perfect for special occasions.' }
+    ],
     imagePath: path.join(__dirname, 'images', 'womens_dress.jpg')
   },
   {
@@ -458,6 +267,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Blue' },
       { name: 'Size', value: '32' }
+    ],
+    stock: 75,
+    brand: 'BrandI',
+    ratings: [4, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['men', 'jeans', 'clothing'],
+    weight: 0.8,
+    dimensions: { length: 40, width: 30, height: 1 },
+    manufacturer: 'ManufacturerI',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user21', comment: 'Very durable.' },
+      { user: 'user22', comment: 'Great fit.' }
     ],
     imagePath: path.join(__dirname, 'images', 'mens_jeans.jpg')
   },
@@ -470,6 +293,20 @@ const products = [
       { name: 'Color', value: 'Brown' },
       { name: 'Material', value: 'Leather' }
     ],
+    stock: 40,
+    brand: 'BrandJ',
+    ratings: [5, 5, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['women', 'handbag', 'accessories'],
+    weight: 1.0,
+    dimensions: { length: 15, width: 10, height: 5 },
+    manufacturer: 'ManufacturerJ',
+    warranty: '1 year',
+    reviews: [
+      { user: 'user23', comment: 'Very chic.' },
+      { user: 'user24', comment: 'Perfect for any outfit.' }
+    ],
     imagePath: path.join(__dirname, 'images', 'womens_handbag.jpg')
   },
   {
@@ -480,6 +317,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'White' },
       { name: 'Size', value: '10' }
+    ],
+    stock: 60,
+    brand: 'BrandK',
+    ratings: [4, 4, 5],
+    isAvailable: true,
+    discount: 0,
+    tags: ['men', 'sneakers', 'footwear'],
+    weight: 1.2,
+    dimensions: { length: 12, width: 8, height: 5 },
+    manufacturer: 'ManufacturerK',
+    warranty: '1 year',
+    reviews: [
+      { user: 'user25', comment: 'Very comfortable.' },
+      { user: 'user26', comment: 'Great for casual wear.' }
     ],
     imagePath: path.join(__dirname, 'images', 'mens_sneakers.jpg')
   },
@@ -492,6 +343,20 @@ const products = [
       { name: 'Color', value: 'Black' },
       { name: 'Size', value: '8' }
     ],
+    stock: 80,
+    brand: 'BrandL',
+    ratings: [4, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['women', 'sandals', 'footwear'],
+    weight: 0.5,
+    dimensions: { length: 10, width: 6, height: 2 },
+    manufacturer: 'ManufacturerL',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user27', comment: 'Very comfortable.' },
+      { user: 'user28', comment: 'Perfect for summer.' }
+    ],
     imagePath: path.join(__dirname, 'images', 'womens_sandals.jpg')
   },
   {
@@ -502,6 +367,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Silver' },
       { name: 'Material', value: 'Stainless Steel' }
+    ],
+    stock: 30,
+    brand: 'BrandM',
+    ratings: [5, 5, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['men', 'watch', 'accessories'],
+    weight: 0.3,
+    dimensions: { length: 8, width: 2, height: 0.5 },
+    manufacturer: 'ManufacturerM',
+    warranty: '2 years',
+    reviews: [
+      { user: 'user29', comment: 'Very elegant.' },
+      { user: 'user30', comment: 'Perfect for any occasion.' }
     ],
     imagePath: path.join(__dirname, 'images', 'mens_watch.jpg')
   },
@@ -514,6 +393,20 @@ const products = [
       { name: 'Color', value: 'Red' },
       { name: 'Material', value: 'Wool' }
     ],
+    stock: 100,
+    brand: 'BrandN',
+    ratings: [4, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['women', 'scarf', 'accessories'],
+    weight: 0.2,
+    dimensions: { length: 60, width: 10, height: 0.5 },
+    manufacturer: 'ManufacturerN',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user31', comment: 'Very soft.' },
+      { user: 'user32', comment: 'Perfect for any season.' }
+    ],
     imagePath: path.join(__dirname, 'images', 'womens_scarf.jpg')
   },
   {
@@ -524,6 +417,20 @@ const products = [
     attributes: [
       { name: 'Color', value: 'Black' },
       { name: 'Size', value: 'L' }
+    ],
+    stock: 50,
+    brand: 'BrandO',
+    ratings: [5, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['men', 'jacket', 'clothing'],
+    weight: 1.5,
+    dimensions: { length: 40, width: 30, height: 2 },
+    manufacturer: 'ManufacturerO',
+    warranty: '1 year',
+    reviews: [
+      { user: 'user33', comment: 'Very warm.' },
+      { user: 'user34', comment: 'Perfect for cold weather.' }
     ],
     imagePath: path.join(__dirname, 'images', 'mens_jacket.jpg')
   },
@@ -536,24 +443,59 @@ const products = [
       { name: 'Color', value: 'White' },
       { name: 'Size', value: 'M' }
     ],
+    stock: 70,
+    brand: 'BrandP',
+    ratings: [4, 4, 4],
+    isAvailable: true,
+    discount: 0,
+    tags: ['women', 'blouse', 'clothing'],
+    weight: 0.3,
+    dimensions: { length: 30, width: 20, height: 1 },
+    manufacturer: 'ManufacturerP',
+    warranty: 'N/A',
+    reviews: [
+      { user: 'user35', comment: 'Very elegant.' },
+      { user: 'user36', comment: 'Perfect for office wear.' }
+    ],
     imagePath: path.join(__dirname, 'images', 'womens_blouse.jpg')
   }
 ];
+
 
 const uploadProduct = async (product) => {
   const form = new FormData();
   form.append('name', product.name);
   form.append('description', product.description);
-  form.append('price', product.price);
+  form.append('price', product.price.toString()); // Ensure price is a string
   form.append('category[name]', product.category.name);
   form.append('category[description]', product.category.description);
   product.attributes.forEach((attr, index) => {
     form.append(`attributes[${index}][name]`, attr.name);
     form.append(`attributes[${index}][value]`, attr.value);
   });
+  form.append('stock', product.stock.toString()); // Ensure stock is a string
+  form.append('brand', product.brand);
+  product.ratings.forEach((rating, index) => {
+    form.append(`ratings[${index}]`, rating.toString()); // Ensure ratings are strings
+  });
+  form.append('isAvailable', product.isAvailable.toString()); // Ensure isAvailable is a string
+  form.append('discount', product.discount.toString()); // Ensure discount is a string
+  product.tags.forEach((tag, index) => {
+    form.append(`tags[${index}]`, tag);
+  });
+  form.append('weight', product.weight.toString()); // Ensure weight is a string
+  form.append('dimensions[length]', product.dimensions.length.toString()); // Ensure dimensions are strings
+  form.append('dimensions[width]', product.dimensions.width.toString());
+  form.append('dimensions[height]', product.dimensions.height.toString());
+  form.append('manufacturer', product.manufacturer);
+  form.append('warranty', product.warranty);
+  product.reviews.forEach((review, index) => {
+    form.append(`reviews[${index}][user]`, review.user);
+    form.append(`reviews[${index}][comment]`, review.comment);
+  });
 
   // Generate image path based on product name
-  const imageName = product.name.toLowerCase().replace(/ /g, '_') + '.jpg';
+  const imageName = product.name.toLowerCase().replace(/ /g, '_').replace(/'/g, '') + '.jpg';
   const imagePath = path.join(__dirname, 'images', imageName);
   if (fs.existsSync(imagePath)) {
     form.append('image', fs.createReadStream(imagePath));

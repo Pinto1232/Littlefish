@@ -1,4 +1,3 @@
-// Enhanced styling for ProductCard.tsx
 import React, { useState } from "react";
 import {
   CardContent,
@@ -15,6 +14,7 @@ import {
   ImageWrapper,
 } from "./ProductCardImports";
 import { ProductCardProps } from "./ProductCardInterfaces";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 const MotionImg = motion.img;
 
@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   category,
   rating,
-  reviews,
+  reviews = [],
   brand,
   description,
 }) => {
@@ -42,6 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <MotionImg
             src={image}
             alt={name}
+            loading="lazy" // Add lazy loading attribute
             style={{
               position: "absolute",
               top: 0,
@@ -71,14 +72,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
             gutterBottom
             variant="h6"
             component="div"
-            sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+            sx={{ fontWeight: "bold", fontSize: "1.2rem", mt: "-40px" }}
           >
             {name}
           </Typography>
-          <Box display="flex" alignItems="center" mb={1}>
+          <Box display="flex" alignItems="center">
             <StarIcon fontSize="small" color="primary" />
             <Typography variant="body2" color="text.secondary" ml={0.5}>
-              {rating} ({reviews} Reviews)
+              {rating} ({reviews.length} Reviews)
             </Typography>
           </Box>
           <Typography
@@ -88,68 +89,87 @@ const ProductCard: React.FC<ProductCardProps> = ({
           >
             R{price}
           </Typography>
-          <Typography variant="body2" color="text.secondary" mt={1}>
+        </CardContent>
+
+        <Box
+          sx={{
+            backgroundColor: "#000",
+            color: "#fff",
+            p: "13px",
+            borderRadius: "3px",
+          }}
+        >
+          <Typography variant="body2" color="#fff" mt={1}>
             {description}
           </Typography>
-        </CardContent>
-        <CardActions sx={{ justifyContent: "space-between" }}>
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              width: "120px",
-              borderRadius: "50px",
-              backgroundColor: "white",
-              color: "black",
-              borderColor: "black",
-              "&:hover": {
-                backgroundColor: "lightgray",
-              },
-            }}
-            onClick={() =>
-              addToCart({
-                id,
-                image,
-                name,
-                brand: brand ?? "",
-                price: Number(price),
-                category,
-                rating: rating ?? 0,
-                reviews: reviews ?? 0,
-                quantity: 1,
-              })
-            }
-          >
-            Add to Cart
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            sx={{
-              width: "100px",
-              borderRadius: "50px",
-              backgroundColor: "black",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "darkgray",
-              },
-            }}
-            onClick={handleOpenModal}
-          >
-            Buy Now
-          </Button>
-        </CardActions>
+
+          <CardActions sx={{ justifyContent: "space-between" }}>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                width: "120px",
+                borderRadius: "50px",
+                backgroundColor: "white",
+                whiteSpace: "nowrap	",
+                color: "black",
+                borderColor: "black",
+                display: "flex",
+                fontSize: "12px",
+                justifyContent: "center",
+                px: "7px",
+                "&:hover": {
+                  backgroundColor: "lightgray",
+                },
+              }}
+              onClick={() =>
+                addToCart({
+                  id,
+                  image,
+                  name,
+                  brand: brand ?? "",
+                  price: Number(price),
+                  category,
+                  rating: rating ?? 0,
+                  reviews: reviews.length ?? 0,
+                  quantity: 1,
+                })
+              }
+            >
+              <ShoppingBasketIcon fontSize="small" sx={{ marginRight: 0.2 }} />
+              Add to Cart
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              sx={{
+                width: "100px",
+                borderRadius: "50px",
+                backgroundColor: "blue",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "darkgray",
+                },
+              }}
+              onClick={handleOpenModal}
+            >
+              Buy Now
+            </Button>
+          </CardActions>
+        </Box>
       </StyledCard>
+
+      {/* Product Modal rendering */}
       <ProductModal
         open={modalOpen}
         onClose={handleCloseModal}
         product={{
           image,
           name,
-          price,
+          price: price.toString(),
           category,
           rating: rating ?? 0,
-          reviews: reviews ?? 0,
+          reviews: reviews.length ?? 0,
         }}
       />
     </>
