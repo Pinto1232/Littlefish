@@ -1,4 +1,4 @@
 export interface JumbotronProps {
-    backgroundImage: string;
-  }
-  
+  backgroundImage: string;
+  onSearch: (query: string) => void;
+}

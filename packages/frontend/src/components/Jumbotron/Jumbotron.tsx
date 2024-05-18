@@ -1,11 +1,26 @@
-import React from 'react';
-import { Typography, TextField, Button, InputAdornment } from '@mui/material';
-import { JumbotronContainer, OverlayText, SearchContainer} from './Jumbotron.style';
-import SearchIcon from '@mui/icons-material/Search';
-import {JumbotronProps} from './Jumbotron.types'
+import React, { useState } from "react";
+import { Typography, TextField, Button, InputAdornment } from "@mui/material";
+import {
+  JumbotronContainer,
+  OverlayText,
+  SearchContainer,
+} from "./Jumbotron.style";
+import SearchIcon from "@mui/icons-material/Search";
+import { JumbotronProps } from "./Jumbotron.types";
 
+const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage, onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage }) => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    onSearch(query); // Call the onSearch function on every change
+  };
+
+  const handleSearch = () => {
+    onSearch(searchQuery);
+  };
+
   return (
     <JumbotronContainer style={{ backgroundImage: `url(${backgroundImage})` }}>
       <OverlayText variant="h1">Shop</OverlayText>
@@ -17,19 +32,21 @@ const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage }) => {
           variant="outlined"
           placeholder="Search..."
           fullWidth
+          value={searchQuery}
+          onChange={handleSearchChange}
           sx={{
             marginBottom: { xs: 1, sm: 0 },
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '50px',
-              backgroundColor: '#f5f5f5',
-              '& fieldset': {
-                borderColor: 'transparent',
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "50px",
+              backgroundColor: "#f5f5f5",
+              "& fieldset": {
+                borderColor: "transparent",
               },
-              '&:hover fieldset': {
-                borderColor: '#ccc',
+              "&:hover fieldset": {
+                borderColor: "#ccc",
               },
-              '&.Mui-focused fieldset': {
-                borderColor: '#3f51b5',
+              "&.Mui-focused fieldset": {
+                borderColor: "#3f51b5",
               },
             },
           }}
@@ -43,15 +60,16 @@ const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage }) => {
         />
         <Button
           variant="contained"
+          onClick={handleSearch}
           sx={{
-            backgroundColor: '#000',
-            color: '#fff',
-            borderRadius: '50px',
-            padding: '10px 20px',
+            backgroundColor: "#000",
+            color: "#fff",
+            borderRadius: "50px",
+            padding: "10px 20px",
             marginLeft: { sm: 1, xs: 0 },
             marginTop: { xs: 1, sm: 0 },
-            '&:hover': {
-              backgroundColor: '#333',
+            "&:hover": {
+              backgroundColor: "#333",
             },
           }}
         >
