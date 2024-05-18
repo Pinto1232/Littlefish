@@ -5,4 +5,5 @@ export interface CategoryFilterProps {
     onPriceChange: (priceRange: number[]) => void;
     onColorChange: (color: string) => void;
     onSizeChange: (size: string) => void;
+    onDimensionChange: (dimension: string, newValue: number[]) => void;
   }
