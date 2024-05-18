@@ -1,5 +1,12 @@
 import { styled } from "@mui/system";
-import { Box, Typography, Select, Slider, Checkbox, FormControlLabel  } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Select,
+  Slider,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { Theme } from "@mui/material/styles";
 
 export const FilterContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -20,13 +27,15 @@ export const HeaderBox = styled(Box)({
   justifyContent: "space-between",
 });
 
-export const FilterTitle = styled(Typography)(({ theme }: { theme: Theme }) => ({
-  marginBottom: theme.spacing(2),
-  fontWeight: "bold",
-  color: theme.palette.primary.main,
-  display: "flex",
-  alignItems: "center",
-}));
+export const FilterTitle = styled(Typography)(
+  ({ theme }: { theme: Theme }) => ({
+    marginBottom: theme.spacing(2),
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
+    display: "flex",
+    alignItems: "center",
+  })
+);
 
 export const StyledSelect = styled(Select)(({ theme }: { theme: Theme }) => ({
   marginBottom: theme.spacing(2),
