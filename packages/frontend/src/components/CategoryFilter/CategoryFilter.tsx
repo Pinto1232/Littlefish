@@ -1,44 +1,96 @@
 import React, { useState } from "react";
 import {
-  Box,
   Typography,
-  Slider,
   Checkbox,
-  FormControlLabel,
   FormControl,
   Collapse,
   IconButton,
-  Select,
   MenuItem,
   SelectChangeEvent,
   RadioGroup,
   Divider,
 } from "@mui/material";
-import CategoryIcon from "@mui/icons-material/Category";
+import { useTheme } from "@mui/material/styles";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import ElectronicsIcon from "@mui/icons-material/ElectricalServices";
-import BookIcon from "@mui/icons-material/Book";
-import ClothingIcon from "@mui/icons-material/Checkroom";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import DevicesIcon from "@mui/icons-material/Devices";
+import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import { CategoryFilterProps } from "./CategoryFilter.types";
+import { useGetProductsQuery } from "../../features/api/apiSlice";
+import ChildFriendlyIcon from "@mui/icons-material/ChildFriendly";
+import StyleIcon from "@mui/icons-material/Style";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+
+import {
+  FilterContainer,
+  HeaderBox,
+  FilterTitle,
+  StyledSelect,
+  StyledSlider,
+  IconStyle,
+  LengthTypography,
+  WidthTypography,
+  HeightTypography,
+  IconButtonStyle,
+  StyledCheckbox,
+  StyledFormControlLabel,
+} from "./CategoryFilter.styles";
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({
   categories,
   onFilter,
   onPriceChange,
   onColorChange,
-  onSizeChange,
+  onDimensionChange,
 }) => {
+  const theme = useTheme();
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Categories");
   const [priceRange, setPriceRange] = useState<number[]>([0, 100]);
   const [color, setColor] = useState<string>("all");
-  const [size, setSize] = useState<string>("all");
+  const [dimensionRange, setDimensionRange] = useState<{
+    length: number[];
+    width: number[];
+    height: number[];
+  }>({
+    length: [0, 10],
+    width: [0, 10],
+    height: [0, 10],
+  });
   const [open, setOpen] = useState(true);
 
-  const handleCategoryChange = (event: SelectChangeEvent<string>) => {
+  // Redux Query Operations
+  const { data: products, error, isLoading } = useGetProductsQuery();
+  console.log("Category Filter ", products);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    let errorMessage = "An unknown error occurred";
+    if ("status" in error) {
+      const fetchError = error as FetchBaseQueryError;
+      if (
+        fetchError.data &&
+        typeof fetchError.data === "object" &&
+        "message" in fetchError.data
+      ) {
+        errorMessage = (fetchError.data as { message: string }).message;
+      }
+    } else if ("message" in error) {
+      errorMessage =
+        (error as SerializedError).message || "An unknown error occurred";
+    }
+    return <div>Error: {errorMessage}</div>;
+  }
+
+  const handleCategoryChange = (event: SelectChangeEvent<unknown>) => {
     const category = event.target.value as string;
     setSelectedCategory(category);
     onFilter(category);
@@ -54,9 +106,15 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     onColorChange(event.target.value);
   };
 
-  const handleSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSize(event.target.value);
-    onSizeChange(event.target.value);
+  const handleDimensionChange = (
+    dimension: string,
+    newValue: number | number[]
+  ) => {
+    setDimensionRange((prev) => ({
+      ...prev,
+      [dimension]: newValue as number[],
+    }));
+    onDimensionChange(dimension, newValue as number[]);
   };
 
   const handleClick = () => {
@@ -66,15 +124,19 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "All":
-        return <AllInclusiveIcon sx={{ mr: 1 }} />;
+        return <ViewListIcon sx={IconStyle} />;
       case "Electronics":
-        return <ElectronicsIcon sx={{ mr: 1 }} />;
-      case "Books":
-        return <BookIcon sx={{ mr: 1 }} />;
-      case "Clothing":
-        return <ClothingIcon sx={{ mr: 1 }} />;
+        return <DevicesIcon sx={IconStyle} />;
+      case "Cars":
+        return <DriveEtaIcon sx={IconStyle} />;
+      case "Baby":
+        return <ChildFriendlyIcon sx={IconStyle} />;
+      case "Food":
+        return <FastfoodIcon sx={IconStyle} />;
+      case "Fashion & Apparel":
+        return <StyleIcon sx={IconStyle} />;
       default:
-        return <CategoryIcon sx={{ mr: 1 }} />;
+        return <DashboardIcon sx={IconStyle} />;
     }
   };
 
@@ -98,47 +160,34 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   };
 
   return (
-    <Box sx={{ p: 3, mt: 2, borderRadius: 2, boxShadow: 2, width: 320 }}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography
-          variant="h6"
-          sx={{
-            mb: 2,
-            fontWeight: "bold",
-            color: "primary.main",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+    <FilterContainer theme={theme}>
+      <HeaderBox>
+        <FilterTitle theme={theme} variant="h6">
           <FilterListIcon sx={{ mr: 1 }} /> Filter
-        </Typography>
-        <IconButton onClick={handleClick}>
+        </FilterTitle>
+        <IconButton sx={IconButtonStyle} onClick={handleClick}>
           {open ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
-      </Box>
+      </HeaderBox>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "medium" }}>
-          Category
-        </Typography>
         <FormControl fullWidth>
-          <Select
+          <StyledSelect
+            theme={theme}
             value={selectedCategory}
             onChange={handleCategoryChange}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
-            sx={{
-              mb: 2,
-              borderRadius: 1,
-              borderColor: "primary.main",
-              "& .MuiSelect-select": { padding: "10px" },
-            }}
           >
-            <MenuItem value="Categories" disabled>
-              <CategoryIcon sx={{ mr: 1 }} />
-              Categories
+            <MenuItem
+              sx={{ display: "flex", alignItems: "center" }}
+              value="Categories"
+              disabled
+            >
+              <DashboardIcon sx={{ mr: 1 }} />
+              <Typography>Categories</Typography>
             </MenuItem>
             <MenuItem value="All">
-              <AllInclusiveIcon sx={{ mr: 1 }} />
+              <ViewListIcon sx={{ mr: 1 }} />
               All
             </MenuItem>
             {categories.map((category, index) => (
@@ -147,7 +196,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 {category}
               </MenuItem>
             ))}
-          </Select>
+          </StyledSelect>
         </FormControl>
         <Divider sx={{ my: 2 }} />
         <Typography
@@ -156,13 +205,53 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         >
           Price
         </Typography>
-        <Slider
+        <StyledSlider
+          theme={theme}
           value={priceRange}
           onChange={handlePriceChange}
           valueLabelDisplay="auto"
           min={0}
           max={1000}
-          sx={{ mb: 2 }}
+        />
+        <Divider sx={{ my: 2 }} />
+        <Typography
+          variant="subtitle1"
+          sx={{ mt: 2, mb: 1, fontWeight: "medium" }}
+        >
+          Dimensions
+        </Typography>
+        <LengthTypography fontSize={10} px={2} py={0.4} variant="body2">
+          Length
+        </LengthTypography>
+        <StyledSlider
+          theme={theme}
+          value={dimensionRange.length}
+          onChange={(_e, newValue) => handleDimensionChange("length", newValue)}
+          valueLabelDisplay="auto"
+          min={0}
+          max={20}
+        />
+        <WidthTypography fontSize={10} px={2} py={0.4} variant="body2">
+          Width
+        </WidthTypography>
+        <StyledSlider
+          theme={theme}
+          value={dimensionRange.width}
+          onChange={(_e, newValue) => handleDimensionChange("width", newValue)}
+          valueLabelDisplay="auto"
+          min={0}
+          max={20}
+        />
+        <HeightTypography fontSize={10} px={2} py={0.4} variant="body2">
+          Height
+        </HeightTypography>
+        <StyledSlider
+          theme={theme}
+          value={dimensionRange.height}
+          onChange={(_e, newValue) => handleDimensionChange("height", newValue)}
+          valueLabelDisplay="auto"
+          min={0}
+          max={20}
         />
         <Divider sx={{ my: 2 }} />
         <Typography
@@ -173,18 +262,22 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         </Typography>
         <FormControl component="fieldset">
           <RadioGroup value={color} onChange={handleColorChange}>
-            <FormControlLabel value="all" control={<Checkbox />} label="All" />
-            <FormControlLabel
+            <StyledFormControlLabel
+              value="all"
+              control={<StyledCheckbox />}
+              label="All"
+            />
+            <StyledFormControlLabel
               value="red"
               control={getColorCheckbox("red")}
               label="Red"
             />
-            <FormControlLabel
+            <StyledFormControlLabel
               value="blue"
               control={getColorCheckbox("blue")}
               label="Blue"
             />
-            <FormControlLabel
+            <StyledFormControlLabel
               value="green"
               control={getColorCheckbox("green")}
               label="Green"
@@ -192,34 +285,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
           </RadioGroup>
         </FormControl>
         <Divider sx={{ my: 2 }} />
-        <Typography
-          variant="subtitle1"
-          sx={{ mt: 2, mb: 1, fontWeight: "medium" }}
-        >
-          Size
-        </Typography>
-        <FormControl component="fieldset">
-          <RadioGroup value={size} onChange={handleSizeChange}>
-            <FormControlLabel value="all" control={<Checkbox />} label="All" />
-            <FormControlLabel
-              value="small"
-              control={<Checkbox />}
-              label="Small"
-            />
-            <FormControlLabel
-              value="medium"
-              control={<Checkbox />}
-              label="Medium"
-            />
-            <FormControlLabel
-              value="large"
-              control={<Checkbox />}
-              label="Large"
-            />
-          </RadioGroup>
-        </FormControl>
       </Collapse>
-    </Box>
+    </FilterContainer>
   );
 };
 

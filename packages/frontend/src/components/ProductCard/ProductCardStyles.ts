@@ -11,7 +11,8 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-export const ImageWrapper = styled(Box)({
+
+export const ImageWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
   width: "100%",
   height: "100%",
@@ -21,4 +22,9 @@ export const ImageWrapper = styled(Box)({
   overflow: "hidden",
   borderTopLeftRadius: 8,
   borderTopRightRadius: 8,
-});
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: "100%",
+    maxHeight: "100%",
+    marginBottom: theme.spacing(2),
+  },
+}));

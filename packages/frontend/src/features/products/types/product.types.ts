@@ -1,3 +1,9 @@
+export type Dimensions = {
+  width: number;
+  height: number;
+  depth: number;
+};
+
 export interface Product {
   brand: string;
   id: number;
@@ -11,6 +17,7 @@ export interface Product {
   size?: string;
   price: number;
   quantity?: number; 
+  dimensions: Dimensions;
   category: {
     name: string;
     description: string;
@@ -21,3 +28,4 @@ export interface Product {
   }[];
   __v?: number; 
 }
+

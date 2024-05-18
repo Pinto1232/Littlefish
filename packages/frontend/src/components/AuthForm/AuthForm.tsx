@@ -13,13 +13,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
-
-interface AuthFormProps {
-  tab: number;
-  setTab: (tab: number) => void;
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
+import { AuthFormProps } from "./AuthForm.types";
 
 const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -31,8 +25,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
   };
 
   return (
-    <Dialog open={open}  onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogContent>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogContent sx={{ backgroundColor: "lightgray" }}>
         <Box
           sx={{
             p: 3,
@@ -97,7 +91,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ mt: 2 , backgroundColor: '#000', borderRadius: 5}}
+              sx={{ mt: 2, backgroundColor: "#000", borderRadius: 5 }}
             >
               {tab === 0 ? "Log in" : "Register"}
             </Button>

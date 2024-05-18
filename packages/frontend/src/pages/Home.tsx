@@ -13,6 +13,7 @@ import Navbar from "../components/Navbar/Navbar";
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
 import AuthForm from "../components/AuthForm/AuthForm";
 import CategoryFilter from "../components/CategoryFilter/CategoryFilter";
+import { Dimensions } from '../features/products/types/product.types';
 import theme from "../custom/theme";
 
 const Home: React.FC = () => {
@@ -64,7 +65,14 @@ const Home: React.FC = () => {
     );
   };
 
-
+  const handleDimensionChange = (dimension: string, newValue: number[]) => {
+    setFilteredProducts((prevProducts) => {
+      return prevProducts?.filter((product) => {
+        const productDimension = product.dimensions[dimension as keyof Dimensions];
+        return productDimension >= newValue[0] && productDimension <= newValue[1];
+      });
+    });
+  };
 
   if (error) {
     return (
@@ -98,6 +106,7 @@ const Home: React.FC = () => {
             onPriceChange={handlePriceChange} 
             onColorChange={handleColorChange} 
             onSizeChange={handleSizeChange} 
+            onDimensionChange={handleDimensionChange} 
           />
         </Grid>
         <Grid item xs={12} sm={9}>
