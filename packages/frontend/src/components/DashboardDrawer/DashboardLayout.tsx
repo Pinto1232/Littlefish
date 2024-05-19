@@ -94,4 +94,6 @@ const DashboardLayout: React.FC = () => {
   );
 };
 
-export default DashboardLayout;
+const MemoizedDashboardLayout = React.memo(DashboardLayout);
+export default MemoizedDashboardLayout;
+

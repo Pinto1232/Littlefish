@@ -61,4 +61,6 @@ const DashboardDrawer: React.FC<DashboardDrawerProps> = ({
   );
 };
 
-export default DashboardDrawer;
+const MemoizedDashboardDrawer = React.memo(DashboardDrawer);
+export default MemoizedDashboardDrawer;
+
