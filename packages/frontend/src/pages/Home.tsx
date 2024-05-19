@@ -247,4 +247,5 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+const MemoizedHome = React.memo(Home);
+export default MemoizedHome;

@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { AppBar, Toolbar, Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { Theme, useTheme } from "@mui/material/styles";
-import logo from '../../../public/Logo.jpg'
+import logo from "../../../public/Logo.jpg";
 
 const NavbarContainer = styled(AppBar)(({ theme }: { theme: Theme }) => ({
   backgroundColor: "#000",
@@ -46,4 +46,5 @@ const NavbarContainerComponent: React.FC<NavbarContainerComponentProps> = ({
   );
 };
 
-export default NavbarContainerComponent;
+const MemoizedNavbarContainerComponent = React.memo(NavbarContainerComponent);
+export default MemoizedNavbarContainerComponent;

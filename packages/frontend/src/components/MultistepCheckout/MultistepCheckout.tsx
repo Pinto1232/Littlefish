@@ -70,4 +70,8 @@ const MultistepCheckout: React.FC = () => {
   );
 };
 
-export default MultistepCheckout;
+const MemoizedMultistepCheckout = React.memo(MultistepCheckout);
+export default MemoizedMultistepCheckout;
+
+
+

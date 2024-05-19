@@ -64,4 +64,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
   );
 };
 
-export default UserMenu;
+const MemoizedUserMenu = React.memo(UserMenu);
+export default MemoizedUserMenu;
+

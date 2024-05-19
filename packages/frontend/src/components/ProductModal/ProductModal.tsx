@@ -196,4 +196,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
   );
 };
 
-export default ProductModal;
+const MemoizedProductModal = React.memo(ProductModal);
+export default MemoizedProductModal;
+
+

@@ -82,4 +82,6 @@ const Navbar: React.FC<{
   );
   };
   
-  export default Navbar;
+  const MemoizedNavbar = React.memo(Navbar);
+export default MemoizedNavbar;
+

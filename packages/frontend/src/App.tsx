@@ -36,4 +36,7 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+const MemoizedApp = React.memo(App);
+export default MemoizedApp;
+
+

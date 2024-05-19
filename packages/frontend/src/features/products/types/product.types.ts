@@ -29,3 +29,19 @@ export interface Product {
   __v?: number; 
 }
 
+
+export interface ProductData {
+  name: string;
+  description: string;
+  price: number;
+  category: {
+    name: string;
+    description: string;
+  };
+  attributes: Array<{
+    name: string;
+    value: string;
+  }>;
+  imageFile?: File;
+  __v: number;
+}

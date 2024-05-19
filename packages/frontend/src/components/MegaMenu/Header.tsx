@@ -5,14 +5,16 @@ import MegaMenu from './MegaMenu';
 const Header: React.FC = () => {
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
 
-  console.log("Header: isMegaMenuOpen", isMegaMenuOpen); // Debugging log
+  console.log("Header: isMegaMenuOpen", isMegaMenuOpen); 
 
   return (
-    <div style={{ position: 'relative', zIndex: 1000 }}> {/* Ensure high z-index */}
+    <div style={{ position: 'relative', zIndex: 1000 }}> 
       <NavLinks setMegaMenuOpen={setMegaMenuOpen} />
-      {isMegaMenuOpen && <MegaMenu />}
+      {isMegaMenuOpen && <MegaMenu open={false} />}
     </div>
   );
 };
 
-export default Header;
+
+const MemoizedHeader = React.memo(Header);
+export default MemoizedHeader;
