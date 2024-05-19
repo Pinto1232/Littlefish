@@ -10,136 +10,149 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Box,
+  Button,
 } from "@mui/material";
+import { PersonalInfoProps } from "./MultiStepChekout.types";
 
-interface CartItem {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-  image: string;
-}
-
-const PersonalInfo: React.FC = () => {
-  const cartData: CartItem[] = [
-    {
-      id: 1,
-      name: "Example Item",
-      quantity: 2,
-      price: 19.99,
-      image: "https://via.placeholder.com/100",
-    },
-    {
-      id: 2,
-      name: "Example Item",
-      quantity: 23,
-      price: 19.99,
-      image: "https://via.placeholder.com/100",
-    },
-
-    {
-      id: 3,
-      name: "Example Item",
-      quantity: 3,
-      price: 19.99,
-      image: "https://via.placeholder.com/100",
-    },
-  ];
-
+const PersonalInfo: React.FC<PersonalInfoProps> = ({
+  handleNext,
+  handleBack,
+}) => {
   return (
     <React.Fragment>
-      <Grid container spacing={2} sx={{ p: 4 }}>
-        <Grid item xs={12} md={7} spacing={3}>
-          <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-            Personal Info
-          </Typography>
-          <Grid container sx={{ m: 1 }}>
-            <Grid item xs={12}>
+      <Grid container spacing={2} sx={{ p: 4, bgcolor: 'lightgray' }}>
+        <Grid item xs={12} md={7}>
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Personal Information
+            </Typography>
+            <Box component={Paper} p={5}>
               <Grid container spacing={2}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="fullName"
-                      name="fullName"
-                      label="Full Name"
-                      fullWidth
-                      autoComplete="name"
-                      variant="filled"
-                   
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="email"
-                      name="email"
-                      label="Email"
-                      fullWidth
-                      autoComplete="email"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      id="address"
-                      name="address"
-                      label="Street Address"
-                      fullWidth
-                      autoComplete="shipping address-line1"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="city"
-                      name="city"
-                      label="City"
-                      fullWidth
-                      autoComplete="shipping address-level2"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="state"
-                      name="state"
-                      label="State/Province"
-                      fullWidth
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="zip"
-                      name="zip"
-                      label="Zip / Postal code"
-                      fullWidth
-                      autoComplete="shipping postal-code"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="phone"
-                      name="phone"
-                      label="Phone Number"
-                      fullWidth
-                      autoComplete="tel"
-                      variant="filled"
-                    />
-                  </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="firstName"
+                    name="firstName"
+                    label="First Name"
+                    fullWidth
+                    autoComplete="given-name"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="lastName"
+                    name="lastName"
+                    label="Last Name"
+                    fullWidth
+                    autoComplete="family-name"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    autoComplete="email"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="phone"
+                    name="phone"
+                    label="Phone Number"
+                    fullWidth
+                    autoComplete="tel"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="address1"
+                    name="address1"
+                    label="Address Line 1"
+                    fullWidth
+                    autoComplete="address-line1"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="city"
+                    name="city"
+                    label="City"
+                    fullWidth
+                    autoComplete="address-level2"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="state"
+                    name="state"
+                    label="State/Province/Region"
+                    fullWidth
+                    autoComplete="address-level1"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="postalCode"
+                    name="postalCode"
+                    label="Postal Code"
+                    fullWidth
+                    autoComplete="postal-code"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="country"
+                    name="country"
+                    label="Country"
+                    fullWidth
+                    autoComplete="country"
+                    variant="standard"
+                    margin="normal"
+                  />
                 </Grid>
               </Grid>
-            </Grid>
-          </Grid>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+              <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleNext}
+                sx={{ mt: 3, ml: 1 }}
+              >
+                Next
+              </Button>
+            </Box>
+          </Box>
         </Grid>
-        {/* Basket Section */}
         <Grid item xs={12} md={5}>
           <Typography variant="h6" gutterBottom>
             Basket
@@ -155,20 +168,18 @@ const PersonalInfo: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cartData.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                      <img
-                        src={row.image}
-                        alt={row.name}
-                        style={{ maxWidth: "30px", maxHeight: "30px" }}
-                      />
-                    </TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.quantity}</TableCell>
-                    <TableCell>{row.price}</TableCell>
-                  </TableRow>
-                ))}
+                <TableRow>
+                  <TableCell>
+                    <img
+                      src=""
+                      alt=""
+                      style={{ maxWidth: "30px", maxHeight: "30px" }}
+                    />
+                  </TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>price</TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

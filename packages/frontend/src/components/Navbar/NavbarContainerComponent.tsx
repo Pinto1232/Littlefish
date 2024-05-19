@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { AppBar, Toolbar, Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { Theme, useTheme } from "@mui/material/styles";
+import logo from '../../../public/Logo.jpg'
 
 const NavbarContainer = styled(AppBar)(({ theme }: { theme: Theme }) => ({
   backgroundColor: "#000",
@@ -31,12 +32,12 @@ const NavbarContainerComponent: React.FC<NavbarContainerComponentProps> = ({
       <Toolbar>
         <Box display="flex" alignItems="center" flexGrow={1}>
           <img
-            src=""
+            src={logo}
             alt="Logo"
             style={{ height: "40px", marginRight: "16px" }}
           />
           <Typography variant="h6" component="div">
-            Stuffsus
+            LittleFish
           </Typography>
         </Box>
         {children}

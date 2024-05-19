@@ -70,6 +70,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
 
   // Saving quantity to local storage
   useEffect(() => {
+    console.log("Cart data:", cart); 
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
