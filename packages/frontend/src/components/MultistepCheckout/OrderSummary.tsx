@@ -6,25 +6,19 @@ interface OrderSummaryProps {
   handleBack: () => void;
 }
 
-const OrderSummary: React.FC<OrderSummaryProps> = ({
-  handleNext,
-  handleBack,
-}) => {
+const OrderSummary: React.FC<OrderSummaryProps> = ({ handleBack }) => {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order Summary
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-        <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-          Back
-        </Button>
         <Button
-          variant="contained"
-          onClick={handleNext}
+          onClick={handleBack}
           sx={{ mt: 3, ml: 1, bgcolor: "#000" }}
+          variant="contained"
         >
-          Next
+          Back
         </Button>
       </Box>
     </React.Fragment>

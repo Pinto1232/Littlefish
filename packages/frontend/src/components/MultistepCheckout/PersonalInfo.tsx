@@ -193,7 +193,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
             </Box>
             <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
               <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                Back
+                {/* Back */}
               </Button>
               <Button
                 variant="contained"
