@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"; 
 import { AuthFormProps } from "./AuthForm.types";
 import {
   useLoginMutation,
@@ -22,11 +23,11 @@ import {
 } from "../../features/api/apiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useNavigate } from "react-router-dom";
-import useAuthFormValidation from "../../hooks/useAuthFormValidation"; // Import the custom hook
-import { LoginMessageContext } from "../../Context/LoginMessageContext"; // Import the context
+import useAuthFormValidation from "../../hooks/useAuthFormValidation"; 
+import { LoginMessageContext } from "../../Context/LoginMessageContext"; 
 
 type CustomFetchBaseQueryError = FetchBaseQueryError & {
-  data: {
+  data?: {
     message?: string;
   };
 };
@@ -47,13 +48,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
   const [register, { error: registerError }] = useRegisterMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [image, setImage] = useState<File | null>(null); 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
   const navigate = useNavigate();
-  const { errors, validate } = useAuthFormValidation(); // Use the custom hook
+  const { errors, validate } = useAuthFormValidation();
   const { setMessage } = useContext(LoginMessageContext);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -80,10 +82,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         setSnackbarMessage("Login successful! Redirecting to products...");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
-        setMessage("You are logged in now"); // Set the login message
-        navigate("/products"); // Redirect to /products after successful login
+        setMessage("You are logged in now");
+        navigate("/products"); 
       } else {
-        const response = await register({ username, password }).unwrap();
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", password);
+        if (image) {
+          formData.append("image", image);
+        }
+        const response = await register(formData).unwrap();
         localStorage.setItem("token", response.token);
         setSnackbarMessage("Registration successful! You can now log in.");
         setSnackbarSeverity("success");
@@ -91,9 +99,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         setOpen(false);
       }
     } catch (err) {
-      setSnackbarMessage(
-        "Authentication failed. Please check your credentials and try again."
-      );
+      let errorMessage = "Authentication failed. Please check your credentials and try again.";
+      if (isFetchBaseQueryError(err) && err.data?.message) {
+        errorMessage = err.data.message;
+      }
+      setSnackbarMessage(errorMessage);
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
       console.error("Auth error:", err);
@@ -155,6 +165,24 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
                   ),
                 }}
               />
+              {tab === 1 && (
+                <Box sx={{ mt: 2 }}>
+                  <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="upload-button-file"
+                    type="file"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setImage(e.target.files?.[0] || null)
+                    }
+                  />
+                  <label htmlFor="upload-button-file">
+                    <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+                      Upload Image
+                    </Button>
+                  </label>
+                </Box>
+              )}
               {tab === 0 && (
                 <Box
                   sx={{
@@ -189,7 +217,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
               {(loginError || registerError) && (
                 <Typography color="error" variant="body2" sx={{ mt: 2 }}>
                   {isFetchBaseQueryError(loginError || registerError)
-                    ? (loginError as CustomFetchBaseQueryError).data?.message ??
+                    ? (loginError as CustomFetchBaseQueryError)?.data?.message ??
                       "Authentication failed"
                     : "Authentication failed"}
                 </Typography>
@@ -241,7 +269,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Position the Snackbar at the top center
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} 
       >
         <Alert
           onClose={handleSnackbarClose}
@@ -249,17 +277,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
           sx={{
             width: "100%",
             backgroundColor:
-              snackbarSeverity === "success" ? "#4caf50" : "#f44336", // Custom background color
-            color: "white", // Custom text color
-            boxShadow: 3, // Add shadow
-            borderRadius: 2, // Rounded corners
-          }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    </>
-  );
+            snackbarSeverity === "success" ? "#4caf50" : "#f44336",
+          color: "white",
+          boxShadow: 3,
+          borderRadius: 2,
+        }}
+      >
+        {snackbarMessage}
+      </Alert>
+    </Snackbar>
+  </>
+);
 };
 
 export default AuthForm;

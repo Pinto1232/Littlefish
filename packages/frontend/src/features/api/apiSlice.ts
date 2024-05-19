@@ -60,12 +60,12 @@ export const apiSlice = createApi({
     }),
     register: builder.mutation<
       { token: string },
-      { username: string; password: string }
+      FormData // Change this line to accept FormData
     >({
-      query: (credentials) => ({
+      query: (formData) => ({
         url: "/auth/register",
         method: "POST",
-        body: credentials,
+        body: formData,
       }),
     }),
   }),

@@ -13,7 +13,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     <>
       <Avatar
         alt="User"
-        src="https://via.placeholder.com/40"
+        src=""
         onClick={handleClick}
         sx={{ cursor: "pointer" }}
       />
