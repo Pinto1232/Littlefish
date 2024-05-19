@@ -79,11 +79,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
       if (tab === 0) {
         const response = await login({ username, password }).unwrap();
         localStorage.setItem("token", response.token);
+        localStorage.setItem("user", JSON.stringify(response.user)); // Store user data
         setSnackbarMessage("Login successful! Redirecting to products...");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
-        setMessage("You are logged in now");
-        navigate("/products");
+        setMessage("You are logged in now"); // Set the login message
+        navigate("/products"); // Redirect to /products after successful login
       } else {
         const formData = new FormData();
         formData.append("username", username);
@@ -91,6 +92,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         if (image) {
           formData.append("image", image);
         }
+  
         const response = await register(formData).unwrap();
         localStorage.setItem("token", response.token);
         setSnackbarMessage("Registration successful! You can now log in.");
@@ -99,8 +101,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         setOpen(false);
       }
     } catch (err) {
-      let errorMessage =
-        "Authentication failed. Please check your credentials and try again.";
+      let errorMessage = "Authentication failed. Please check your credentials and try again.";
       if (isFetchBaseQueryError(err) && err.data?.message) {
         errorMessage = err.data.message;
       }

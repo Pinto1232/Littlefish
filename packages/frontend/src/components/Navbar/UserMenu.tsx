@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import { UserMenuProps } from "./NavbarInterfaces";
+import { useUser } from "../../Context/useUser"; // Update the import path
 
 const UserMenu: React.FC<UserMenuProps> = ({
   anchorEl,
@@ -9,11 +10,16 @@ const UserMenu: React.FC<UserMenuProps> = ({
   handleLoginClick,
   handleRegisterClick,
 }) => {
+  const { user } = useUser();
+
+  // Ensure the image path uses forward slashes
+  const imageUrl = user?.image ? `http://localhost:5000/${user.image.replace(/\\/g, '/')}` : "";
+
   return (
     <>
       <Avatar
         alt="User"
-        src=""
+        src={imageUrl}
         onClick={handleClick}
         sx={{ cursor: "pointer" }}
       />
@@ -28,7 +34,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
-            "&.MuiAvatar-root": {
+            "& .MuiAvatar-root": {
               width: 32,
               height: 32,
               ml: -0.5,
