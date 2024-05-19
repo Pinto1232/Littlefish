@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload"; 
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { AuthFormProps } from "./AuthForm.types";
 import {
   useLoginMutation,
@@ -23,8 +23,8 @@ import {
 } from "../../features/api/apiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useNavigate } from "react-router-dom";
-import useAuthFormValidation from "../../hooks/useAuthFormValidation"; 
-import { LoginMessageContext } from "../../Context/LoginMessageContext"; 
+import useAuthFormValidation from "../../hooks/useAuthFormValidation";
+import { LoginMessageContext } from "../../Context/LoginMessageContext";
 
 type CustomFetchBaseQueryError = FetchBaseQueryError & {
   data?: {
@@ -48,7 +48,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
   const [register, { error: registerError }] = useRegisterMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [image, setImage] = useState<File | null>(null); 
+  const [image, setImage] = useState<File | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
@@ -83,7 +83,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
         setMessage("You are logged in now");
-        navigate("/products"); 
+        navigate("/products");
       } else {
         const formData = new FormData();
         formData.append("username", username);
@@ -99,7 +99,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         setOpen(false);
       }
     } catch (err) {
-      let errorMessage = "Authentication failed. Please check your credentials and try again.";
+      let errorMessage =
+        "Authentication failed. Please check your credentials and try again.";
       if (isFetchBaseQueryError(err) && err.data?.message) {
         errorMessage = err.data.message;
       }
@@ -169,7 +170,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
                 <Box sx={{ mt: 2 }}>
                   <input
                     accept="image/*"
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                     id="upload-button-file"
                     type="file"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -177,7 +178,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
                     }
                   />
                   <label htmlFor="upload-button-file">
-                    <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+                    <Button
+                      variant="contained"
+                      component="span"
+                      startIcon={<CloudUploadIcon />}
+                    >
                       Upload Image
                     </Button>
                   </label>
@@ -217,8 +222,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
               {(loginError || registerError) && (
                 <Typography color="error" variant="body2" sx={{ mt: 2 }}>
                   {isFetchBaseQueryError(loginError || registerError)
-                    ? (loginError as CustomFetchBaseQueryError)?.data?.message ??
-                      "Authentication failed"
+                    ? (loginError as CustomFetchBaseQueryError)?.data
+                        ?.message ?? "Authentication failed"
                     : "Authentication failed"}
                 </Typography>
               )}
@@ -269,7 +274,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} 
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={handleSnackbarClose}
@@ -277,17 +282,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
           sx={{
             width: "100%",
             backgroundColor:
-            snackbarSeverity === "success" ? "#4caf50" : "#f44336",
-          color: "white",
-          boxShadow: 3,
-          borderRadius: 2,
-        }}
-      >
-        {snackbarMessage}
-      </Alert>
-    </Snackbar>
-  </>
-);
+              snackbarSeverity === "success" ? "#4caf50" : "#f44336",
+            color: "white",
+            boxShadow: 3,
+            borderRadius: 2,
+          }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </>
+  );
 };
 
 export default AuthForm;
