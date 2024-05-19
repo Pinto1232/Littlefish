@@ -276,4 +276,6 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList;
+const MemoizedProductList = React.memo(ProductList);
+export default MemoizedProductList;
+

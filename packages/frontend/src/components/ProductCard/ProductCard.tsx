@@ -176,4 +176,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCard;
+const MemoizedProductCard = React.memo(ProductCard);
+export default MemoizedProductCard;
+

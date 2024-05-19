@@ -257,4 +257,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
   );
 };
 
-export default CreateProduct;
+const MemoizedCreateProduct = React.memo(CreateProduct);
+export default MemoizedCreateProduct;
+
+

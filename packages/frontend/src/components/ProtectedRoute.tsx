@@ -9,4 +9,6 @@ const ProtectedRoute: React.FC = () => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
-export default ProtectedRoute;
+const MemoizedProtectedRoute = React.memo(ProtectedRoute);
+export default MemoizedProtectedRoute;
+

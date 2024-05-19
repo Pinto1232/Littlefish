@@ -241,4 +241,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   );
 };
 
-export default CartDrawer;
+const MemoizedCartDrawer = React.memo(CartDrawer);
+export default MemoizedCartDrawer;
+

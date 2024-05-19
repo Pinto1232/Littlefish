@@ -46,4 +46,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ setMegaMenuOpen }) => {
   );
 };
 
-export default NavLinks;
+const MemoizedNavLinks = React.memo(NavLinks);
+export default MemoizedNavLinks;
+
+
