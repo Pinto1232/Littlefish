@@ -1,4 +1,9 @@
-import React, { createContext, useState, Dispatch, SetStateAction } from "react";
+import React, {
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 interface Product {
   id: string | number;
@@ -18,13 +23,17 @@ interface CartContextType {
   setCart: Dispatch<SetStateAction<Product[]>>;
 }
 
-export const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | undefined>(
+  undefined
+);
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [cart, setCart] = useState<Product[]>(() => {
     // Load cart from local storage initially
-    const savedCart = localStorage.getItem('cart');
-    return savedCart? JSON.parse(savedCart) : [];
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
   });
 
   const addToCart = (product: Product) => {
@@ -33,14 +42,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       let newCart;
       if (existingProduct) {
         newCart = prevCart.map((item) =>
-          item.id === product.id? {...item, quantity: item.quantity + 1 } : item
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       } else {
-        newCart = [...prevCart, {...product, quantity: 1 }];
+        newCart = [...prevCart, { ...product, quantity: 1 }];
       }
 
       // Save the updated cart to localStorage
-      localStorage.setItem('cart', JSON.stringify(newCart));
+      localStorage.setItem("cart", JSON.stringify(newCart));
 
       return newCart;
     });
