@@ -45,11 +45,11 @@ Littlefish is designed to provide a seamless shopping experience for users. The 
 
 #### Backend
 
-bash cd packages/backend npm install
+bash cd packages/backend yarn add
 
 #### Frontend
 
-bash cd packages/frontend npm install
+bash cd packages/frontend yarn add
 
 ## Running the Application
 
@@ -59,6 +59,7 @@ bash cd packages/frontend npm install
 2. Create a `.env` file in the `packages/backend` directory with the following content:
 
 env MONGO_URI=mongodb://localhost:27017/littlefish JWT_SECRET=your_jwt_secret
+### url: http://localhost:27017/'mongodb+srv://pintomanuel:ORuhfFxC7EzA2qYL@LittleFishStoreDB.iqcsto9.mongodb.net/LittleFishStoreDB?retryWrites=true&w=majority
 
 3. Start the backend server:
 
