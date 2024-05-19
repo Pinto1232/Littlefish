@@ -60,7 +60,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
 
   return (
     <React.Fragment>
-      <Grid container spacing={2} sx={{ p: 4, bgcolor: "#f8f8f8" }}>
+      <Grid container spacing={2} sx={{ p: 4, bgcolor: "#f8f8f8", width: "100%" }}>
         <Grid item xs={12} md={7}>
           <Box>
             <Typography variant="h6" gutterBottom>
