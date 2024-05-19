@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   TextField,
@@ -8,26 +8,67 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Box,
   Button,
 } from "@mui/material";
 import { PersonalInfoProps } from "./MultiStepChekout.types";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PersonIcon from "@mui/icons-material/Person";
+
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+  brand: string;
+  category: {
+    name: string;
+    description: string;
+  };
+  rating: number;
+  reviews: number;
+}
 
 const PersonalInfo: React.FC<PersonalInfoProps> = ({
   handleNext,
   handleBack,
 }) => {
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
+
+  const calculateCartTotals = (cart: CartItem[]) => {
+    const subtotal = cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    const deliveryFee = subtotal * 0.1;
+    const tax = subtotal * 0.15;
+    const discount = subtotal * 0.05;
+    const total = subtotal + deliveryFee + tax - discount;
+    return { deliveryFee, tax, discount, total };
+  };
+
+  const { deliveryFee, tax, discount, total } = calculateCartTotals(cart);
+
   return (
     <React.Fragment>
-      <Grid container spacing={2} sx={{ p: 4, bgcolor: 'lightgray' }}>
+      <Grid container spacing={2} sx={{ p: 4, bgcolor: "#f8f8f8" }}>
         <Grid item xs={12} md={7}>
           <Box>
             <Typography variant="h6" gutterBottom>
-              Personal Information
+              <Box display="flex" alignItems="center">
+                <PersonIcon /> Personal Information
+              </Box>
             </Typography>
-            <Box component={Paper} p={5}>
+            <Box bgcolor={"#fff"} p={5}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -89,6 +130,17 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
                     margin="normal"
                   />
                 </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="address2"
+                    name="address2"
+                    label="Address Line 2"
+                    fullWidth
+                    autoComplete="address-line2"
+                    variant="standard"
+                    margin="normal"
+                  />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -146,7 +198,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
               <Button
                 variant="contained"
                 onClick={handleNext}
-                sx={{ mt: 3, ml: 1 }}
+                sx={{ mt: 3, ml: 1, bgcolor: "#000" }}
               >
                 Next
               </Button>
@@ -155,33 +207,75 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
         </Grid>
         <Grid item xs={12} md={5}>
           <Typography variant="h6" gutterBottom>
-            Basket
+            <Box display="flex" alignItems="center">
+              <ShoppingCartIcon sx={{ mr: 1 }} /> Basket
+            </Box>
           </Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflow: "hidden" }}>
             <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Prod</TableCell>
-                  <TableCell>Item</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Price</TableCell>
-                </TableRow>
-              </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <img
-                      src=""
-                      alt=""
-                      style={{ maxWidth: "30px", maxHeight: "30px" }}
-                    />
-                  </TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>price</TableCell>
-                </TableRow>
+                <Box
+                  sx={{
+                    bgcolor: "#efefef",
+                    maxHeight: cart.length > 4 ? 200 : "auto",
+                    overflowY: "auto",
+                    overflowX: "hidden",
+                  }}
+                >
+                  {cart.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          style={{
+                            maxWidth: "30px",
+                            maxHeight: "30px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.quantity}</TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          R {item.price}
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </Box>
               </TableBody>
             </Table>
+            <Box p={3}>
+              <Typography variant="body1">
+                Delivery: R {deliveryFee.toFixed(2)}
+              </Typography>
+              <Typography variant="body1">Tax: R {tax.toFixed(2)}</Typography>
+              <Typography variant="body1">
+                Discount: R {discount.toFixed(2)}
+              </Typography>
+              <Typography variant="body1">
+                Total: R {total.toFixed(2)}
+              </Typography>
+              <Box mt={2} display="flex">
+                <TextField
+                  variant="outlined"
+                  placeholder="Use Coupon Code"
+                  size="small"
+                  style={{ marginRight: "8px" }}
+                />
+                <Button variant="contained" sx={{ bgcolor: "#000" }}>
+                  APPLY
+                </Button>
+              </Box>
+            </Box>
           </TableContainer>
         </Grid>
       </Grid>

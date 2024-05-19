@@ -130,6 +130,29 @@ const Home: React.FC = () => {
         justifyContent="center"
         alignItems="flex-start"
       >
+        {isSmallScreen && (
+          <Grid item xs={12}>
+            <Grid container>
+              {paginatedProducts?.map((product) => (
+                <Grid item key={product._id} xs={12} sm={6} md={4}>
+                  <ProductCard
+                    id={product._id}
+                    brand={product.brand || "Default Brand"}
+                    image={product.imageUrl || "defaultImageUrl"}
+                    name={product.name}
+                    description={product.description}
+                    price={product.price}
+                    category={product.category}
+                    rating={product.rating ?? 0}
+                    reviews={
+                      Array.isArray(product.reviews) ? product.reviews : []
+                    }
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        )}
         <Grid item xs={12} sm={3}>
           <CategoryFilter
             categories={categories}
@@ -140,50 +163,52 @@ const Home: React.FC = () => {
             onDimensionChange={handleDimensionChange}
           />
         </Grid>
-        <Grid item xs={12} sm={9}>
-          <Grid container>
-            {paginatedProducts?.map((product) => (
-              <Grid item key={product._id} xs={12} sm={6} md={4}>
-                <ProductCard
-                  id={product._id}
-                  brand={product.brand || "Default Brand"}
-                  image={product.imageUrl || "defaultImageUrl"}
-                  name={product.name}
-                  description={product.description}
-                  price={product.price}
-                  category={product.category}
-                  rating={product.rating ?? 0}
-                  reviews={
-                    Array.isArray(product.reviews) ? product.reviews : []
-                  }
-                />
-              </Grid>
-            ))}
+        {!isSmallScreen && (
+          <Grid item xs={12} sm={9}>
+            <Grid container>
+              {paginatedProducts?.map((product) => (
+                <Grid item key={product._id} xs={12} sm={6} md={4}>
+                  <ProductCard
+                    id={product._id}
+                    brand={product.brand || "Default Brand"}
+                    image={product.imageUrl || "defaultImageUrl"}
+                    name={product.name}
+                    description={product.description}
+                    price={product.price}
+                    category={product.category}
+                    rating={product.rating ?? 0}
+                    reviews={
+                      Array.isArray(product.reviews) ? product.reviews : []
+                    }
+                  />
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
-          <Box
-            display="flex"
-            justifyContent={isSmallScreen ? "center" : "flex-start"}
-            mt={4}
-          >
-            <Pagination
-              count={Math.ceil((filteredProducts?.length || 0) / itemsPerPage)}
-              page={page}
-              onChange={handlePageChange}
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  "&.Mui-selected": {
-                    backgroundColor: "black",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "black",
-                    },
-                  },
-                },
-              }}
-            />
-          </Box>
-        </Grid>
+        )}
       </Grid>
+      <Box
+        display="flex"
+        justifyContent={isSmallScreen ? "center" : "flex-start"}
+        mt={4}
+      >
+        <Pagination
+          count={Math.ceil((filteredProducts?.length || 0) / itemsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          sx={{
+            "& .MuiPaginationItem-root": {
+              "&.Mui-selected": {
+                backgroundColor: "black",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "black",
+                },
+              },
+            },
+          }}
+        />
+      </Box>
       <AuthForm
         tab={tab}
         setTab={setTab}
