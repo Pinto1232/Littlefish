@@ -25,4 +25,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ handleBack }) => {
   );
 };
 
-export default OrderSummary;
+const MemoizedOrderSummary = React.memo(OrderSummary);
+export default MemoizedOrderSummary;
+
+

@@ -80,4 +80,5 @@ const Jumbotron: React.FC<JumbotronProps> = ({ backgroundImage, onSearch }) => {
   );
 };
 
-export default Jumbotron;
+const MemoizedJumbotron = React.memo(Jumbotron);
+export default MemoizedJumbotron;

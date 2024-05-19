@@ -98,4 +98,6 @@ const MegaMenu: React.FC<{ open: boolean }> = React.memo(({ open }) => {
   );
 });
 
-export default MegaMenu;
+const MemoizedMegaMenu = React.memo(MegaMenu);
+export default MemoizedMegaMenu;
+

@@ -19,6 +19,7 @@ import {
   MasterCardIcon,
   PayPalIcon,
 } from "./Icons";
+import React from "react";
 
 const Footer = () => {
   return (
@@ -149,4 +150,6 @@ const PaymentIcons = () => (
   </Box>
 );
 
-export default Footer;
+const MemoizedFooter = React.memo(Footer);
+export default MemoizedFooter;
+

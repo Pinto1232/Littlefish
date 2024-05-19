@@ -31,4 +31,6 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   );
 };
 
-export default PaymentMethods;
+const MemoizedPaymentMethods = React.memo(PaymentMethods);
+export default MemoizedPaymentMethods;
+
