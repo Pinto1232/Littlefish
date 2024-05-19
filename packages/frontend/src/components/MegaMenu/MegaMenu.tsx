@@ -1,59 +1,28 @@
-import {
-  Box,
-  Typography,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
-import { styled } from "@mui/system";
-import { Theme, useTheme } from "@mui/material/styles";
+import React from "react";
+import { Grid, List } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import StoreIcon from "@mui/icons-material/Store";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import WebIcon from "@mui/icons-material/Web";
+import {
+  MegaMenuContainer,
+  CategoryTitle,
+  StyledListItem,
+  StyledListItemText,
+} from "./MegaMenuStyles";
 
-const MegaMenuContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
-  position: "absolute",
-  marginTop: 9,
-  top: "100%",
-  left: "50%",
-  transform: "translateX(-50%)",
-  width: "100%",
-  maxWidth: "90vw",
-  backgroundColor: "white",
-  boxShadow: theme.shadows[5],
-  padding: theme.spacing(4),
-  zIndex: 900,
-  transition: "opacity 0.3s ease, visibility 0.3s ease, max-height 0.3s ease",
-  opacity: 0,
-  visibility: "hidden",
-  maxHeight: 0,
-  overflow: "hidden",
-  "&.open": {
-    opacity: 1,
-    visibility: "visible",
-    maxHeight: "500px",
-  },
-}));
+interface Link {
+  name: string;
+}
 
-const CategoryTitle = styled(Typography)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  color: theme.palette.primary.main,
-  marginBottom: theme.spacing(1),
-  cursor: "pointer",
-}));
+interface Category {
+  title: string;
+  icon: React.ReactNode;
+  links: Link[];
+}
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
-  padding: theme.spacing(1, 0),
-}));
-
-const StyledListItemText = styled(ListItemText)(({ theme }) => ({
-  color: theme.palette.text.primary,
-}));
-
-const categories = [
+const categories: Category[] = [
   {
     title: "Finance",
     icon: <AccountBalanceIcon sx={{ mr: 1 }} />,
@@ -104,7 +73,7 @@ const categories = [
   },
 ];
 
-const MegaMenu: React.FC<{ open: boolean }> = ({ open }) => {
+const MegaMenu: React.FC<{ open: boolean }> = React.memo(({ open }) => {
   const theme = useTheme();
 
   return (
@@ -112,7 +81,7 @@ const MegaMenu: React.FC<{ open: boolean }> = ({ open }) => {
       <Grid container spacing={4}>
         {categories.map((category) => (
           <Grid item xs={12} sm={3} key={category.title}>
-            <CategoryTitle variant="h6">
+            <CategoryTitle variant="h6" aria-label={category.title}>
               {category.icon} {category.title}
             </CategoryTitle>
             <List>
@@ -127,6 +96,6 @@ const MegaMenu: React.FC<{ open: boolean }> = ({ open }) => {
       </Grid>
     </MegaMenuContainer>
   );
-};
+});
 
 export default MegaMenu;

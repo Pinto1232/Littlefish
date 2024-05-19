@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, CssBaseline, Box, Stepper, Step, StepLabel, Button, Typography } from '@mui/material';
+import { Container, CssBaseline, Box, Stepper, Step, StepLabel, Typography, Paper } from '@mui/material';
 import PersonalInfo from './PersonalInfo';
 import PaymentMethods from './PaymentMethods';
 import OrderSummary from './OrderSummary';
@@ -20,7 +20,7 @@ const MultistepCheckout: React.FC = () => {
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <PersonalInfo />;
+        return <PersonalInfo handleNext={handleNext} handleBack={handleBack} />;
       case 1:
         return <PaymentMethods />;
       case 2:
@@ -31,34 +31,22 @@ const MultistepCheckout: React.FC = () => {
   };
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="md" >
       <CssBaseline />
-      <Box sx={{ marginTop: 4 }}>
-        <Typography component="h1" variant="h4" align="center">
+      <Box sx={{ marginTop: 4, marginBottom: 4 }} >
+        <Typography component="h1" variant="h4" align="center" gutterBottom>
           Checkout
         </Typography>
-        <Stepper activeStep={activeStep} sx={{ padding: 3 }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        {getStepContent(activeStep)}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          {activeStep !== 0 && (
-            <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-              Back
-            </Button>
-          )}
-          <Button
-            variant="contained"
-            onClick={handleNext}
-            sx={{ mt: 3, ml: 1 }}
-          >
-            {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-          </Button>
-        </Box>
+        <Paper elevation={0} sx={{ padding: 3 }}>
+          <Stepper activeStep={activeStep} sx={{ padding: 3, marginBottom: 3 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          {getStepContent(activeStep)}
+        </Paper>
       </Box>
     </Container>
   );

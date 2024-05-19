@@ -8,7 +8,7 @@ import {
   useCart,
 } from './index';
 import MegaMenu from '../MegaMenu/MegaMenu';
-import NavLinks from './NavLinks'; // Import NavLinks
+import NavLinks from './NavLinks';
 import GlobalStyle from '../../GlobalStyle/GlobalStyle';
 
 const Navbar: React.FC<{
@@ -55,7 +55,7 @@ const Navbar: React.FC<{
   return (
     <NavbarContainerComponent>
       <Box display="flex" alignItems="center" gap={2}>
-        <NavLinks setMegaMenuOpen={setMegaMenuOpen} /> {/* Pass setMegaMenuOpen */}
+        <NavLinks setMegaMenuOpen={setMegaMenuOpen} /> 
         <IconButton onClick={toggleDrawer(true)}>
           <Badge
             badgeContent={cart.length}
@@ -76,7 +76,7 @@ const Navbar: React.FC<{
         />
       </Box>
       <GlobalStyle />
-      {megaMenuOpen && <MegaMenu open={megaMenuOpen} />} {/* Render MegaMenu conditionally */}
+      {megaMenuOpen && <MegaMenu open={megaMenuOpen} />} 
       <CartDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
     </NavbarContainerComponent>
   );

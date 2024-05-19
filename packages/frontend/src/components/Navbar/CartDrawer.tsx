@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Drawer,
   Box,
@@ -14,6 +14,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import {
   useTheme,
@@ -35,6 +36,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   const { cart, setCart } = useCart();
   const navigate = useNavigate();
   const theme = useTheme();
+  const [loading, setLoading] = useState(false);
 
   const cartItems = cart.map((product) => ({
     ...product,
@@ -61,17 +63,26 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
     );
   };
 
-  // Remove product form  cart
+  // Remove product from cart
   const removeProductFromCart = (productId: string) => {
     setCart((currentCart) =>
       currentCart.filter((item) => item.id !== productId)
     );
   };
 
-  // Saving quantity to local storage
+  // Saving cart to local storage
   useEffect(() => {
+    console.log("Cart data:", cart); 
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  const handleConfirmOrder = () => {
+    setLoading(true);
+    // Simulate an async operation like an API call
+    setTimeout(() => {
+      navigate("/checkout");
+    }, 2000); // Adjust the timeout duration as needed
+  };
 
   return (
     <>
@@ -218,9 +229,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
                 borderRadius: "20px",
                 "&:hover": { backgroundColor: "#333" },
               }}
-              onClick={() => navigate("/checkout")}
+              onClick={handleConfirmOrder}
+              disabled={loading}
             >
-              Confirm Order
+              {loading ? <CircularProgress size={24} sx={{ color: "#333" }} /> : "Confirm Order"}
             </Button>
           </Box>
         </DrawerContent>
