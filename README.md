@@ -75,6 +75,7 @@ bash cd packages/frontend dev run dev
 
 - **MongoDB URI**: Set in the `.env` file as `MONGO_URI`.
 - **JWT Secret**: Set in the `.env` file as `JWT_SECRET`.
+### JWT_SECRET='7250tMOsVrTyZS251L9LH9mwZ72jCDxtsaOS1xM3G3M=',
 
 ## Architectural Choices
 
