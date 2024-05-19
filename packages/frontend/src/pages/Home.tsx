@@ -190,7 +190,8 @@ const Home: React.FC = () => {
       </Grid>
       <Box
         display="flex"
-        justifyContent={isSmallScreen ? "center" : "flex-start"}
+        justifyContent={isSmallScreen ? "center" : "center"}
+        sx={{ marginBottom: "10px" }}
         mt={4}
       >
         <Pagination

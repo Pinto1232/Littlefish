@@ -87,7 +87,7 @@ const DashboardLayout: React.FC = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <Typography paragraph>Main content goes here.</Typography>
+          <Typography paragraph>{/* Main content goes here. */}</Typography>
         )}
       </Box>
     </Box>

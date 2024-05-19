@@ -73,7 +73,7 @@ const SignUpSection = () => (
     <Box sx={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
       <TextField
         variant="outlined"
-        placeholder="Enter your e-mail address here"
+        placeholder="Enter your e-mail"
         size="small"
         sx={{
           flex: 1,
