@@ -18,6 +18,7 @@ import {
   DialogContent,
   Box,
   TablePagination,
+  CssBaseline,
 } from "@mui/material";
 import { Product } from "../products/types/product.types";
 import { confirmAlert } from "react-confirm-alert";
@@ -32,6 +33,7 @@ import CreateProduct from "./CreateProduct";
 import { useGetProductsQuery, useDeleteProductMutation } from "../api/apiSlice";
 import { useStyles } from "./ProductList.style";
 import Footer from "../../components/Footer/Footer";
+import DashboardLayout from "../../components/DashboardDrawer/DashboardLayout";
 
 const ProductList: React.FC = () => {
   const classes = useStyles();
@@ -267,7 +269,9 @@ const ProductList: React.FC = () => {
           />
         </DialogContent>
       </Dialog>
-      <Footer />
+      <CssBaseline />
+      <DashboardLayout />
+         <Footer />
     </>
   );
 };

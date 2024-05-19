@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { Email as EmailIcon } from "@mui/icons-material";
 import {
   TikTokIcon,
   AmazonIcon,
@@ -93,10 +94,10 @@ const SignUpSection = () => (
           padding: "10px 16px",
           minWidth: "auto",
           "&:hover": { backgroundColor: "#1565c0" },
-          borderRadius: 0
+          borderRadius: 0,
         }}
       >
-        &#x27A4;
+        <EmailIcon />
       </Button>
     </Box>
   </>

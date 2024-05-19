@@ -65,7 +65,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
           <Box>
             <Typography variant="h6" gutterBottom>
               <Box display="flex" alignItems="center">
-                <PersonIcon /> Personal Information
+                <PersonIcon sx={{ mr: 1, color: 'blue'}} /> Personal Information
               </Box>
             </Typography>
             <Box bgcolor={"#fff"} p={5}>
@@ -208,7 +208,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
         <Grid item xs={12} md={5}>
           <Typography variant="h6" gutterBottom>
             <Box display="flex" alignItems="center">
-              <ShoppingCartIcon sx={{ mr: 1 }} /> Basket
+              <ShoppingCartIcon sx={{ mr: 1, color: 'blue' }} /> Basket
             </Box>
           </Typography>
           <TableContainer component={Paper} sx={{ overflow: "hidden" }}>
