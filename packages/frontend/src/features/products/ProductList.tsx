@@ -30,7 +30,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateProduct from "./CreateProduct";
 import { useGetProductsQuery, useDeleteProductMutation } from "../api/apiSlice";
-import { useStyles } from './ProductList.style'
+import { useStyles } from "./ProductList.style";
+import Footer from "../../components/Footer/Footer";
 
 const ProductList: React.FC = () => {
   const classes = useStyles();
@@ -43,7 +44,6 @@ const ProductList: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
-
 
   // Pagination state
   const [page, setPage] = useState(0);
@@ -225,30 +225,32 @@ const ProductList: React.FC = () => {
           </TableBody>
         </Table>
         {products && products.length > 4 && (
-           <TablePagination
-           rowsPerPageOptions={[4, 10, 25]}
-           component="div"
-           count={products.length}
-           rowsPerPage={rowsPerPage}
-           page={page}
-           onPageChange={handleChangePage}
-           onRowsPerPageChange={handleChangeRowsPerPage}
-           sx={{
-             '.MuiTablePagination-toolbar': {
-               backgroundColor: '#f5f5f5',
-               color: '#333',
-               height: '56px',
-             },
-             '.MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows': {
-               margin: '0 8px',
-             },
-             '.MuiTablePagination-actions': {
-               marginRight: '8px',
-             },
-           }}
-         />
+          <TablePagination
+            rowsPerPageOptions={[4, 10, 25]}
+            component="div"
+            count={products.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              ".MuiTablePagination-toolbar": {
+                backgroundColor: "#f5f5f5",
+                color: "#333",
+                height: "56px",
+              },
+              ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows":
+                {
+                  margin: "0 8px",
+                },
+              ".MuiTablePagination-actions": {
+                marginRight: "8px",
+              },
+            }}
+          />
         )}
       </Paper>
+
       <Dialog
         open={isDialogOpen}
         onClose={handleDialogClose}
@@ -265,6 +267,7 @@ const ProductList: React.FC = () => {
           />
         </DialogContent>
       </Dialog>
+      <Footer />
     </>
   );
 };
