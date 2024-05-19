@@ -17,6 +17,7 @@ import AuthForm from "../components/AuthForm/AuthForm";
 import CategoryFilter from "../components/CategoryFilter/CategoryFilter";
 import { Dimensions } from "../features/products/types/product.types";
 import theme from "../custom/theme";
+import Footer from "../components/Footer/Footer";
 
 const Home: React.FC = () => {
   const { data: products, error } = useGetProductsQuery();
@@ -240,6 +241,7 @@ const Home: React.FC = () => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
+      <Footer />
     </>
   );
 };

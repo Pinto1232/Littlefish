@@ -3,6 +3,7 @@ import { Container, CssBaseline, Box, Stepper, Step, StepLabel, Typography, Pape
 import PersonalInfo from './PersonalInfo';
 import PaymentMethods from './PaymentMethods';
 import OrderSummary from './OrderSummary';
+import Footer from '../Footer/Footer';
 
 const steps = ['Personal Info', 'Payment Methods', 'Order Summary'];
 
@@ -31,6 +32,7 @@ const MultistepCheckout: React.FC = () => {
   };
 
   return (
+    <>
     <Container component="main" maxWidth="md" >
       <CssBaseline />
       <Box sx={{ marginTop: 4, marginBottom: 4 }} >
@@ -49,6 +51,8 @@ const MultistepCheckout: React.FC = () => {
         </Paper>
       </Box>
     </Container>
+       <Footer />
+    </>
   );
 };
 
