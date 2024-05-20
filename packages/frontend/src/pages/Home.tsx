@@ -37,18 +37,20 @@ const Home: React.FC = () => {
   }, [products]);
 
   const handleSearch = (query: string) => {
-    if (query) {
-      const filtered = products?.filter((product) =>
-        product.name.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredProducts(filtered);
-      if (filtered?.length === 0) {
-        setSnackbarMessage("The product you are looking for does not exist.");
-        setSnackbarOpen(true);
+    if (products) {
+      if (query) {
+        const filtered = products.filter((product) =>
+          product.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredProducts(filtered);
+        if (filtered.length === 0) {
+          setSnackbarMessage("The product you are looking for does not exist.");
+          setSnackbarOpen(true);
+        }
+      } else {
+        setFilteredProducts(products);
+        setSnackbarOpen(false); // Close the Snackbar when the search query is cleared
       }
-    } else {
-      setFilteredProducts(products);
-      setSnackbarOpen(false); // Close the Snackbar when the search query is cleared
     }
   };
 
@@ -58,44 +60,55 @@ const Home: React.FC = () => {
   );
 
   const handleFilter = (selectedCategory: string) => {
-    if (selectedCategory === "All") {
-      setFilteredProducts(products);
-    } else {
+    if (products) {
+      if (selectedCategory === "All") {
+        setFilteredProducts(products);
+      } else {
+        setFilteredProducts(
+          products.filter(
+            (product) => product.category.name === selectedCategory
+          )
+        );
+      }
+    }
+  };
+
+  const handlePriceChange = (priceRange: number[]) => {
+    if (products) {
+      const [minPrice, maxPrice] = priceRange;
       setFilteredProducts(
-        products?.filter(
-          (product) => product.category.name === selectedCategory
+        products.filter(
+          (product) => product.price >= minPrice && product.price <= maxPrice
         )
       );
     }
   };
 
-  const handlePriceChange = (priceRange: number[]) => {
-    const [minPrice, maxPrice] = priceRange;
-    setFilteredProducts(
-      products?.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
-      )
-    );
-  };
-
   const handleColorChange = (color: string) => {
-    setFilteredProducts(products?.filter((product) => product.color === color));
+    if (products) {
+      setFilteredProducts(products.filter((product) => product.color === color));
+    }
   };
 
   const handleSizeChange = (size: string) => {
-    setFilteredProducts(products?.filter((product) => product.size === size));
+    if (products) {
+      setFilteredProducts(products.filter((product) => product.size === size));
+    }
   };
 
   const handleDimensionChange = (dimension: string, newValue: number[]) => {
-    setFilteredProducts((prevProducts) => {
-      return prevProducts?.filter((product) => {
-        const productDimension =
-          product.dimensions[dimension as keyof Dimensions];
-        return (
-          productDimension >= newValue[0] && productDimension <= newValue[1]
-        );
+    if (products) {
+      setFilteredProducts((prevProducts) => {
+        return prevProducts?.filter((product) => {
+          const productDimension = product.dimensions?.[dimension as keyof Dimensions];
+          return (
+            productDimension !== undefined &&
+            productDimension >= newValue[0] &&
+            productDimension <= newValue[1]
+          );
+        });
       });
-    });
+    }
   };
 
   if (error) {

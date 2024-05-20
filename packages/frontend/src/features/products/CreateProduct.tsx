@@ -11,6 +11,16 @@ interface CreateProductProps {
   refetch: () => void;
 }
 
+interface ProductData {
+  name: string;
+  description: string;
+  price: number;
+  category: { name: string; description: string };
+  attributes: { name: string; value: string }[];
+  imageFile?: File; // Make imageFile optional
+  __v: number;
+}
+
 const CreateProduct: React.FC<CreateProductProps> = ({
   product,
   onClose,
@@ -18,13 +28,13 @@ const CreateProduct: React.FC<CreateProductProps> = ({
   refetch,
 }) => {
   const [createProduct, { isLoading, error }] = useCreateProductMutation();
-  const [productData, setProductData] = useState({
+  const [productData, setProductData] = useState<ProductData>({
     name: "",
     description: "",
     price: 0,
     category: { name: "", description: "" },
     attributes: [{ name: "", value: "" }],
-    imageFile: null as File | null,
+    imageFile: undefined,
     __v: 0,
   });
 
@@ -32,7 +42,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
     if (product) {
       setProductData({
         ...product,
-        imageFile: null,
+        imageFile: undefined,
         __v: product.__v || 0,
       });
     } else {
@@ -42,7 +52,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
         price: 0,
         category: { name: "", description: "" },
         attributes: [{ name: "", value: "" }],
-        imageFile: null,
+        imageFile: undefined,
         __v: 0,
       });
     }
