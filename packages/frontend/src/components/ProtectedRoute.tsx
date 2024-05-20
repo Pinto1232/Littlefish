@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../Context/useAuth';
 
 const ProtectedRoute: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -11,4 +10,3 @@ const ProtectedRoute: React.FC = () => {
 
 const MemoizedProtectedRoute = React.memo(ProtectedRoute);
 export default MemoizedProtectedRoute;
-
