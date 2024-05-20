@@ -175,10 +175,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
               DESCRIPTION
             </Typography>
             <Typography variant="body2" color="text.primary" sx={{ mt: 1 }}>
-              Where the original 574’s go-anywhere versatility was the result of
-              a design that blended road and trail features, the 57/40 combines
-              the familiar with a series of exaggerated features inspired by the
-              bold technical running designs of the `80s and `90s.
+              {product.category.description}
             </Typography>
             <Button
               variant="contained"
