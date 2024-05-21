@@ -19,6 +19,8 @@ import {
   Box,
   TablePagination,
   CssBaseline,
+  TableContainer,
+  Button, // Import TableContainer
 } from "@mui/material";
 import { Product } from "../products/types/product.types";
 import { confirmAlert } from "react-confirm-alert";
@@ -34,6 +36,7 @@ import { useGetProductsQuery, useDeleteProductMutation } from "../api/apiSlice";
 import { useStyles } from "./ProductList.style";
 import Footer from "../../components/Footer/Footer";
 import DashboardLayout from "../../components/DashboardDrawer/DashboardLayout";
+import { SwitchProps } from "@mui/material/Switch";
 
 const ProductList: React.FC = () => {
   const classes = useStyles();
@@ -129,6 +132,17 @@ const ProductList: React.FC = () => {
     setPage(0);
   };
 
+  const getSwitchProps = (
+    product: Product
+  ): { checked: boolean; color: SwitchProps["color"]; label: string } => {
+    const stock = product.stock ?? 0;
+    return {
+      checked: stock > 0,
+      color: stock > 0 ? "success" : "error",
+      label: stock > 0 ? "Yes" : "No",
+    };
+  };
+
   if (isLoading) return <CircularProgress />;
 
   if (error) {
@@ -147,98 +161,136 @@ const ProductList: React.FC = () => {
     <>
       <ToastContainer />
       <Paper style={{ width: "100%" }}>
-        <Table className={classes.table}>
-          <TableHead className={classes.tableHeader}>
-            <TableRow>
-              <TableCell>
-                <Checkbox />
-              </TableCell>
-              <TableCell>Product</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Stock</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Qty</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isUpdating ? (
+        <TableContainer>
+          <Table className={classes.table}>
+            <TableHead className={classes.tableHeader}>
               <TableRow>
-                <TableCell colSpan={7}>
-                  <div className={classes.progressContainer}>
-                    <CircularProgress />
-                  </div>
+                <TableCell>
+                  <Checkbox />
                 </TableCell>
+                <TableCell>Product</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Stock</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Qty</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
-            ) : (
-              products
-                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((product: Product) => (
-                  <TableRow key={product._id}>
-                    <TableCell>
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      <Box display="flex" alignItems="center">
-                        {product.imageUrl && (
-                          <img
-                            src={product.imageUrl}
-                            alt={product.name}
-                            className={classes.productImage}
+            </TableHead>
+            <TableBody>
+              {isUpdating ? (
+                <TableRow>
+                  <TableCell colSpan={7}>
+                    <div className={classes.progressContainer}>
+                      <CircularProgress />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                products
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((product: Product) => {
+                    // Simulate out of stock for a specific product
+                    const simulatedProduct = {
+                      ...product,
+                      stock:
+                        product._id === "specificProductId" ? 0 : product.stock,
+                    };
+                    const switchProps = getSwitchProps(simulatedProduct);
+                    return (
+                      <TableRow key={simulatedProduct._id}>
+                        <TableCell>
+                          <Checkbox />
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          <Box display="flex" alignItems="center">
+                            {simulatedProduct.imageUrl && (
+                              <img
+                                src={simulatedProduct.imageUrl}
+                                alt={simulatedProduct.name}
+                                className={classes.productImage}
+                              />
+                            )}
+                            <Box>
+                              <Typography
+                                variant="body1"
+                                sx={{ fontWeight: "bold" }}
+                              >
+                                {simulatedProduct.name}
+                              </Typography>
+                              <Typography variant="body2" color="textSecondary">
+                                {simulatedProduct.description}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </TableCell>
+                        <TableCell>{simulatedProduct.category.name}</TableCell>
+                        <TableCell>
+                          <Switch
+                            checked={switchProps.checked}
+                            color={switchProps.color}
                           />
-                        )}
-                        <Box>
                           <Typography
-                            variant="body1"
-                            sx={{ fontWeight: "bold" }}
+                            variant="body2"
+                            sx={{
+                              color:
+                                switchProps.color === "success"
+                                  ? "green"
+                                  : "red",
+                              display: "inline",
+                              marginLeft: 1,
+                            }}
                           >
-                            {product.name}
+                            {switchProps.label}
                           </Typography>
-                          <Typography variant="body2" color="textSecondary">
-                            {product.description}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{product.category.name}</TableCell>
-                    <TableCell>
-                      <Switch className={classes.switch} />
-                    </TableCell>
-                    <TableCell>{product.price}</TableCell>
-                    <TableCell>{product.attributes[0].value}</TableCell>
-                    <TableCell className={classes.actions}>
-                      <IconButton
-                        className={classes.menuButton}
-                        onClick={(event) => handleMenuClick(event, product._id)}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                      <Menu
-                        anchorEl={anchorEl}
-                        open={
-                          Boolean(anchorEl) && selectedProduct === product._id
-                        }
-                        onClose={handleMenuClose}
-                      >
-                        <MenuItem onClick={() => handleViewClick(product)}>
-                          <VisibilityIcon /> View
-                        </MenuItem>
-                        <MenuItem onClick={() => handleEditClick(product)}>
-                          <EditIcon /> Edit
-                        </MenuItem>
-                        <MenuItem onClick={handleCreateClick}>
-                          <EditIcon /> Create
-                        </MenuItem>
-                        <MenuItem onClick={() => handleRemove(product._id)}>
-                          <DeleteIcon /> Delete
-                        </MenuItem>
-                      </Menu>
-                    </TableCell>
-                  </TableRow>
-                ))
-            )}
-          </TableBody>
-        </Table>
+                        </TableCell>
+                        <TableCell>{simulatedProduct.price}</TableCell>
+                        <TableCell>
+                          {simulatedProduct.attributes[0].value}
+                        </TableCell>
+                        <TableCell className={classes.actions}>
+                          <IconButton
+                            className={classes.menuButton}
+                            onClick={(event) =>
+                              handleMenuClick(event, simulatedProduct._id)
+                            }
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={
+                              Boolean(anchorEl) &&
+                              selectedProduct === simulatedProduct._id
+                            }
+                            onClose={handleMenuClose}
+                          >
+                            <MenuItem
+                              onClick={() => handleViewClick(simulatedProduct)}
+                            >
+                              <VisibilityIcon /> View
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => handleEditClick(simulatedProduct)}
+                            >
+                              <EditIcon /> Edit
+                            </MenuItem>
+                            <MenuItem onClick={handleCreateClick}>
+                              <EditIcon /> Create
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => handleRemove(simulatedProduct._id)}
+                            >
+                              <DeleteIcon /> Delete
+                            </MenuItem>
+                          </Menu>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
         {products && products.length > 4 && (
           <TablePagination
             rowsPerPageOptions={[4, 10, 25]}
@@ -300,14 +352,36 @@ const ProductList: React.FC = () => {
                 backgroundColor: "#f9f9f9",
                 borderRadius: 2,
                 gap: 2,
+                boxShadow: 3,
               }}
             >
+              {productToView.imageUrl && (
+                <Box
+                  component="img"
+                  src={productToView.imageUrl}
+                  alt={productToView.name}
+                  sx={{
+                    flex: 1,
+                    maxWidth: { xs: "100%", md: "50%" },
+                    height: { xs: "auto", md: "100%" },
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    boxShadow: 3,
+                    cursor: "pointer",
+                    transition: "transform 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
+                  }}
+                />
+              )}
               <Box
                 sx={{
                   flex: 1,
                   padding: 3,
-                  backgroundColor: "#f9f9f9",
+                  backgroundColor: "#fff",
                   borderRadius: 2,
+                  boxShadow: 3,
                 }}
               >
                 <Typography
@@ -316,9 +390,20 @@ const ProductList: React.FC = () => {
                     fontWeight: "bold",
                     marginBottom: 2,
                     color: "#333",
+                    textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
                   }}
                 >
                   {productToView.name}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    marginBottom: 2,
+                    color: "#333",
+                    textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+                  }}
+                >
+                  KES {productToView.price}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -337,18 +422,6 @@ const ProductList: React.FC = () => {
                   sx={{ marginBottom: 1, color: "#777" }}
                 >
                   <strong>Brand:</strong> {productToView.brand}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ marginBottom: 1, color: "#777" }}
-                >
-                  <strong>Price:</strong> R{productToView.price}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ marginBottom: 1, color: "#777" }}
-                >
-                  <strong>Discount:</strong> {productToView.discount}%
                 </Typography>
                 <Typography
                   variant="body2"
@@ -420,26 +493,36 @@ const ProductList: React.FC = () => {
                     )}
                   </ul>
                 </Typography>
-              </Box>
-              {productToView.imageUrl && (
                 <Box
-                  component="img"
-                  src={productToView.imageUrl}
-                  alt={productToView.name}
                   sx={{
-                    flex: 1,
-                    maxWidth: { xs: "100%", md: "50%" },
-                    height: { xs: "auto", md: "400px" },
-                    objectFit: "cover",
-                    borderRadius: 2,
-                    boxShadow: 3,
-                    transition: "transform 0.3s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.05)",
-                    },
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: 2,
                   }}
-                />
-              )}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ marginRight: 2, color: "#777" }}
+                  >
+                    <strong>Quantity:</strong>
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      border: "1px solid #ccc",
+                      borderRadius: 1,
+                      padding: "0 8px",
+                    }}
+                  >
+                    <Button>-</Button>
+                    <Typography variant="body2" sx={{ margin: "0 8px" }}>
+                      1
+                    </Typography>
+                    <Button>+</Button>
+                  </Box>
+                </Box>
+              </Box>
             </Box>
           )}
         </DialogContent>
