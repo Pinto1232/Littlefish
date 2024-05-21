@@ -1,5 +1,6 @@
 import { ProductData } from "./types/product.types";
 
+// Handle attribute change in product data
 export const handleAttributeChange = (
   index: number,
   field: string,
@@ -12,6 +13,7 @@ export const handleAttributeChange = (
   setProductData({ ...productData, attributes: newAttributes });
 };
 
+// Handle image change in product data
 export const handleImageChange = (
   e: React.ChangeEvent<HTMLInputElement>,
   productData: ProductData,

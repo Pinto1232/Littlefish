@@ -38,14 +38,16 @@ import DashboardLayout from "../../components/DashboardDrawer/DashboardLayout";
 const ProductList: React.FC = () => {
   const classes = useStyles();
   const { data: products, error, isLoading, refetch } = useGetProductsQuery();
-  console.log("Product list: ", products);
-
   const [deleteProduct] = useDeleteProductMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [productToView, setProductToView] = useState<Product | null>(null);
+
+  console.log("Product list", products);
 
   // Pagination state
   const [page, setPage] = useState(0);
@@ -103,6 +105,17 @@ const ProductList: React.FC = () => {
   const handleDialogClose = () => {
     setIsDialogOpen(false);
     setProductToEdit(null);
+  };
+
+  const handleViewClick = (product: Product) => {
+    setProductToView(product);
+    setIsViewModalOpen(true);
+    handleMenuClose();
+  };
+
+  const handleViewModalClose = () => {
+    setIsViewModalOpen(false);
+    setProductToView(null);
   };
 
   const handleChangePage = (_: unknown, newPage: number) => {
@@ -207,7 +220,7 @@ const ProductList: React.FC = () => {
                         }
                         onClose={handleMenuClose}
                       >
-                        <MenuItem onClick={handleMenuClose}>
+                        <MenuItem onClick={() => handleViewClick(product)}>
                           <VisibilityIcon /> View
                         </MenuItem>
                         <MenuItem onClick={() => handleEditClick(product)}>
@@ -269,13 +282,175 @@ const ProductList: React.FC = () => {
           />
         </DialogContent>
       </Dialog>
+
+      <Dialog
+        open={isViewModalOpen}
+        onClose={handleViewModalClose}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>Product Details</DialogTitle>
+        <DialogContent>
+          {productToView && (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                padding: 3,
+                backgroundColor: "#f9f9f9",
+                borderRadius: 2,
+                gap: 2,
+              }}
+            >
+              <Box
+                sx={{
+                  flex: 1,
+                  padding: 3,
+                  backgroundColor: "#f9f9f9",
+                  borderRadius: 2,
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: 2,
+                    color: "#333",
+                  }}
+                >
+                  {productToView.name}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ marginBottom: 2, color: "#555" }}
+                >
+                  {productToView.description}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Category:</strong> {productToView.category.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Brand:</strong> {productToView.brand}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Price:</strong> R{productToView.price}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Discount:</strong> {productToView.discount}%
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Stock:</strong> {productToView.stock}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Warranty:</strong> {productToView.warranty}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Manufacturer:</strong> {productToView.manufacturer}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Dimensions:</strong>{" "}
+                  {productToView.dimensions?.length ?? "N/A"} x{" "}
+                  {productToView.dimensions?.width ?? "N/A"} x{" "}
+                  {productToView.dimensions?.height ?? "N/A"} inches
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Weight:</strong> {productToView.weight} lbs
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Attributes:</strong>
+                  <ul>
+                    {productToView.attributes.map((attr) => (
+                      <li key={attr._id}>
+                        {attr.name}: {attr.value}
+                      </li>
+                    ))}
+                  </ul>
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Tags:</strong>{" "}
+                  {productToView?.tags?.join(", ") || "No tags available"}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ marginBottom: 1, color: "#777" }}
+                >
+                  <strong>Reviews:</strong>
+                  <ul>
+                    {productToView?.reviews?.length ? (
+                      productToView.reviews.map((review) => (
+                        <li key={review._id}>
+                          {review.user}: {review.comment}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No reviews available</li>
+                    )}
+                  </ul>
+                </Typography>
+              </Box>
+              {productToView.imageUrl && (
+                <Box
+                  component="img"
+                  src={productToView.imageUrl}
+                  alt={productToView.name}
+                  sx={{
+                    flex: 1,
+                    maxWidth: { xs: "100%", md: "50%" },
+                    height: { xs: "auto", md: "400px" },
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    boxShadow: 3,
+                    transition: "transform 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
+                  }}
+                />
+              )}
+            </Box>
+          )}
+        </DialogContent>
+      </Dialog>
+
       <CssBaseline />
       <DashboardLayout />
-         <Footer />
+      <Footer />
     </>
   );
 };
 
 const MemoizedProductList = React.memo(ProductList);
 export default MemoizedProductList;
-

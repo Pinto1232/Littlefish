@@ -1,8 +1,10 @@
+// Import necessary modules and models
 const Product = require("../models/Product");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
+// Ensure the uploads directory exists
 const uploadDir = path.join(__dirname, "../uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -11,14 +13,14 @@ if (!fs.existsSync(uploadDir)) {
   console.log(`Directory already exists: ${uploadDir}`);
 }
 
+// Configure multer for file storage and filtering
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     console.log(`Saving file to: ${uploadDir}`);
     cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
-    const filename =
-      new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname;
+    const filename = new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname;
     console.log(`Generated filename: ${filename}`);
     cb(null, filename);
   },
@@ -34,8 +36,10 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
+// Middleware to handle single image upload
 exports.uploadImage = upload.single("image");
 
+// Create a new product
 exports.createProduct = async (req, res) => {
   try {
     console.log("Request Body:", req.body);
@@ -61,6 +65,7 @@ exports.createProduct = async (req, res) => {
   }
 };
 
+// Get a product by ID
 exports.getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -75,6 +80,7 @@ exports.getProduct = async (req, res) => {
 
 console.log("Product Controller Loaded");
 
+// Update a product by ID
 exports.updateProduct = async (req, res) => {
   console.log("Updating Product:", req.params.id);
   try {
@@ -87,11 +93,7 @@ exports.updateProduct = async (req, res) => {
       ...req.body,
       imageUrl: req.file ? url + "/uploads/" + req.file.filename : undefined,
     };
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      updatedData,
-      { new: true }
-    );
+    const product = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
     if (!product) {
       return res.status(404).send();
     }
@@ -101,6 +103,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+// Delete a product by ID
 exports.deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
@@ -113,6 +116,7 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
+// List all products
 exports.listProducts = async (req, res) => {
   try {
     const products = await Product.find({});

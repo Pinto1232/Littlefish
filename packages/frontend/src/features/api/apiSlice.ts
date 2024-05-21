@@ -4,6 +4,7 @@ export type { Product };
 
 const baseUrl = "http://localhost:5000/api";
 
+// Configure base query with authorization header
 const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (headers) => {
@@ -15,10 +16,12 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+// Define API slice
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery,
   endpoints: (builder) => ({
+    // Define endpoints for CRUD operations and authentication
     getProducts: builder.query<Product[], void>({
       query: () => "/products",
     }),
@@ -51,7 +54,7 @@ export const apiSlice = createApi({
     login: builder.mutation<
       {
         [x: string]: string; token: string 
-},
+      },
       { username: string; password: string }
     >({
       query: (credentials) => ({
@@ -73,6 +76,7 @@ export const apiSlice = createApi({
   }),
 });
 
+// Export hooks for API endpoints
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,

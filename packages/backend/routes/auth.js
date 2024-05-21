@@ -1,10 +1,11 @@
+// Import necessary modules and models
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const User = require("../models/User");
 const router = express.Router();
 
-// multer for file uploads
+// Configure multer for file storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -16,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// User registration
+// Register a new user with image upload
 router.post("/register", upload.single("image"), async (req, res) => {
   const { username, password } = req.body;
   const image = req.file ? req.file.path : null;
@@ -31,7 +32,7 @@ router.post("/register", upload.single("image"), async (req, res) => {
   }
 });
 
-// User login
+// Login a user and return a JWT token
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const trimmedPassword = password.trim();
@@ -50,4 +51,5 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Export the router
 module.exports = router;

@@ -2,15 +2,8 @@ import React from "react";
 import { Typography, Paper, Grid, Button, Box } from "@mui/material";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import ProductFormFields from "./ProductFormFields";
-import { ProductData } from "../products/types/product.types";
+import { ProductFormProps } from "../products/types/product.types";
 
-interface ProductFormProps {
-  productData: ProductData;
-  setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
-  handleSubmit: (formData: FormData) => void;
-  isLoading: boolean;
-  error: FetchBaseQueryError | null;
-}
 
 const ProductForm: React.FC<ProductFormProps> = ({
   productData,
