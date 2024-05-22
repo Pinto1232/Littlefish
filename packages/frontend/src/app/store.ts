@@ -3,17 +3,23 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { apiSlice } from '../features/api/apiSlice';
 import productsReducer from '../features/products/productsSlice';
 
+// Configure the Redux store
 export const store = configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    products: productsReducer,
+    // Add API slice reducer
+    [apiSlice.reducerPath]: apiSlice.reducer, 
+    // Add products slice reducer
+    products: productsReducer, 
   },
-  // Adding the api middleware enables caching, features of RTK Query
+  
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    // Add API middleware
+    getDefaultMiddleware().concat(apiSlice.middleware), 
 });
 
+// Setup listeners for refetching on focus or reconnect
 setupListeners(store.dispatch);
 
+// Export types for RootState and AppDispatch
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

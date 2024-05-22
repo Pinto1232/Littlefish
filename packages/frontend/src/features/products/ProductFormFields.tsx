@@ -1,15 +1,11 @@
 import React from "react";
 import { Grid, TextField } from "@mui/material";
-import { ProductData } from "../products/types/product.types";
+import { ProductFormFieldsProps } from "../products/types/product.types";
 import {
   handleAttributeChange,
   handleImageChange,
 } from "./ProductFormHandlers";
 
-interface ProductFormFieldsProps {
-  productData: ProductData;
-  setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
-}
 
 const ProductFormFields: React.FC<ProductFormFieldsProps> = ({
   productData,

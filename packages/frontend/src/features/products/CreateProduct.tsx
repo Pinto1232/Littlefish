@@ -1,25 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useCreateProductMutation } from "../api/apiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { Product } from "../products/types/product.types";
+import { CreateProductProps, ProductData } from "../products/types/product.types";
 import ProductForm from "./ProductForm";
-
-interface CreateProductProps {
-  product?: Product | null;
-  onClose: () => void;
-  setIsUpdating: (isUpdating: boolean) => void;
-  refetch: () => void;
-}
-
-interface ProductData {
-  name: string;
-  description: string;
-  price: number;
-  category: { name: string; description: string };
-  attributes: { name: string; value: string }[];
-  imageFile?: File; // Make imageFile optional
-  __v: number;
-}
 
 const CreateProduct: React.FC<CreateProductProps> = ({
   product,
@@ -38,6 +21,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
     __v: 0,
   });
 
+  // Update product data if a product is provided
   useEffect(() => {
     if (product) {
       setProductData({
@@ -58,6 +42,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
     }
   }, [product]);
 
+  // Handle form submission
   const handleSubmit = async (formData: FormData) => {
     setIsUpdating(true);
     try {
@@ -78,6 +63,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({
     }
   };
 
+  // Type guard for FetchBaseQueryError
   const isFetchBaseQueryError = (
     error: unknown
   ): error is FetchBaseQueryError => {
@@ -95,5 +81,6 @@ const CreateProduct: React.FC<CreateProductProps> = ({
   );
 };
 
+// Memoize the CreateProduct component
 const MemoizedCreateProduct = React.memo(CreateProduct);
 export default MemoizedCreateProduct;
