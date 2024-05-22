@@ -30,13 +30,23 @@ const MultistepCheckout: React.FC = () => {
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <PersonalInfo handleNext={handleNext} handleBack={handleBack} />;
+        return (
+          <Box bgcolor={"#f8f8f8"} padding={"32px"}>
+            <PersonalInfo handleNext={handleNext} handleBack={handleBack} />
+          </Box>
+        );
       case 1:
         return (
-          <PaymentMethods handleNext={handleNext} handleBack={handleBack} />
+          <Box bgcolor={"#f8f8f8"} padding={"32px"}>
+            <PaymentMethods handleNext={handleNext} handleBack={handleBack} />
+          </Box>
         );
       case 2:
-        return <OrderSummary handleNext={handleNext} handleBack={handleBack} />;
+        return (
+          <Box bgcolor={"#f8f8f8"} padding={"32px"}>
+            <OrderSummary handleNext={handleNext} handleBack={handleBack} />
+          </Box>
+        );
       default:
         throw new Error("Unknown step");
     }
@@ -72,6 +82,3 @@ const MultistepCheckout: React.FC = () => {
 
 const MemoizedMultistepCheckout = React.memo(MultistepCheckout);
 export default MemoizedMultistepCheckout;
-
-
-

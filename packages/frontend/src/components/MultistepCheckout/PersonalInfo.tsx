@@ -102,7 +102,6 @@ const CartTable: React.FC<{ cart: CartItem[] }> = ({ cart }) => (
       <TableBody>
         <Box
           sx={{
-            bgcolor: "#efefef",
             maxHeight: cart.length > 4 ? 200 : "auto",
             overflowY: "auto",
             overflowX: "hidden",
