@@ -6,13 +6,18 @@ import App from "./App.tsx";
 import "./index.css";
 import { LoginMessageProvider } from "./Context/LoginMessageContext.tsx";
 import { UserProvider } from "./Context/UserContext.tsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
+const clientId = "YOUR_GOOGLE_CLIENT_ID"; 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       <LoginMessageProvider>
         <UserProvider>
-          <App />
+          <GoogleOAuthProvider clientId={clientId}>
+            <App />
+          </GoogleOAuthProvider>
         </UserProvider>
       </LoginMessageProvider>
     </Provider>

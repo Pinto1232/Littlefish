@@ -117,6 +117,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ tab, setTab, open, setOpen }) => {
               {tab === 0 ? "Log in" : "Register"}
             </Typography>
             <AuthFormTabs tab={tab} handleTabChange={handleTabChange} />
+        
             <AuthFormFields
               tab={tab}
               username={username}
