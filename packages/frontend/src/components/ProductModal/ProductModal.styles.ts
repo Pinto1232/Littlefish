@@ -5,7 +5,7 @@ export const style = {
   transform: "translate(-50%, -50%)",
   width: '80%', 
   maxWidth: '700px', 
-  height: '85%',
+  height: '64%',
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 5,

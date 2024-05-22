@@ -8,10 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import GoogleIcon from "@mui/icons-material/Google";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { getErrorMessage } from "./utils";
 import { AuthFormFieldsProps } from "./AuthForm.types";
+import { GoogleLogin } from "@react-oauth/google";
 
 const AuthFormFields: React.FC<AuthFormFieldsProps> = ({
   tab,
@@ -26,6 +26,16 @@ const AuthFormFields: React.FC<AuthFormFieldsProps> = ({
   loginError,
   registerError,
 }) => {
+  const handleGoogleLoginSuccess = (response: unknown) => {
+    console.log("Google login success:", response);
+    // Handle the Google login success, e.g., send the token to your backend
+  };
+
+  const handleGoogleLoginFailure = () => {
+    console.error("Google login failure");
+    // Handle the Google login failure
+  };
+
   return (
     <Box component="form" sx={{ mt: 2 }} onSubmit={handleSubmit}>
       <TextField
@@ -133,13 +143,10 @@ const AuthFormFields: React.FC<AuthFormFieldsProps> = ({
         <Box sx={{ flexGrow: 1, height: 1, backgroundColor: "grey.300" }} />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-        <Button
-          variant="outlined"
-          startIcon={<GoogleIcon />}
-          sx={{ flexGrow: 1, mr: 1 }}
-        >
-          Google
-        </Button>
+        <GoogleLogin
+          onSuccess={handleGoogleLoginSuccess}
+          onError={handleGoogleLoginFailure}
+        />
         <Button
           variant="outlined"
           startIcon={<FingerprintIcon />}
