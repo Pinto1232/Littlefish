@@ -306,7 +306,7 @@ const ProductList: React.FC = () => {
                             <MenuItem
                               onClick={() => handleEditClick(simulatedProduct)}
                             >
-                              <EditIcon /> Edit
+                              <EditIcon /> Update
                             </MenuItem>
                             <MenuItem onClick={handleCreateClick}>
                               <EditIcon /> Create
@@ -437,7 +437,7 @@ const ProductList: React.FC = () => {
                     textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
                   }}
                 >
-                  KES {productToView.price}
+                  R {productToView.price}
                 </Typography>
                 <Typography
                   variant="body1"

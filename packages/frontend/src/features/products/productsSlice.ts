@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Product } from '../api/apiSlice';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { Product } from "../api/apiSlice";
 
 // Create a slice for products
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState: [] as Product[],
   reducers: {
     // Reducer to set the products state

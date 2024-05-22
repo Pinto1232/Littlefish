@@ -37,12 +37,12 @@ export const apiSlice = createApi({
     }),
     updateProduct: builder.mutation<
       Product,
-      { id: string; product: Partial<Product> }
+      { productId: string; formData: FormData }
     >({
-      query: ({ id, product }) => ({
-        url: `/products/${id}`,
+      query: ({ productId, formData }) => ({
+        url: `/products/${productId}`,
         method: "PUT",
-        body: product,
+        body: formData,
       }),
     }),
     deleteProduct: builder.mutation<{ success: boolean }, string>({
@@ -53,7 +53,8 @@ export const apiSlice = createApi({
     }),
     login: builder.mutation<
       {
-        [x: string]: string; token: string 
+        [x: string]: string;
+        token: string;
       },
       { username: string; password: string }
     >({
@@ -63,10 +64,7 @@ export const apiSlice = createApi({
         body: credentials,
       }),
     }),
-    register: builder.mutation<
-      { token: string },
-      FormData 
-    >({
+    register: builder.mutation<{ token: string }, FormData>({
       query: (formData) => ({
         url: "/auth/register",
         method: "POST",
@@ -76,7 +74,6 @@ export const apiSlice = createApi({
   }),
 });
 
-// Export hooks for API endpoints
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,

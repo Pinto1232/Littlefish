@@ -4,7 +4,6 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import ProductFormFields from "./ProductFormFields";
 import { ProductFormProps } from "../products/types/product.types";
 
-
 const ProductForm: React.FC<ProductFormProps> = ({
   productData,
   setProductData,
@@ -28,13 +27,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
       formData.append("image", productData.imageFile);
     }
     formData.append("__v", productData.__v.toString());
-    handleSubmit(formData);
+
+    // Check if productData has an _id to determine if it's an update
+    if (productData._id) {
+      formData.append("productId", productData._id);
+    }
+    handleSubmit(formData); // Pass only one argument
   };
 
   return (
     <>
       <Typography variant="h4" component="h1" gutterBottom>
-        {productData.name ? "Edit Product" : "Create Product"}
+        {productData._id ? "Edit Product" : "Create Product"}
       </Typography>
       <Paper elevation={3} style={{ padding: "16px" }}>
         <form onSubmit={onSubmit}>
@@ -53,8 +57,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
               >
                 {isLoading ? (
                   <Box></Box>
-                ) : productData.name ? (
-                  "Edit Product"
+                ) : productData._id ? (
+                  "Update Product"
                 ) : (
                   "Create Product"
                 )}
@@ -76,6 +80,3 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
 const MemoizedProductForm = React.memo(ProductForm);
 export default MemoizedProductForm;
-
-
-

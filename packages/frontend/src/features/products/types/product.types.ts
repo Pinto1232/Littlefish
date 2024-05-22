@@ -15,10 +15,12 @@ export interface Review {
 }
 
 export interface Product {
+  __v: number;
   _id: string;
   name: string;
   description: string;
   category: {
+    description: string;
     name: string;
   };
   price: number;
@@ -73,8 +75,9 @@ export interface ProductData {
   price: number;
   category: { name: string; description: string };
   attributes: { name: string; value: string }[];
-  imageFile?: File; // Make imageFile optional
+  imageFile?: File;
   __v: number;
+  _id?: string;
 }
 
 export interface ProductFormProps {

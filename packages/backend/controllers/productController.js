@@ -91,14 +91,19 @@ exports.updateProduct = async (req, res) => {
     const url = req.protocol + "://" + req.get("host");
     const updatedData = {
       ...req.body,
-      imageUrl: req.file ? url + "/uploads/" + req.file.filename : undefined,
     };
+
+    if (req.file) {
+      updatedData.imageUrl = url + "/uploads/" + req.file.filename;
+    }
+
     const product = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
     if (!product) {
-      return res.status(404).send();
+      return res.status(404).send({ message: "Product not found" });
     }
     res.send(product);
   } catch (error) {
+    console.error("Error Updating Product:", error);
     res.status(400).send(error);
   }
 };
