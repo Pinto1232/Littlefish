@@ -51,6 +51,7 @@ const ProductList: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [productToView, setProductToView] = useState<Product | null>(null);
+  const [, setProductsState] = useState<Product[]>([]);
 
   console.log("Product list", products);
 
@@ -134,6 +135,16 @@ const ProductList: React.FC = () => {
     setPage(0);
   };
 
+  const handleStockToggle = (productId: string) => {
+    setProductsState((prevProducts: Product[]) => {
+      return prevProducts.map((product: Product) =>
+        product._id === productId
+          ? { ...product, stock: (product.stock ?? 0) > 0 ? 0 : 1 }
+          : product
+      );
+    });
+  };
+
   const getSwitchProps = (
     product: Product
   ): { checked: boolean; color: SwitchProps["color"]; label: string } => {
@@ -161,7 +172,17 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-      <ToastContainer />
+      <Box
+        sx={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 9999, // Ensure it is above other elements
+        }}
+      >
+        <ToastContainer />
+      </Box>
       <Paper style={{ width: "100%" }}>
         <TableContainer>
           <Table className={classes.table}>
@@ -231,6 +252,9 @@ const ProductList: React.FC = () => {
                           <Switch
                             checked={switchProps.checked}
                             color={switchProps.color}
+                            onChange={() =>
+                              handleStockToggle(simulatedProduct._id)
+                            }
                           />
                           {switchProps.checked ? (
                             <CheckCircleIcon
