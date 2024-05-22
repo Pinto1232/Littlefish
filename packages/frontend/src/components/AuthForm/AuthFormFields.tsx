@@ -1,4 +1,5 @@
 import React from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import {
   Box,
   Button,
@@ -11,7 +12,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { getErrorMessage } from "./utils";
 import { AuthFormFieldsProps } from "./AuthForm.types";
-import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse } from '@react-oauth/google'; 
 
 const AuthFormFields: React.FC<AuthFormFieldsProps> = ({
   tab,
@@ -26,11 +27,35 @@ const AuthFormFields: React.FC<AuthFormFieldsProps> = ({
   loginError,
   registerError,
 }) => {
-  const handleGoogleLoginSuccess = (response: unknown) => {
-    console.log("Google login success:", response);
-    // Handle the Google login success, e.g., send the token to your backend
-  };
 
+  const handleGoogleLoginSuccess = async (response: CredentialResponse) => {
+    console.log("Google login success:", response);
+    const { credential } = response;
+  
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: credential }),
+      });
+  
+      const data = await res.json();
+      if (res.ok) {
+        console.log("User authenticated:", data);
+        // Store token and user info in local storage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        // Redirect to the dashboard or another page
+        window.location.href = "/dashboard";
+      } else {
+        console.error("Authentication failed:", data);
+      }
+    } catch (error) {
+      console.error("Error during authentication:", error);
+    }
+  };
   const handleGoogleLoginFailure = () => {
     console.error("Google login failure");
     // Handle the Google login failure

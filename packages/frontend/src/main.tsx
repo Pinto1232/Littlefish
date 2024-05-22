@@ -8,7 +8,7 @@ import { LoginMessageProvider } from "./Context/LoginMessageContext.tsx";
 import { UserProvider } from "./Context/UserContext.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const clientId = "YOUR_GOOGLE_CLIENT_ID"; 
+const clientId = "383304292643-ola2k1jfh9f0a39gd5ijv5h9ph125sfr.apps.googleusercontent.com";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

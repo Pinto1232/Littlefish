@@ -6,7 +6,6 @@ import {
   handleImageChange,
 } from "./ProductFormHandlers";
 
-
 const ProductFormFields: React.FC<ProductFormFieldsProps> = ({
   productData,
   setProductData,

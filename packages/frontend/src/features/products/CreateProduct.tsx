@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useCreateProductMutation } from "../api/apiSlice";
+import {
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} from "../api/apiSlice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { CreateProductProps, ProductData } from "../products/types/product.types";
+import {
+  CreateProductProps,
+  ProductData,
+} from "../products/types/product.types";
 import ProductForm from "./ProductForm";
 
 const CreateProduct: React.FC<CreateProductProps> = ({
@@ -10,7 +16,10 @@ const CreateProduct: React.FC<CreateProductProps> = ({
   setIsUpdating,
   refetch,
 }) => {
-  const [createProduct, { isLoading, error }] = useCreateProductMutation();
+  const [createProduct, { isLoading: isCreating, error: createError }] =
+    useCreateProductMutation();
+  const [updateProduct, { isLoading: isUpdating, error: updateError }] =
+    useUpdateProductMutation();
   const [productData, setProductData] = useState<ProductData>({
     name: "",
     description: "",
@@ -27,7 +36,15 @@ const CreateProduct: React.FC<CreateProductProps> = ({
       setProductData({
         ...product,
         imageFile: undefined,
-        __v: product.__v || 0,
+        category: {
+          ...product.category,
+          description: product.category.description || "",
+        },
+        attributes: product.attributes.map((attr) => ({
+          name: attr.name as string,
+          value: attr.value,
+        })),
+        __v: product.__v,
       });
     } else {
       setProductData({
@@ -47,8 +64,14 @@ const CreateProduct: React.FC<CreateProductProps> = ({
     setIsUpdating(true);
     try {
       console.log("Submitting product:", productData);
-      await createProduct(formData).unwrap();
-      alert("Product created successfully");
+      if (productData._id) {
+        // Logic for updating a product
+        await updateProduct({ productId: productData._id, formData }).unwrap();
+      } else {
+        // Logic for creating a new product
+        await createProduct(formData).unwrap();
+      }
+      alert("Product saved successfully");
       refetch();
       onClose();
     } catch (err) {
@@ -75,8 +98,14 @@ const CreateProduct: React.FC<CreateProductProps> = ({
       productData={productData}
       setProductData={setProductData}
       handleSubmit={handleSubmit}
-      isLoading={isLoading}
-      error={isFetchBaseQueryError(error) ? error : null}
+      isLoading={isCreating || isUpdating}
+      error={
+        isFetchBaseQueryError(createError)
+          ? createError
+          : isFetchBaseQueryError(updateError)
+          ? updateError
+          : null
+      }
     />
   );
 };
