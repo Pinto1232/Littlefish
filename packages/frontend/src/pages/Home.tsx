@@ -15,9 +15,9 @@ import Navbar from "../components/Navbar/Navbar";
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
 import AuthForm from "../components/AuthForm/AuthForm";
 import CategoryFilter from "../components/CategoryFilter/CategoryFilter";
-import { Dimensions } from "../features/products/types/product.types";
 import theme from "../custom/theme";
 import Footer from "../components/Footer/Footer";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
 
 const Home: React.FC = () => {
   const { data: products, error } = useGetProductsQuery();
@@ -86,7 +86,9 @@ const Home: React.FC = () => {
 
   const handleColorChange = (color: string) => {
     if (products) {
-      setFilteredProducts(products.filter((product) => product.color === color));
+      setFilteredProducts(
+        products.filter((product) => product.color === color)
+      );
     }
   };
 
@@ -100,12 +102,20 @@ const Home: React.FC = () => {
     if (products) {
       setFilteredProducts((prevProducts) => {
         return prevProducts?.filter((product) => {
-          const productDimension = product.dimensions?.[dimension as keyof Dimensions];
-          return (
-            productDimension !== undefined &&
-            productDimension >= newValue[0] &&
-            productDimension <= newValue[1]
-          );
+          if (product.dimensions && dimension in product.dimensions) {
+            if (["length", "width", "height"].includes(dimension)) {
+              const productDimension =
+                product.dimensions[
+                  dimension as keyof typeof product.dimensions
+                ];
+              return (
+                productDimension !== undefined &&
+                productDimension >= newValue[0] &&
+                productDimension <= newValue[1]
+              );
+            }
+          }
+          return false;
         });
       });
     }
@@ -147,23 +157,31 @@ const Home: React.FC = () => {
         {isSmallScreen && (
           <Grid item xs={12}>
             <Grid container>
-              {paginatedProducts?.map((product) => (
-                <Grid item key={product._id} xs={12} sm={6} md={4}>
-                  <ProductCard
-                    id={product._id}
-                    brand={product.brand || "Default Brand"}
-                    image={product.imageUrl || "defaultImageUrl"}
-                    name={product.name}
-                    description={product.description}
-                    price={product.price}
-                    category={product.category}
-                    rating={product.rating ?? 0}
-                    reviews={
-                      Array.isArray(product.reviews) ? product.reviews : []
-                    }
-                  />
-                </Grid>
-              ))}
+              {paginatedProducts?.map((product) => {
+                const averageRating =
+                  product.ratings && product.ratings.length > 0
+                    ? product.ratings.reduce((a, b) => a + b, 0) /
+                      product.ratings.length
+                    : 0;
+
+                return (
+                  <Grid item key={product._id} xs={12} sm={6} md={4}>
+                    <ProductCard
+                      id={product._id}
+                      brand={product.brand || "Default Brand"}
+                      image={product.imageUrl || "defaultImageUrl"}
+                      name={product.name}
+                      description={product.description}
+                      price={product.price}
+                      category={product.category}
+                      rating={averageRating}
+                      reviews={
+                        Array.isArray(product.reviews) ? product.reviews : []
+                      }
+                    />
+                  </Grid>
+                );
+              })}
             </Grid>
           </Grid>
         )}
@@ -180,26 +198,38 @@ const Home: React.FC = () => {
         {!isSmallScreen && (
           <Grid item xs={12} sm={9}>
             <Grid container>
-              {paginatedProducts?.map((product) => (
-                <Grid item key={product._id} xs={12} sm={6} md={4}>
-                  <ProductCard
-                    id={product._id}
-                    brand={product.brand || "Default Brand"}
-                    image={product.imageUrl || "defaultImageUrl"}
-                    name={product.name}
-                    description={product.description}
-                    price={product.price}
-                    category={product.category}
-                    rating={product.rating ?? 0}
-                    reviews={
-                      Array.isArray(product.reviews) ? product.reviews : []
-                    }
-                  />
-                </Grid>
-              ))}
+              {paginatedProducts?.map((product) => {
+                const averageRating =
+                  product.ratings && product.ratings.length > 0
+                    ? product.ratings.reduce((a, b) => a + b, 0) /
+                      product.ratings.length
+                    : 0;
+
+                return (
+                  <Grid item key={product._id} xs={12} sm={6} md={4}>
+                    <ProductCard
+                      id={product._id}
+                      brand={product.brand || "Default Brand"}
+                      image={product.imageUrl || "defaultImageUrl"}
+                      name={product.name}
+                      description={product.description}
+                      price={product.price}
+                      category={product.category}
+                      rating={averageRating}
+                      reviews={
+                        Array.isArray(product.reviews) ? product.reviews : []
+                      }
+                    />
+                  </Grid>
+                );
+              })}
             </Grid>
+            <Box>
+          <ProductSlider />
+        </Box>
           </Grid>
         )}
+
       </Grid>
       <Box
         display="flex"

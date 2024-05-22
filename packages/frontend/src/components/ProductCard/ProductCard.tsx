@@ -42,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <MotionImg
             src={image}
             alt={name}
-            loading="lazy" // Add lazy loading attribute
+            loading="lazy" 
             style={{
               position: "absolute",
               top: 0,

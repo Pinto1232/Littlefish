@@ -15,6 +15,7 @@ export interface Review {
 }
 
 export interface Product {
+  color: string;
   __v: number;
   _id: string;
   name: string;
@@ -42,7 +43,8 @@ export interface Product {
   weight?: number;
   tags?: string[];
   ratings?: number[];
-  reviews?: Review[]; // Ensure reviews is an array of Review
+  reviews?: Review[]; 
+  size?: string; 
 }
 
 export interface ProductData {
