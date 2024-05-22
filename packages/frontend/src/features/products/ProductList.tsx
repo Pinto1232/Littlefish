@@ -20,7 +20,7 @@ import {
   TablePagination,
   CssBaseline,
   TableContainer,
-  Button, // Import TableContainer
+  Button,
 } from "@mui/material";
 import { Product } from "../products/types/product.types";
 import { confirmAlert } from "react-confirm-alert";
@@ -37,6 +37,8 @@ import { useStyles } from "./ProductList.style";
 import Footer from "../../components/Footer/Footer";
 import DashboardLayout from "../../components/DashboardDrawer/DashboardLayout";
 import { SwitchProps } from "@mui/material/Switch";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const ProductList: React.FC = () => {
   const classes = useStyles();
@@ -224,11 +226,19 @@ const ProductList: React.FC = () => {
                           </Box>
                         </TableCell>
                         <TableCell>{simulatedProduct.category.name}</TableCell>
+
                         <TableCell>
                           <Switch
                             checked={switchProps.checked}
                             color={switchProps.color}
                           />
+                          {switchProps.checked ? (
+                            <CheckCircleIcon
+                              sx={{ color: "green", marginLeft: 1 }}
+                            />
+                          ) : (
+                            <CancelIcon sx={{ color: "red", marginLeft: 1 }} />
+                          )}
                           <Typography
                             variant="body2"
                             sx={{
