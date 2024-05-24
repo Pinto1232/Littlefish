@@ -27,14 +27,14 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       <Typography variant="h6" gutterBottom>
         Pay by card
       </Typography>
-      <Card variant="outlined">
+      <Card>
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle1" gutterBottom>
                 Amount
               </Typography>
-              <RadioGroup defaultValue="unpaidBalance">
+              <RadioGroup>
                 <FormControlLabel
                   value="enterAmount"
                   control={<Radio />}
@@ -47,11 +47,28 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                     >
                       Enter amount
                       <TextField
-                        variant="outlined"
+                        variant="standard"
                         size="small"
-                        sx={{ ml: 2, flex: 1 }}
                         defaultValue="R0.00"
                         inputProps={{ "aria-label": "Enter amount" }}
+                        sx={{
+                          ml: 2,
+                          flex: 1,
+                          "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                              borderColor: "#ccc",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "#000",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: "#000",
+                            },
+                          },
+                          "& .MuiInputBase-input": {
+                            padding: "10px 12px",
+                          },
+                        }}
                       />
                     </Box>
                   }
@@ -64,6 +81,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                       display="flex"
                       justifyContent="space-between"
                       width="100%"
+                      mr={2}
                     >
                       Unpaid balance
                       <Typography>R435.00</Typography>
@@ -86,10 +104,14 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                       justifyContent="space-around"
                       width="100%"
                     >
-                      <Box whiteSpace={"nowrap"} mr={4}>
+                      <Box whiteSpace={"nowrap"} mr={10} fontSize={13}>
                         Ending in: ...8845
-                        <Typography variant="body2" color="textSecondary">
-                          Last time used: Thu, Mar 18 2021
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          fontSize={13}
+                        >
+                          Last used: Thu, Mar 18 2021
                         </Typography>
                       </Box>
                       <FaCcVisa size={34} color="red" />
@@ -105,12 +127,13 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                       justifyContent="space-between"
                       width="100%"
                     >
-                      <Box whiteSpace={"nowrap"} mr={15}>
+                      <Box whiteSpace={"nowrap"} mr={18} fontSize={13}>
                         Ending in: ...7172
                         <Typography
                           variant="body2"
                           color="textSecondary"
                           whiteSpace={"nowrap"}
+                          fontSize={13}
                         >
                           Never used
                         </Typography>
@@ -122,7 +145,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
               </RadioGroup>
               <Button
                 variant="outlined"
-                sx={{ mt: 2, ":hover": { bgcolor: "#f0f0f0" } }}
+                sx={{ mt: 2, ":hover": { bgcolor: "#f0f0f0", color: "#000" } }}
               >
                 Add new card
               </Button>
@@ -135,10 +158,30 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                 fullWidth
                 placeholder="Optionally, add a reference note"
                 inputProps={{ "aria-label": "Reference note" }}
+                sx={{
+                  mt: 2,
+                  mb: 2,
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#ccc",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#000",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#000",
+                    },
+                  },
+                  "& .MuiInputBase-input": {
+                    padding: "12px 14px",
+                  },
+                }}
               />
 
               <Box display="flex" justifyContent="space-between" sx={{ mt: 3 }}>
-                <Typography variant="subtitle1">Payment total</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+  Payment total
+</Typography>
                 <Typography variant="subtitle1">R435.00</Typography>
               </Box>
             </Grid>
