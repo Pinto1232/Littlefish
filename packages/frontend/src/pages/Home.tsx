@@ -17,7 +17,7 @@ import AuthForm from "../components/AuthForm/AuthForm";
 import CategoryFilter from "../components/CategoryFilter/CategoryFilter";
 import theme from "../custom/theme";
 import Footer from "../components/Footer/Footer";
-import ProductSlider from "../components/ProductSlider/ProductSlider";
+/* import ProductSlider from "../components/ProductSlider/ProductSlider"; */
 
 const Home: React.FC = () => {
   const { data: products, error } = useGetProductsQuery();
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
               })}
             </Grid>
             <Box>
-          <ProductSlider />
+          {/* <ProductSlider /> */}
         </Box>
           </Grid>
         )}

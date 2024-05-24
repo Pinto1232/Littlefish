@@ -117,7 +117,7 @@ const ProductSlider = () => {
                 sx={{
                   width: 210,
                   height: 200,
-                  margin: 1,
+                  margin: 0.5,
                   cursor: "pointer",
                   bgcolor: "#fff",
                   color: "#000",
@@ -145,12 +145,12 @@ const ProductSlider = () => {
                     gutterBottom
                     variant="h6"
                     sx={{
-                        backgroundColor: 'blue',
-                        color: "#fff",
-                        fontSize: "17px",
-                        textAlign: "center",
-                        borderRadius: '56px',
-                        fontsize: "12px",
+                      backgroundColor: "blue",
+                      color: "#fff",
+                      fontSize: "17px",
+                      textAlign: "center",
+                      borderRadius: "56px",
+                      fontsize: "12px",
                     }}
                     textAlign={"center"}
                     component="div"
